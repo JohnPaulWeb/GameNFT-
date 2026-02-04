@@ -1,0 +1,52 @@
+{
+  "placeholderImages": [
+    {
+      "id": "1",
+      "description": "A mythical sword shimmering with arcane energy.",
+      "imageUrl": "https://images.unsplash.com/photo-1662826321315-c72a74f871c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bXl0aGljYWwlMjBzd29yZHxlbnwwfHx8fDE3Njk4MzIxMjl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "mythical sword"
+    },
+    {
+      "id": "2",
+      "description": "An ancient shield, scarred from countless battles.",
+      "imageUrl": "https://images.unsplash.com/photo-1768466588276-7dcf1c3472fb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxhbmNpZW50JTIwc2hpZWxkfGVufDB8fHx8MTc2OTgzMjEyOXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ancient shield"
+    },
+    {
+      "id": "3",
+      "description": "A glowing potion that restores vitality.",
+      "imageUrl": "https://images.unsplash.com/photo-1602531019754-146bfbc69dd9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxnbG93aW5nJTIwcG90aW9ufGVufDB8fHx8MTc2OTgzMjEyOXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "glowing potion"
+    },
+    {
+      "id": "4",
+      "description": "A helmet forged in dragon's fire.",
+      "imageUrl": "https://images.unsplash.com/photo-1668261200406-7f7d12cca0fc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxkcmFnb24lMjBoZWxtZXR8ZW58MHx8fHwxNzY5ODMyMTI5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "dragon helmet"
+    },
+    {
+      "id": "5",
+      "description": "Boots that grant the wearer incredible speed.",
+      "imageUrl": "https://images.unsplash.com/photo-1758887698575-8079803ac303?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxzcGVlZCUyMGJvb3RzfGVufDB8fHx8MTc2OTgzMjEyOXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "speed boots"
+    },
+    {
+      "id": "6",
+      "description": "A powerful staff for a master wizard.",
+      "imageUrl": "https://images.unsplash.com/photo-1728106164075-6dd28e3600be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx3aXphcmQlMjBzdGFmZnxlbnwwfHx8fDE3Njk4MzIxMjl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "wizard staff"
+    },
+    {
+      "id": "7",
+      "description": "A legendary bow that never misses its target.",
+      "imageUrl": "https://images.unsplash.com/photo-1767680148651-1f147697282c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxsZWdlbmRhcnklMjBib3d8ZW58MHx8fHwxNzY5ODMyMTI5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "legendary bow"
+    },
+    {
+      "id": "8",
+      "description": "A mystic ring that amplifies magical abilities.",
+      "imageUrl": "https://images.unsplash.com/photo-1650553758993-445987922bcd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxteXN0aWMlMjByaW5nfGVufDB8fHx8MTc2OTgzMjEyOXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "mystic ring"
+    }
+  ]
+}
