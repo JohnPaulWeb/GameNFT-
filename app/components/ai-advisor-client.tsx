@@ -9,7 +9,7 @@ import {
   type AIPoweredItemSuggestionOutput,
 } from '@/app/ai/flows/ai-powered-item-suggestion';
 import { useCurrentAccount, useSuiClient } from '@mysten/dapp-kit';
-import { useQuery } from '@tanstack/react-quer';
+import { useQuery } from '@tanstack/react-query';
 
 import { Button } from '@/app/components/ui/button';
 import {
@@ -30,7 +30,7 @@ import { Badge } from './ui/badge';
 const formSchema = z.object({
   marketData: z.string().min(10, 'Please provide more detailed market data.'),
   userInventory: z.string().min(5, 'Please provide your user inventory.'),
-  suiAccountBalance: z.coerce.number().positive('SUI balance must be a positive number.'),
+  suiAccountBalance: z.number().positive('SUI balance must be a positive number.'),
 });
 
 const defaultValues = {
@@ -87,10 +87,10 @@ export function AIAdvisorClient() {
   }
 
   return (
-    <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-2">
-      <Card>
-        <CardHeader>
-          <CardTitle>Input Data</CardTitle>
+    <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+      <Card className="border-2 shadow-lg">
+        <CardHeader className="space-y-2">
+          <CardTitle className="text-xl font-bold">Input Data</CardTitle>
           <CardDescription>Provide data for the AI to analyze.</CardDescription>
         </CardHeader>
         <CardContent>
@@ -148,12 +148,12 @@ export function AIAdvisorClient() {
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>AI Suggestion</CardTitle>
+      <Card className="border-2 shadow-lg">
+        <CardHeader className="space-y-2">
+          <CardTitle className="text-xl font-bold">AI Suggestion</CardTitle>
           <CardDescription>The AI's recommendation based on your data.</CardDescription>
         </CardHeader>
-        <CardContent className="min-h-[300px] flex items-center justify-center">
+        <CardContent className="flex min-h-[300px] items-center justify-center">
           {isLoading && <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />}
           
           {!isLoading && !result && (

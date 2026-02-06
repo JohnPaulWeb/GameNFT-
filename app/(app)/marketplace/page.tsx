@@ -1,8 +1,8 @@
 'use client';
 
-import { useMarketplace } from '@/components/providers';
-import { NftCard } from '@/components/nft-card';
-import { Button } from '@/components/ui/button';
+import { useMarketplace } from '@/app/components/providers';
+import { NftCard } from '@/app/components/nft-card';
+import { Button } from '@/app/components/ui/button';
 import { ShoppingCart } from 'lucide-react';
 import { useCurrentAccount } from '@mysten/dapp-kit';
 
@@ -15,29 +15,29 @@ export default function MarketplacePage() {
   );
 
   return (
-    <div className="animate-in fade-in-0">
+    <div className="h-full w-full space-y-8">
       {nftsForSale.length > 0 ? (
-        <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+        <div className="grid place-items-center grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           {nftsForSale.map((nft) => (
             <NftCard key={nft.id} nft={nft}>
               <Button
-                className="w-full bg-primary hover:bg-primary/90"
+                className="w-full font-semibold shadow-sm"
+                size="lg"
                 onClick={() => buyNft(nft)}
                 disabled={!account}
               >
-                <ShoppingCart className="mr-2" />
-                Buy Now for {nft.price} SUI
+                <ShoppingCart className="mr-2 h-4 w-4" />
+                Buy for {nft.price} SUI
               </Button>
             </NftCard>
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center h-96 border-2 border-dashed rounded-lg">
-          <h2 className="text-2xl font-semibold text-muted-foreground">
-            Marketplace is empty
-          </h2>
-          <p className="mt-2 text-muted-foreground">
-            Check your own collection or check back later for new items!
+        <div className="flex min-h-[500px] flex-col items-center justify-center rounded-xl border-2 border-dashed border-muted-foreground/30 bg-muted/30 p-12 text-center">
+          <ShoppingCart className="mb-6 h-16 w-16 text-muted-foreground/70" />
+          <h2 className="text-2xl font-bold">No items for sale</h2>
+          <p className="mt-3 text-muted-foreground">
+            Check back later for new items!
           </p>
         </div>
       )}

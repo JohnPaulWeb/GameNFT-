@@ -15,9 +15,9 @@ import {
   useCurrentAccount,
 } from '@mysten/dapp-kit';
 import { getFullnodeUrl } from '@mysten/sui.js/client';
-import type { NFT } from '@/lib/types';
-import { useToast } from '@/hooks/use-toast';
-import { mockNfts as initialNfts } from '@/lib/mock-data';
+import type { NFT } from '@/app/lib/types';
+import { useToast } from '@/app/hooks/use-toast';
+import { mockNfts as initialNfts } from '@/app/lib/mock-data';
 
 // Marketplace Context
 interface MarketplaceContextType {
@@ -128,9 +128,9 @@ export function MarketplaceProvider({ children }: { children: ReactNode }) {
 // Original Providers
 const queryClient = new QueryClient();
 const networks = {
-  mainnet: { url: getFullnodeUrl('mainnet') },
-  devnet: { url: getFullnodeUrl('devnet') },
-  testnet: { url: getFullnodeUrl('testnet') },
+  mainnet: { url: getFullnodeUrl('mainnet'), network: 'mainnet' as const },
+  devnet: { url: getFullnodeUrl('devnet'), network: 'devnet' as const },
+  testnet: { url: getFullnodeUrl('testnet'), network: 'testnet' as const },
 };
 
 export function Providers({ children }: { children: React.ReactNode }) {

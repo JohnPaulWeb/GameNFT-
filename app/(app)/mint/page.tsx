@@ -6,7 +6,7 @@ import { useCurrentAccount } from '@mysten/dapp-kit';
 import { Sparkles } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@/app/components/ui/button';
 import {
   Card,
   CardContent,
@@ -14,18 +14,18 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from '@/app/components/ui/card';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { useToast } from '@/hooks/use-toast';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { useMarketplace } from '@/components/providers';
-import { NFT } from '@/lib/types';
+} from '@/app/components/ui/select';
+import { useToast } from '@/app/hooks/use-toast';
+import { PlaceHolderImages } from '@/app/lib/placeholder-images';
+import { useMarketplace } from '@/app/components/providers';
+import { NFT } from '@/app/lib/types';
 
 const mintableItems = PlaceHolderImages.map((img) => ({
   id: img.id,
@@ -86,25 +86,25 @@ export default function MintPage() {
   };
 
   return (
-    <div className="animate-in fade-in-0">
-      <Card className="max-w-2xl mx-auto">
-        <CardHeader>
-          <CardTitle className="text-2xl font-headline">
+    <div className="flex justify-center py-8">
+      <Card className="w-full max-w-2xl border-2 shadow-xl">
+        <CardHeader className="space-y-2">
+          <CardTitle className="text-2xl font-bold">
             Mint a New Game Item
           </CardTitle>
           <CardDescription>
             Choose an item to mint. This is currently a simulation.
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-6">
           <div className="space-y-4">
-            <p className="font-medium">Item to Mint</p>
+            <label className="text-sm font-semibold">Item to Mint</label>
             <Select
               onValueChange={setSelectedItem}
               value={selectedItem || ''}
               disabled={isMinting}
             >
-              <SelectTrigger>
+              <SelectTrigger className="h-11">
                 <SelectValue placeholder="Select an item..." />
               </SelectTrigger>
               <SelectContent>
@@ -113,9 +113,10 @@ export default function MintPage() {
                     {item.name}
                   </SelectItem>
                 ))}
+                
               </SelectContent>
             </Select>
-            <div className="text-sm text-muted-foreground p-4 bg-secondary rounded-lg">
+            <div className="rounded-lg border-2 border-dashed border-muted-foreground/25 bg-muted/50 p-4 text-sm text-muted-foreground">
               <p>
                 This is a simulated minting process. No real transaction will be
                 made.
@@ -123,9 +124,10 @@ export default function MintPage() {
             </div>
           </div>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="border-t bg-muted/50 pt-6">
           <Button
-            className="w-full"
+            className="w-full font-semibold shadow-sm"
+            size="lg"
             onClick={handleMint}
             disabled={isMinting || !selectedItem}
           >
@@ -133,7 +135,7 @@ export default function MintPage() {
               'Minting...'
             ) : (
               <>
-                <Sparkles className="mr-2" />
+                <Sparkles className="mr-2 h-4 w-4" />
                 Mint NFT
               </>
             )}
