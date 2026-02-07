@@ -2,7 +2,7 @@ import type { NFT, User } from './types';
 import { PlaceHolderImages } from './placeholder-images';
 
 export const mockUser: User = {
-  walletAddress: '0x123456789012345678901234567890123456789012345678901234567890abcd',
+  walletAddress: '0xa760c3344de19543765340179f95acc80ccacb9a727ee34e2f6087179feeab89',
   suiBalance: 150.75,
 };
 

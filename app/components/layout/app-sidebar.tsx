@@ -106,7 +106,7 @@ export function AppSidebar() {
   }
 
   return (
-    <Sidebar>
+    <Sidebar collapsible="none">
       <SidebarHeader>
         <div className="flex items-center gap-2 px-4 py-3">
           <Logo className="h-8 w-8 text-primary" />

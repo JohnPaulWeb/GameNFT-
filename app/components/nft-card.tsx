@@ -20,7 +20,7 @@ export function NftCard({ nft, children, className }: NftCardProps) {
   return (
     <Card
       className={cn(
-        'group flex h-full w-full max-w-sm flex-col overflow-hidden border-2 transition-all hover:border-primary/50 hover:shadow-xl',
+        'group flex h-full w-full max-w-[320px] flex-col overflow-hidden border-2 transition-all hover:border-primary/50 hover:shadow-xl',
         className
       )}
     >

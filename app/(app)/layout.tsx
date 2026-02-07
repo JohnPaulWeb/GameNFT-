@@ -8,13 +8,13 @@ import { Providers } from '@/app/components/providers';
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <Providers>
-      <SidebarProvider>
-        <div className="flex h-screen w-full overflow-hidden">
+      <SidebarProvider defaultOpen={true}>
+        <div className="flex h-screen w-screen overflow-hidden bg-background">
           <AppSidebar />
-          <SidebarInset className="flex flex-1 flex-col overflow-hidden">
+          <SidebarInset className="flex min-w-0 flex-1 flex-col overflow-hidden">
             <AppHeader />
-            <main className="flex-1 overflow-y-auto bg-background/95 p-4 sm:p-6 lg:p-8">
-              <div className="mx-auto w-full max-w-[1920px]">
+            <main className="min-h-0 flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+              <div className="mx-auto w-full max-w-7xl">
                 {children}
               </div>
             </main>

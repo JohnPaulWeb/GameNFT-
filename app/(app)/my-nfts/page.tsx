@@ -56,7 +56,7 @@ export default function MyNftsPage() {
   return (
     <div className="h-full w-full space-y-8">
       {myNfts.length > 0 ? (
-        <div className="grid place-items-center grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+        <div className="grid grid-cols-1 gap-6 justify-items-center sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           {myNfts.map((nft) => (
             <NftCard key={nft.id} nft={nft}>
               {nft.isListed ? (

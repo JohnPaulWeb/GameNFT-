@@ -11,8 +11,8 @@
  * @function aiPoweredItemSuggestion - A function that handles the item suggestion process.
  */
 
-import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
+import {ai} from '@/app/ai/genkit';
+import {z} from 'zod';
 
 const AIPoweredItemSuggestionInputSchema = z.object({
   marketData: z
@@ -77,7 +77,7 @@ const aiPoweredItemSuggestionFlow = ai.defineFlow(
     inputSchema: AIPoweredItemSuggestionInputSchema,
     outputSchema: AIPoweredItemSuggestionOutputSchema,
   },
-  async input => {
+  async (input: AIPoweredItemSuggestionInput) => {
     const {output} = await prompt(input);
     return output!;
   }

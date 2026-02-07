@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Toaster } from '@/app/components/ui/toaster';
 import '@mysten/dapp-kit/dist/index.css';
 import './globals.css';
+import { Providers } from '@/app/components/providers';
 
 export const metadata: Metadata = {
   title: 'SuiPlay Marketplace',
@@ -25,9 +26,11 @@ export default function RootLayout({
         />
       </head>
       <body className="h-full font-body antialiased">
-        <div className="flex h-full min-h-screen flex-col">
-          {children}
-        </div>
+        <Providers>
+          <div className="flex h-full min-h-screen flex-col">
+            {children}
+          </div>
+        </Providers>
         <Toaster />
       </body>
     </html>

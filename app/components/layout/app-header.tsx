@@ -19,7 +19,7 @@ export function AppHeader() {
 
   return (
     <header className="flex h-14 shrink-0 items-center gap-4 border-b bg-background px-4 sm:h-16 sm:px-6">
-      <SidebarTrigger className="-ml-2 md:hidden" />
+      <SidebarTrigger className="-ml-2" />
       <h1 className="text-xl font-semibold md:text-2xl">{title}</h1>
       <div className="ml-auto">
         <ConnectButton />
