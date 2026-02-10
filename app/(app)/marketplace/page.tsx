@@ -11,7 +11,7 @@ export default function MarketplacePage() {
   const account = useCurrentAccount();
 
   const nftsForSale = nfts.filter(
-    (nft) => nft.isListed && nft.owner !== account?.address
+    (nft) => nft.isListed
   );
 
   return (
@@ -24,10 +24,10 @@ export default function MarketplacePage() {
                 className="w-full font-semibold shadow-sm"
                 size="lg"
                 onClick={() => buyNft(nft)}
-                disabled={!account}
+                disabled={!account || nft.owner === account?.address}
               >
                 <ShoppingCart className="mr-2 h-4 w-4" />
-                Buy for {nft.price} SUI
+                {nft.owner === account?.address ? 'Your Item' : `Buy for ${nft.price} SUI`}
               </Button>
             </NftCard>
           ))}

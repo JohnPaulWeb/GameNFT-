@@ -1,5 +1,5 @@
 import { TransactionBlock } from '@mysten/sui.js/transactions';
-import { CONTRACTS } from '@/constants/contracts';
+import { CONTRACTS } from '@/app/components/contracts';
 
 export class NFTMarketplaceTransactions {
   
@@ -53,6 +53,7 @@ export class NFTMarketplaceTransactions {
         tx.object(CONTRACTS.MARKETPLACE_ID),
         tx.pure(nftId),
       ],
+      
     });
     
     return tx;

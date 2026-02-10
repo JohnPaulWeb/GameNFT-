@@ -74,14 +74,15 @@ export default function MintPage() {
         imageUrl: item.imageUrl,
         imageHint: item.imageHint,
         owner: account.address,
-        isListed: false,
+        isListed: true,
+        price: 50,
       };
 
       addNft(newNft);
 
       setIsMinting(false);
       setSelectedItem(null);
-      router.push('/my-nfts');
+      router.push('/marketplace');
     }, 1500);
   };
 
