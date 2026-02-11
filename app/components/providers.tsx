@@ -17,7 +17,6 @@ import {
 import { getFullnodeUrl } from '@mysten/sui.js/client';
 import type { NFT } from '@/app/lib/types';
 import { useToast } from '@/app/hooks/use-toast';
-import { mockNfts as initialNfts } from '@/app/lib/mock-data';
 
 // Marketplace Context
 interface MarketplaceContextType {
@@ -42,7 +41,7 @@ export function useMarketplace() {
 }
 
 export function MarketplaceProvider({ children }: { children: ReactNode }) {
-  const [nfts, setNfts] = useState<NFT[]>(initialNfts);
+  const [nfts, setNfts] = useState<NFT[]>([]);
   const { toast } = useToast();
   const account = useCurrentAccount();
 

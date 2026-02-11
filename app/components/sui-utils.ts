@@ -16,6 +16,7 @@ export class NFTMarketplaceTransactions {
       ],
     });
     
+    
     return tx;
   }
   
@@ -93,6 +94,7 @@ export class NFTMarketplaceTransactions {
     
     return tx;
   }
+
   
   // Burn NFT
   static burnNFT(nftId: string) {

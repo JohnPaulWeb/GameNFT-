@@ -3,7 +3,7 @@
 import { useMarketplace } from '@/app/components/providers';
 import { NftCard } from '@/app/components/nft-card';
 import { Button } from '@/app/components/ui/button';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, Wallet } from 'lucide-react';
 import { useCurrentAccount } from '@mysten/dapp-kit';
 
 export default function MarketplacePage() {
@@ -16,6 +16,17 @@ export default function MarketplacePage() {
 
   return (
     <div className="h-full w-full space-y-8">
+      {account && (
+        <div className="flex items-center gap-3 rounded-lg border bg-muted/50 p-4">
+          <Wallet className="h-5 w-5 text-primary" />
+          <div className="flex flex-col">
+            <span className="text-xs font-medium text-muted-foreground">Connected Wallet</span>
+            <span className="font-mono text-sm font-semibold">
+              {account.address.slice(0, 6)}...{account.address.slice(-4)}
+            </span>
+          </div>
+        </div>
+      )}
       {nftsForSale.length > 0 ? (
         <div className="grid grid-cols-1 gap-6 justify-items-center sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           {nftsForSale.map((nft) => (

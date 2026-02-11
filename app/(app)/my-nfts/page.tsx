@@ -55,6 +55,17 @@ export default function MyNftsPage() {
 
   return (
     <div className="h-full w-full space-y-8">
+      {account && (
+        <div className="flex items-center gap-3 rounded-lg border bg-muted/50 p-4">
+          <Wallet className="h-5 w-5 text-primary" />
+          <div className="flex flex-col">
+            <span className="text-xs font-medium text-muted-foreground">Your Wallet</span>
+            <span className="font-mono text-sm font-semibold">
+              {account.address}
+            </span>
+          </div>
+        </div>
+      )}
       {myNfts.length > 0 ? (
         <div className="grid grid-cols-1 gap-6 justify-items-center sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           {myNfts.map((nft) => (
@@ -106,7 +117,7 @@ export default function MyNftsPage() {
               <Input
                 id="price"
                 type="number"
-                placeholder="Enter price (e.g., 10.5)"
+                placeholder="Enter price (e.g., 10.5)"  
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 min="0"

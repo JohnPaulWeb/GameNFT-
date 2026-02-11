@@ -19,7 +19,7 @@ export const mockNfts: NFT[] = [
     imageHint: getImage(0).imageHint,
     owner: '0x-other-user-address-1',
     isListed: true,
-    price: 42,
+    price: 0.1,
   },
   {
     id: 'nft-2',
@@ -38,7 +38,7 @@ export const mockNfts: NFT[] = [
     imageHint: getImage(2).imageHint,
     owner: otherUserAddress,
     isListed: true,
-    price: 12.5,
+    price: 0.2,
   },
   {
     id: 'nft-4',
@@ -68,7 +68,7 @@ export const mockNfts: NFT[] = [
     imageHint: getImage(5).imageHint,
     owner: otherUserAddress,
     isListed: true,
-    price: 120,
+    price: 0.3,
   },
   {
     id: 'nft-7',
@@ -88,6 +88,6 @@ export const mockNfts: NFT[] = [
     imageHint: getImage(7).imageHint,
     owner: otherUserAddress,
     isListed: true,
-    price: 250,
+    price: 0.4,
   },
 ];
