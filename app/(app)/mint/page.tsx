@@ -61,18 +61,23 @@ export default function MintPage() {
       // Create transaction block for blockchain minting
       const tx = new TransactionBlock();
       
+      // Convert strings to byte arrays for Move contract
+      const nameBytes = Array.from(new TextEncoder().encode(name));
+      const descriptionBytes = Array.from(new TextEncoder().encode(description));
+      const imageUrlBytes = Array.from(new TextEncoder().encode(imageUrl));
+      
       tx.moveCall({
         target: `${CONTRACTS.PACKAGE_ID}::${CONTRACTS.MODULE_NAME}::mint`,
         arguments: [
-          tx.pure.string(name),
-          tx.pure.string(description),
-          tx.pure.string(imageUrl),
+          tx.pure.vector('u8', nameBytes),
+          tx.pure.vector('u8', descriptionBytes),
+          tx.pure.vector('u8', imageUrlBytes),
         ],
       });
 
       // Send to wallet for signing and execution
       signAndExecuteTransaction(
-        { transaction: tx } as any,
+        { transaction: tx },
         {
           onSuccess: (result: any) => {
             console.log('Mint successful!', result);
