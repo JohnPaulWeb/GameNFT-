@@ -1,33 +1,36 @@
-// contracts.ts
-// After deploying the Move contract, update these values with your deployed addresses
-// See DEPLOYMENT_GUIDE.md for instructions
+// =====================================================
+// REPLACE THESE VALUES WITH YOUR DEPLOYED CONTRACT INFO
+// Run: sui client publish --gas-budget 100000000
+// Then check the output for "Published Objects" section
+// =====================================================
 
 export const CONTRACTS = {
-  // The package ID from "Published Objects" after deployment
-  // Format: 0x + 64 hex characters
-  PACKAGE_ID: "0xa6de9c1ab09e798b59912a671816aa3deb30f34b38f04cfb2c171efb6ea78a4a",
-  
-  // The Marketplace object ID from "Created Objects" after deployment
-  // This is the shared object created in the init() function
-  // Format: 0x + 64 hex characters
-  MARKETPLACE_ID: "0x9b5a733d61a1126d8f02db38f91593a6436f9ad8c6aada395076af7a21457ed4",
-  
-  // The UpgradeCap object ID (needed if you want to upgrade the contract)
-  UPGRADE_CAP_ID: "0x67bf99c003939cb8e0d6b3e9c80abb04b25c16f015f1fd616e68e631a588f6b7",
-  
-  // The module name (matches [package] name in Move.toml)
-  MODULE_NAME: "nft_marketplace",
-  
-  // Network: "testnet" | "mainnet" | "devnet"
-  NETWORK: "testnet",
-};
+  // Your deployed package ID from `sui client publish` output
+  // Example: "0x1a2b3c4d5e6f..."
+  PACKAGE_ID: '0x204187be671e09b8f8af560bfc0b0ba59aef48386c9b03f1f38824de6ca535d5',
 
-// Type definitions for better TypeScript support
-export interface ContractConfig { 
-  PACKAGE_ID: string;
-  MARKETPLACE_ID: string;
-  UPGRADE_CAP_ID: string;
-  MODULE_NAME: string;
-  NETWORK: "testnet" | "mainnet" | "devnet";
-}
+  // The Move module name (matches: module nft::nft_marketplace)
+  MODULE_NAME: 'nft_marketplace',
 
+  // The shared Marketplace object ID created during init()
+  // Find it in the publish output under "Created Objects" → type contains "Marketplace"
+  MARKETPLACE_ID: '0x355bf731f370143cc9fd3f269d75c1ba3bb63584def437fe801486eefa5819f5',
+
+  // The network you deployed to
+  NETWORK: 'testnet', // change to 'mainnet' if on mainnet
+} as const;
+
+// =====================================================
+// HOW TO FIND YOUR IDs:
+//
+// 1. After publishing, run:
+//    sui client object <PACKAGE_ID>
+//
+// 2. Or check the Sui Explorer:
+//    Testnet: https://suiexplorer.com/?network=testnet
+//    Mainnet: https://suiexplorer.com/
+//
+// 3. Or from your terminal publish output, look for:
+//    "PackageID: 0x..."  → this is your PACKAGE_ID
+//    "ObjectID: 0x..." with type "...::Marketplace" → this is your MARKETPLACE_ID
+// =====================================================

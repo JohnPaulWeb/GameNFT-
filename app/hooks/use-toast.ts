@@ -32,6 +32,13 @@ function genId() {
   return count.toString()
 }
 
+
+// tinetest ko lang po ito 
+// function genSan() {
+//   count = (count + 1)  % Number.MAX_SAFE_INTEGER
+//   return  count.toString()
+// }
+
 type ActionType = typeof actionTypes
 
 type Action =

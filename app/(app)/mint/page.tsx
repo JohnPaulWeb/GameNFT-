@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCurrentAccount, useSignAndExecuteTransaction } from '@mysten/dapp-kit';
 import { Sparkles, Wallet } from 'lucide-react';
-import { TransactionBlock } from '@mysten/sui.js/transactions';
+import { Transaction } from '@mysten/sui/transactions';
+import { bcs } from '@mysten/sui/bcs';
 
 import { useMarketplace } from '@/app/components/providers';
 import { Button } from '@/app/components/ui/button';
@@ -27,6 +28,7 @@ export default function MintPage() {
   const [description, setDescription] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [isMinting, setIsMinting] = useState(false);
+
   const account = useCurrentAccount();
   const { toast } = useToast();
   const router = useRouter();
@@ -34,7 +36,6 @@ export default function MintPage() {
   const { addNft } = useMarketplace();
 
   const handleMint = () => {
-    // Validation
     if (!name.trim() || !description.trim() || !imageUrl.trim()) {
       toast({
         variant: 'destructive',
@@ -56,35 +57,42 @@ export default function MintPage() {
     setIsMinting(true);
 
     try {
-      console.log('Creating blockchain mint transaction for:', name);
-      
-      // Create transaction block for blockchain minting
-      const tx = new TransactionBlock();
-      
-      // Convert strings to byte arrays for Move contract
-      const nameBytes = Array.from(new TextEncoder().encode(name));
-      const descriptionBytes = Array.from(new TextEncoder().encode(description));
-      const imageUrlBytes = Array.from(new TextEncoder().encode(imageUrl));
-      
+      console.log('PACKAGE_ID:', CONTRACTS.PACKAGE_ID);
+      console.log('MODULE_NAME:', CONTRACTS.MODULE_NAME);
+      console.log('NETWORK:', CONTRACTS.NETWORK);
+      console.log('Minting NFT:', name);
+
+      const tx = new Transaction();
+      const toBytes = (str: string) => new TextEncoder().encode(str);
+
       tx.moveCall({
         target: `${CONTRACTS.PACKAGE_ID}::${CONTRACTS.MODULE_NAME}::mint`,
         arguments: [
-          tx.pure.vector('u8', nameBytes),
-          tx.pure.vector('u8', descriptionBytes),
-          tx.pure.vector('u8', imageUrlBytes),
+          tx.pure(bcs.vector(bcs.u8()).serialize(toBytes(name))),
+          tx.pure(bcs.vector(bcs.u8()).serialize(toBytes(description))),
+          tx.pure(bcs.vector(bcs.u8()).serialize(toBytes(imageUrl))),
         ],
       });
 
-      // Send to wallet for signing and execution
       signAndExecuteTransaction(
         { transaction: tx },
         {
           onSuccess: (result: any) => {
-            console.log('Mint successful!', result);
-            
-            // Add the newly minted NFT to the marketplace
+            console.log('Mint successful! Full result:', result);
+
+            // ✅ Extract the real on-chain Object ID from the transaction result
+            // This is the actual 0x... ID needed for list/delist/burn
+            const objectId =
+              result?.effects?.created?.[0]?.reference?.objectId  // standard location
+              ?? result?.objectChanges?.find(
+                  (c: any) => c.type === 'created' && c.objectType?.includes('NFT')
+                )?.objectId                                        // fallback location
+              ?? result?.digest;                                   // last resort fallback
+
+            console.log('Minted NFT Object ID:', objectId);
+
             const newNft = {
-              id: `nft-${Date.now()}`,
+              id: objectId,        // ✅ real on-chain ID — required for burn/list/delist
               name,
               description,
               imageUrl,
@@ -94,29 +102,27 @@ export default function MintPage() {
               rarity: 'common' as const,
             };
             addNft(newNft);
-            
+
             toast({
               title: 'Mint Successful! 🎉',
               description: `${name} has been minted on Sui blockchain!`,
             });
+
             setIsMinting(false);
             setName('');
             setDescription('');
             setImageUrl('');
-            
-            // Redirect to my NFTs to see the minted NFT
+
             setTimeout(() => {
               router.push('/my-nfts');
             }, 2000);
           },
           onError: (error: any) => {
             console.error('Blockchain mint failed:', error);
-            const errorMessage = error?.message || error?.toString() || 'Transaction failed';
-            
             toast({
               variant: 'destructive',
               title: 'Blockchain Mint Failed',
-              description: errorMessage,
+              description: error?.message || error?.toString() || 'Transaction failed',
             });
             setIsMinting(false);
           },
@@ -126,7 +132,7 @@ export default function MintPage() {
       console.error('Error creating transaction:', error);
       toast({
         variant: 'destructive',
-        title: 'Transaction Error', 
+        title: 'Transaction Error',
         description: error instanceof Error ? error.message : 'Failed to create transaction.',
       });
       setIsMinting(false);
@@ -137,9 +143,7 @@ export default function MintPage() {
     <div className="flex justify-center py-8">
       <Card className="w-full max-w-2xl border-2 shadow-xl">
         <CardHeader className="space-y-2">
-          <CardTitle className="text-2xl font-bold">
-            Mint a New NFT
-          </CardTitle>
+          <CardTitle className="text-2xl font-bold">Mint a New NFT</CardTitle>
           <CardDescription>
             Create and mint your NFT directly on Sui blockchain using the Move smart contract.
           </CardDescription>
@@ -148,13 +152,14 @@ export default function MintPage() {
               <Wallet className="h-5 w-5 text-primary" />
               <div className="flex flex-col">
                 <span className="text-xs font-medium text-muted-foreground">Connected Wallet</span>
-                <span className="font-mono text-sm font-semibold">
+                <span suppressHydrationWarning className="font-mono text-sm font-semibold">
                   {account.address.slice(0, 6)}...{account.address.slice(-4)}
                 </span>
               </div>
             </div>
           )}
         </CardHeader>
+
         <CardContent className="space-y-6">
           {!account && (
             <div className="rounded-lg border-2 border-yellow-500/50 bg-yellow-50 p-4 dark:bg-yellow-950/20">
@@ -171,7 +176,7 @@ export default function MintPage() {
               </div>
             </div>
           )}
-          
+
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="name" className="text-sm font-semibold">NFT Name</Label>
@@ -216,12 +221,13 @@ export default function MintPage() {
 
             <div className="rounded-lg border-2 border-blue-500/50 bg-blue-50 p-4 dark:bg-blue-950/20">
               <p className="text-sm text-blue-900 dark:text-blue-100">
-                <strong>Smart Contract:</strong> Minting will call the Move contract on Sui {CONTRACTS.NETWORK}.
-                Make sure your wallet has sufficient SUI for gas fees.
+                <strong>Smart Contract:</strong> Minting will call the Move contract on Sui{' '}
+                {CONTRACTS.NETWORK}. Make sure your wallet has sufficient SUI for gas fees.
               </p>
             </div>
           </div>
         </CardContent>
+
         <CardFooter className="border-t bg-muted/50 pt-6">
           <Button
             className="w-full font-semibold shadow-sm"

@@ -87,7 +87,6 @@ export function MarketplaceProvider({ children }: { children: ReactNode }) {
       toast({ variant: 'destructive', title: 'Wallet not connected!' });
       return;
     }
-    // Simulate purchase by changing ownership and delisting.
     setNfts((prevNfts) =>
       prevNfts.map((nft) =>
         nft.id === nftToBuy.id
@@ -124,18 +123,18 @@ export function MarketplaceProvider({ children }: { children: ReactNode }) {
   );
 }
 
-// Original Providers
+// Providers
 const queryClient = new QueryClient();
+
+// ✅ Only keep testnet — removes devnet/mainnet to avoid accidental wrong network
 const networks = {
-  mainnet: { url: getFullnodeUrl('mainnet'), network: 'mainnet' as const },
-  devnet: { url: getFullnodeUrl('devnet'), network: 'devnet' as const },
   testnet: { url: getFullnodeUrl('testnet'), network: 'testnet' as const },
 };
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
-      <SuiClientProvider networks={networks} defaultNetwork="devnet">
+      <SuiClientProvider networks={networks} defaultNetwork="testnet"> {/* ✅ Fixed: was "devnet" */}
         <WalletProvider autoConnect>
           <MarketplaceProvider>{children}</MarketplaceProvider>
         </WalletProvider>
