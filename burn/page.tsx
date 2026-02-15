@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useCurrentAccount, useSignAndExecuteTransaction } from '@mysten/dapp-kit';
+import { useCurrentAccount, useSignAndExecuteTransaction, useSuiClient } from '@mysten/dapp-kit';
 import { Flame, Wallet } from 'lucide-react';
 import { Transaction } from '@mysten/sui/transactions';
 
@@ -29,10 +29,15 @@ export default function BurnPage() {
   const account = useCurrentAccount();
   const { toast } = useToast();
   const router = useRouter();
+  const client = useSuiClient();
   const { mutate: signAndExecuteTransaction } = useSignAndExecuteTransaction();
   const { burnNft } = useMarketplace();
 
-  const handleBurn = () => {
+  // ✅ handleBurn is async so we can await client.getObject() to validate
+  // the NFT exists and is owned by the wallet BEFORE building the transaction.
+  // This converts the cryptic "Expected Object but received Object" SDK error
+  // into a clear, actionable message for the user.
+  const handleBurn = async () => {
     if (!nftObjectId.trim()) {
       toast({
         variant: 'destructive',
@@ -60,7 +65,6 @@ export default function BurnPage() {
       return;
     }
 
-    // ✅ FIX: setIsBurning BEFORE try block to prevent double-click race condition
     setIsBurning(true);
 
     try {
@@ -69,16 +73,56 @@ export default function BurnPage() {
       console.log('NETWORK:', CONTRACTS.NETWORK);
       console.log('Burning NFT:', nftObjectId);
 
-      const tx = new Transaction();
+      // ─── Step 1: Validate the object on-chain ─────────────────────────────
+      const objectData = await client.getObject({
+        id: nftObjectId,
+        options: { showOwner: true, showType: true },
+      });
 
-      // ✅ entry fun burn(nft: NFT)
-      // NFT object is passed directly — it gets permanently deleted on-chain
-      // No typeArguments: burn takes a concrete NFT type, NOT a generic <T>
-      // Passing typeArguments to a non-generic function causes "Expected Object but received Object" error
+      console.log('Object data:', objectData);
+
+      // Object doesn't exist at all
+      if (objectData.error || !objectData.data) {
+        toast({
+          variant: 'destructive',
+          title: 'Object Not Found',
+          description: 'This Object ID does not exist on-chain. Double-check the ID and try again.',
+        });
+        setIsBurning(false);
+        return;
+      }
+
+      // Check ownership — must be AddressOwner matching the connected wallet
+      const owner = objectData.data.owner;
+      const isOwnedByWallet =
+        owner &&
+        typeof owner === 'object' &&
+        'AddressOwner' in owner &&
+        owner.AddressOwner === account.address;
+
+      if (!isOwnedByWallet) {
+        // ObjectOwner means it's wrapped inside another object (e.g. a Listing in the marketplace Bag)
+        const isWrapped = owner && typeof owner === 'object' && 'ObjectOwner' in owner;
+        toast({
+          variant: 'destructive',
+          title: isWrapped ? 'NFT is Still Listed' : 'Not Your NFT',
+          description: isWrapped
+            ? 'This NFT is currently listed in the marketplace. Go to Delist first, then come back to burn.'
+            : 'This NFT is not owned by your connected wallet address.',
+        });
+        setIsBurning(false);
+        return;
+      }
+
+      console.log('Object verified — type:', objectData.data.type, '| owner:', owner);
+
+      // ─── Step 2: Build and submit burn transaction ─────────────────────────
+      // entry fun burn(nft: NFT) — concrete type, no typeArguments needed
+      const tx = new Transaction();
       tx.moveCall({
         target: `${CONTRACTS.PACKAGE_ID}::${CONTRACTS.MODULE_NAME}::burn`,
         arguments: [
-          tx.object(nftObjectId), // NFT object (consumed and deleted)
+          tx.object(nftObjectId),
         ],
       });
 
@@ -88,7 +132,6 @@ export default function BurnPage() {
           onSuccess: (result: any) => {
             console.log('Burn successful!', result);
 
-            // Update local state
             burnNft(nftObjectId);
 
             toast({
@@ -109,7 +152,6 @@ export default function BurnPage() {
             toast({
               variant: 'destructive',
               title: 'Burn Failed',
-              // ✅ FIX: added error?.toString() fallback to match mint pattern
               description: error?.message || error?.toString() || 'Transaction failed',
             });
             setIsBurning(false);
@@ -117,7 +159,7 @@ export default function BurnPage() {
         }
       );
     } catch (error) {
-      console.error('Error creating burn transaction:', error);
+      console.error('Error in burn:', error);
       toast({
         variant: 'destructive',
         title: 'Transaction Error',
@@ -142,7 +184,6 @@ export default function BurnPage() {
               <Wallet className="h-5 w-5 text-primary" />
               <div className="flex flex-col">
                 <span className="text-xs font-medium text-muted-foreground">Connected Wallet</span>
-                {/* ✅ FIX: added suppressHydrationWarning to match mint pattern */}
                 <span suppressHydrationWarning className="font-mono text-sm font-semibold">
                   {account.address.slice(0, 6)}...{account.address.slice(-4)}
                 </span>
@@ -179,23 +220,19 @@ export default function BurnPage() {
               </p>
             </div>
 
-            {/* Ownership requirement — most common cause of burn errors */}
+            {/* Requirements */}
             <div className="rounded-lg border-2 border-yellow-500/50 bg-yellow-50 p-4 dark:bg-yellow-950/20">
               <p className="text-sm font-semibold text-yellow-900 dark:text-yellow-100">
-                📋 Requirements before burning:
+                📋 Before burning:
               </p>
               <ul className="mt-2 space-y-1 text-sm text-yellow-800 dark:text-yellow-200">
+                <li><strong>1.</strong> The NFT must be in your wallet — not listed on the marketplace.</li>
                 <li>
-                  <strong>1.</strong> The NFT must be directly in your wallet — not listed on the marketplace.
-                </li>
-                <li>
-                  <strong>2.</strong> If it is currently listed, go to{' '}
+                  <strong>2.</strong> If currently listed, go to{' '}
                   <a href="/delist" className="underline font-semibold">Delist</a>{' '}
-                  first to return it to your wallet, then come back here to burn it.
+                  first, then come back here.
                 </li>
-                <li>
-                  <strong>3.</strong> Use the original NFT Object ID (not the Listing ID).
-                </li>
+                <li><strong>3.</strong> Use the original NFT Object ID, not a Listing ID or transaction digest.</li>
               </ul>
             </div>
 
@@ -212,7 +249,7 @@ export default function BurnPage() {
                 className="h-11 font-mono text-sm"
               />
               <p className="text-xs text-muted-foreground">
-                The original NFT Object ID — must be in your wallet, not listed on the marketplace.
+                The original NFT Object ID — must be directly in your wallet, not listed on the marketplace.
               </p>
             </div>
 
@@ -246,7 +283,7 @@ export default function BurnPage() {
             disabled={isBurning || !nftObjectId.trim() || !confirmed || !account}
           >
             {isBurning ? (
-              'Burning on Blockchain...'
+              'Verifying & Burning...'
             ) : !account ? (
               <>
                 <Wallet className="mr-2 h-4 w-4" />

@@ -87,23 +87,28 @@ export function AIAdvisorClient() {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-      <Card className="border-2 shadow-lg">
-        <CardHeader className="space-y-2">
-          <CardTitle className="text-xl font-bold">Input Data</CardTitle>
-          <CardDescription>Provide data for the AI to analyze.</CardDescription>
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <Card className="border shadow-md">
+        <CardHeader className="space-y-1 pb-4">
+          <CardTitle className="text-xl font-bold">Market Analysis Input</CardTitle>
+          <CardDescription>Provide market and inventory data for AI analysis</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
               <FormField
                 control={form.control}
                 name="marketData"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Market Data</FormLabel>
+                    <FormLabel className="font-semibold">Market Data *</FormLabel>
                     <FormControl>
-                      <Textarea placeholder="e.g., Top sellers, player demand..." {...field} rows={4}/>
+                      <Textarea 
+                        placeholder="e.g., Top sellers, price trends, player demand..." 
+                        {...field} 
+                        rows={5}
+                        className="resize-none"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -114,9 +119,14 @@ export function AIAdvisorClient() {
                 name="userInventory"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Your Inventory</FormLabel>
+                    <FormLabel className="font-semibold">Your Inventory *</FormLabel>
                     <FormControl>
-                      <Textarea placeholder="e.g., 2x Health Potion, 1x Magic Sword" {...field} />
+                      <Textarea 
+                        placeholder="e.g., 2x Health Potion, 1x Magic Sword" 
+                        {...field}
+                        rows={3}
+                        className="resize-none"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -127,72 +137,103 @@ export function AIAdvisorClient() {
                 name="suiAccountBalance"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>SUI Balance</FormLabel>
+                    <FormLabel className="font-semibold">SUI Balance *</FormLabel>
                     <FormControl>
-                      <Input type="number" placeholder="e.g., 150.75" {...field} />
+                      <Input 
+                        type="number" 
+                        placeholder="e.g., 150.75" 
+                        {...field}
+                        className="h-11"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type="submit" disabled={isLoading} className="w-full">
+              <Button type="submit" disabled={isLoading} className="w-full font-semibold shadow-md" size="lg">
                 {isLoading ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Analyzing...
+                  </>
                 ) : (
-                  <Bot className="mr-2 h-4 w-4" />
+                  <>
+                    <Bot className="mr-2 h-4 w-4" />
+                    Get AI Recommendation
+                  </>
                 )}
-                Get Suggestion
               </Button>
             </form>
           </Form>
         </CardContent>
       </Card>
 
-      <Card className="border-2 shadow-lg">
-        <CardHeader className="space-y-2">
-          <CardTitle className="text-xl font-bold">AI Suggestion</CardTitle>
-          <CardDescription>The AI's recommendation based on your data.</CardDescription>
+      <Card className="border shadow-md">
+        <CardHeader className="space-y-1 pb-4">
+          <CardTitle className="text-xl font-bold">AI Recommendation</CardTitle>
+          <CardDescription>Smart insights based on your market data</CardDescription>
         </CardHeader>
-        <CardContent className="flex min-h-[300px] items-center justify-center">
-          {isLoading && <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />}
+        <CardContent className="flex min-h-[400px] items-center justify-center">
+          {isLoading && (
+            <div className="text-center">
+              <Loader2 className="mx-auto h-12 w-12 animate-spin text-primary" />
+              <p className="mt-4 text-sm text-muted-foreground">Analyzing market data...</p>
+            </div>
+          )}
           
           {!isLoading && !result && (
             <div className="text-center text-muted-foreground">
-              <Bot className="mx-auto h-12 w-12" />
-              <p className="mt-2">Your suggestion will appear here.</p>
+              <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-muted">
+                <Bot className="h-10 w-10" />
+              </div>
+              <p className="mt-4 font-medium">Awaiting Analysis</p>
+              <p className="mt-2 text-sm">Submit your data to receive AI-powered recommendations</p>
             </div>
           )}
           
           {result && (
-            <div className="w-full space-y-4 animate-in fade-in-0">
-                <div className="p-4 bg-card-foreground/5 rounded-lg">
-                    <div className="flex justify-between items-start">
-                        <div>
-                            <p className="text-sm text-muted-foreground">Suggested Item</p>
-                            <p className="text-2xl font-bold font-headline">{result.suggestedItem}</p>
-                        </div>
-                        <Badge variant={result.isProfitable ? 'default' : 'destructive'} className={result.isProfitable ? 'bg-green-600' : ''}>
-                            {result.isProfitable ? <CheckCircle className="mr-2 size-4" /> : <MinusCircle className="mr-2 size-4" />}
-                            {result.isProfitable ? 'Profitable' : 'Not Profitable'}
-                        </Badge>
-                    </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="p-3 bg-card-foreground/5 rounded-lg">
-                    <p className="text-sm text-muted-foreground flex items-center gap-2"><TrendingUp className="size-4"/>Est. Profit</p>
-                    <p className="text-xl font-semibold">{result.estimatedProfit} SUI</p>
+            <div className="w-full space-y-4">
+              <div className="rounded-lg bg-card-foreground/5 p-4">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">Suggested Item</p>
+                    <p className="mt-1 text-2xl font-bold">{result.suggestedItem}</p>
                   </div>
-                   <div className="p-3 bg-card-foreground/5 rounded-lg">
-                    <p className="text-sm text-muted-foreground flex items-center gap-2"><Flame className="size-4"/>Recommended Action</p>
-                    <p className="text-xl font-semibold">Mint & Sell</p>
-                  </div>
+                  <Badge 
+                    variant={result.isProfitable ? 'default' : 'destructive'} 
+                    className={result.isProfitable ? 'bg-green-600' : ''}
+                  >
+                    {result.isProfitable ? (
+                      <CheckCircle className="mr-1.5 h-3.5 w-3.5" />
+                    ) : (
+                      <MinusCircle className="mr-1.5 h-3.5 w-3.5" />
+                    )}
+                    {result.isProfitable ? 'Profitable' : 'Not Profitable'}
+                  </Badge>
                 </div>
+              </div>
 
-                <div>
-                    <p className="font-medium">Reasoning</p>
-                    <p className="text-sm text-muted-foreground mt-1">{result.reasoning}</p>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="rounded-lg bg-card-foreground/5 p-4">
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <TrendingUp className="h-4 w-4" />
+                    <p className="text-sm font-medium">Est. Profit</p>
+                  </div>
+                  <p className="mt-2 text-xl font-bold">{result.estimatedProfit} SUI</p>
                 </div>
+                <div className="rounded-lg bg-card-foreground/5 p-4">
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <Flame className="h-4 w-4" />
+                    <p className="text-sm font-medium">Action</p>
+                  </div>
+                  <p className="mt-2 text-xl font-bold">Mint & Sell</p>
+                </div>
+              </div>
+
+              <div className="rounded-lg border bg-muted/50 p-4">
+                <p className="font-semibold">AI Reasoning</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{result.reasoning}</p>
+              </div>
             </div>
           )}
         </CardContent>

@@ -19,14 +19,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               </div>
             </main>
           </SidebarInset>
-          
-
-          {/* This is test */}
-
-          {/* <SidebarContent>
-            <main className="flex min-w-0 overflow-y-auto p-4 sm:p-6 lg-p-8"></main>
-          </SidebarContent> */}
-          
         </div>
       </SidebarProvider>
     </Providers>

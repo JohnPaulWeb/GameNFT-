@@ -140,97 +140,125 @@ export default function MintPage() {
   };
 
   return (
-    <div className="flex justify-center py-8">
-      <Card className="w-full max-w-2xl border-2 shadow-xl">
-        <CardHeader className="space-y-2">
-          <CardTitle className="text-2xl font-bold">Mint a New NFT</CardTitle>
-          <CardDescription>
-            Create and mint your NFT directly on Sui blockchain using the Move smart contract.
-          </CardDescription>
-          {account && (
-            <div className="mt-4 flex items-center gap-3 rounded-lg border bg-muted/50 p-3">
+    <div className="h-full w-full space-y-6">
+      {/* Header Section */}
+      <div className="space-y-2">
+        <h1 className="text-3xl font-bold tracking-tight">Mint NFT</h1>
+        <p className="text-muted-foreground">
+          Create and mint your NFT directly on the Sui blockchain
+        </p>
+      </div>
+
+      {/* Stats/Info Bar */}
+      {account && (
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="flex items-center gap-3 rounded-lg border bg-card p-4 shadow-sm">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
               <Wallet className="h-5 w-5 text-primary" />
-              <div className="flex flex-col">
-                <span className="text-xs font-medium text-muted-foreground">Connected Wallet</span>
-                <span suppressHydrationWarning className="font-mono text-sm font-semibold">
-                  {account.address.slice(0, 6)}...{account.address.slice(-4)}
-                </span>
-              </div>
             </div>
-          )}
+            <div className="min-w-0 flex-1">
+              <p className="text-sm font-medium text-muted-foreground">Connected Wallet</p>
+              <p className="truncate font-mono text-sm font-semibold">
+                {account.address.slice(0, 8)}...{account.address.slice(-6)}
+              </p>
+            </div>
+          </div>
+          
+          <div className="flex items-center gap-3 rounded-lg border bg-card p-4 shadow-sm">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/10">
+              <Sparkles className="h-5 w-5 text-accent" />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-muted-foreground">Network</p>
+              <p className="text-sm font-semibold capitalize">{CONTRACTS.NETWORK}</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Mint Form Card */}
+      <Card className="border shadow-md">
+        <CardHeader className="space-y-1 pb-4">
+          <CardTitle className="text-xl font-bold">NFT Details</CardTitle>
+          <CardDescription>
+            Fill in the information below to create your unique NFT
+          </CardDescription>
         </CardHeader>
 
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-5">
           {!account && (
             <div className="rounded-lg border-2 border-yellow-500/50 bg-yellow-50 p-4 dark:bg-yellow-950/20">
               <div className="flex items-start gap-3">
-                <Wallet className="h-5 w-5 text-yellow-600 dark:text-yellow-500" />
+                <Wallet className="h-5 w-5 flex-shrink-0 text-yellow-600 dark:text-yellow-500" />
                 <div>
                   <h3 className="font-semibold text-yellow-900 dark:text-yellow-100">
                     Wallet Not Connected
                   </h3>
                   <p className="mt-1 text-sm text-yellow-800 dark:text-yellow-200">
-                    Please connect your wallet using the button in the top right corner to mint NFTs.
+                    Please connect your wallet using the button in the header to mint NFTs.
                   </p>
                 </div>
               </div>
             </div>
           )}
 
-          <div className="space-y-4">
+          <div className="space-y-5">
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-sm font-semibold">NFT Name</Label>
+              <Label htmlFor="name" className="font-semibold">NFT Name *</Label>
               <Input
                 id="name"
                 placeholder="e.g., Legendary Sword"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                disabled={isMinting}
+                disabled={isMinting || !account}
                 className="h-11"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description" className="text-sm font-semibold">Description</Label>
+              <Label htmlFor="description" className="font-semibold">Description *</Label>
               <Textarea
                 id="description"
-                placeholder="Describe your NFT..."
+                placeholder="Describe your NFT's special features and attributes..."
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                disabled={isMinting}
-                rows={3}
+                disabled={isMinting || !account}
+                rows={4}
                 className="resize-none"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="imageUrl" className="text-sm font-semibold">Image URL</Label>
+              <Label htmlFor="imageUrl" className="font-semibold">Image URL *</Label>
               <Input
                 id="imageUrl"
                 type="url"
-                placeholder="https://example.com/image.png"
+                placeholder="https://example.com/your-nft-image.png"
                 value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
-                disabled={isMinting}
+                disabled={isMinting || !account}
                 className="h-11"
               />
               <p className="text-xs text-muted-foreground">
-                Enter a direct URL to your NFT image
+                Provide a direct URL to your NFT image (supports PNG, JPG, GIF)
               </p>
             </div>
 
-            <div className="rounded-lg border-2 border-blue-500/50 bg-blue-50 p-4 dark:bg-blue-950/20">
-              <p className="text-sm text-blue-900 dark:text-blue-100">
-                <strong>Smart Contract:</strong> Minting will call the Move contract on Sui{' '}
-                {CONTRACTS.NETWORK}. Make sure your wallet has sufficient SUI for gas fees.
+            <div className="rounded-lg border-2 border-primary/20 bg-primary/5 p-4">
+              <p className="text-sm">
+                <strong className="text-foreground">Blockchain Details:</strong>{' '}
+                <span className="text-muted-foreground">
+                  Your NFT will be minted on Sui{' '}
+                {CONTRACTS.NETWORK}. Gas fees will be required.
+                </span>
               </p>
             </div>
           </div>
         </CardContent>
 
-        <CardFooter className="border-t bg-muted/50 pt-6">
+        <CardFooter className="border-t bg-muted/30 pt-6">
           <Button
-            className="w-full font-semibold shadow-sm"
+            className="w-full font-semibold shadow-md"
             size="lg"
             onClick={handleMint}
             disabled={isMinting || !name.trim() || !description.trim() || !imageUrl.trim() || !account}

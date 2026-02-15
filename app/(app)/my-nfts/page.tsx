@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useCurrentAccount, useSignAndExecuteTransaction } from '@mysten/dapp-kit';
-import { Tag, X, Flame, Wallet } from 'lucide-react';
+import { Tag, X, Flame, Wallet, Sparkles } from 'lucide-react';
 import { Transaction } from '@mysten/sui/transactions';
 
 import { useMarketplace } from '@/app/components/providers';
@@ -10,6 +10,7 @@ import { NftCard } from '@/app/components/nft-card';
 import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
+import { Package } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -184,30 +185,81 @@ export default function MyNftsPage() {
 
   if (!account) {
     return (
-      <div className="h-full w-full space-y-8">
-        <div className="flex min-h-[500px] flex-col items-center justify-center rounded-xl border-2 border-dashed border-muted-foreground/30 bg-muted/30 p-12 text-center">
-          <Wallet className="mb-6 h-16 w-16 text-muted-foreground/70" />
-          <h2 className="text-2xl font-bold">Connect Wallet</h2>
-          <p className="mt-3 text-muted-foreground">Connect your wallet to view your NFTs</p>
+      <div className="h-full w-full space-y-6">
+        <div className="space-y-2">
+          <h1 className="text-3xl font-bold tracking-tight">My NFTs</h1>
+          <p className="text-muted-foreground">
+            Manage and list your NFT collection
+          </p>
+        </div>
+        <div className="flex min-h-[400px] flex-col items-center justify-center rounded-xl border-2 border-dashed bg-muted/30 p-12 text-center">
+          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-muted">
+            <Wallet className="h-10 w-10 text-muted-foreground/70" />
+          </div>
+          <h2 className="mt-6 text-2xl font-bold">Wallet Not Connected</h2>
+          <p className="mt-2 max-w-sm text-muted-foreground">
+            Please connect your wallet to view and manage your NFT collection
+          </p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="h-full w-full space-y-8">
-      {account && (
-        <div className="flex items-center gap-3 rounded-lg border bg-muted/50 p-4">
-          <Wallet className="h-5 w-5 text-primary" />
-          <div className="flex flex-col">
-            <span className="text-xs font-medium text-muted-foreground">Your Wallet</span>
-            <span className="font-mono text-sm font-semibold">{account.address}</span>
+    <div className="h-full w-full space-y-6">
+      {/* Header Section */}
+      <div className="space-y-2">
+        <h1 className="text-3xl font-bold tracking-tight">My NFTs</h1>
+        <p className="text-muted-foreground">
+          Manage and list your NFT collection
+        </p>
+      </div>
+
+      {/* Stats Bar */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="flex items-center gap-3 rounded-lg border bg-card p-4 shadow-sm">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+            <Package className="h-5 w-5 text-primary" />
+          </div>
+          <div>
+            <p className="text-sm font-medium text-muted-foreground">Total NFTs</p>
+            <p className="text-2xl font-bold">{myNfts.length}</p>
           </div>
         </div>
-      )}
 
+        <div className="flex items-center gap-3 rounded-lg border bg-card p-4 shadow-sm">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/10">
+            <Tag className="h-5 w-5 text-accent" />
+          </div>
+          <div>
+            <p className="text-sm font-medium text-muted-foreground">Listed</p>
+            <p className="text-2xl font-bold">{myNfts.filter(n => n.isListed).length}</p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 rounded-lg border bg-card p-4 shadow-sm sm:col-span-2 lg:col-span-1">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+            <Wallet className="h-5 w-5 text-primary" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-medium text-muted-foreground">Your Wallet</p>
+            <p className="truncate font-mono text-sm font-semibold">
+              {account.address.slice(0, 8)}...{account.address.slice(-6)}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* NFT Grid */}
       {myNfts.length > 0 ? (
-        <div className="grid grid-cols-1 gap-6 justify-items-center sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+        <div>
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="text-lg font-semibold">Your Collection</h2>
+            <span className="text-sm text-muted-foreground">
+              {myNfts.length} {myNfts.length === 1 ? 'item' : 'items'}
+            </span>
+          </div>
+          <div className="grid grid-cols-1 gap-6 justify-items-center sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {myNfts.map((nft) => (
             <NftCard key={nft.id} nft={nft}>
               <div className="flex flex-col gap-2 w-full">
@@ -248,11 +300,20 @@ export default function MyNftsPage() {
             </NftCard>
           ))}
         </div>
+        </div>
       ) : (
-        <div className="flex min-h-[500px] flex-col items-center justify-center rounded-xl border-2 border-dashed border-muted-foreground/30 bg-muted/30 p-12 text-center">
-          <Tag className="mb-6 h-16 w-16 text-muted-foreground/70" />
-          <h2 className="text-2xl font-bold">No NFTs yet</h2>
-          <p className="mt-3 text-muted-foreground">Mint your first NFT to get started</p>
+        <div className="flex min-h-[400px] flex-col items-center justify-center rounded-xl border-2 border-dashed bg-muted/30 p-12 text-center">
+          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-muted">
+            <Package className="h-10 w-10 text-muted-foreground/70" />
+          </div>
+          <h2 className="mt-6 text-2xl font-bold">No NFTs Yet</h2>
+          <p className="mt-2 max-w-sm text-muted-foreground">
+            Start building your collection by minting your first NFT
+          </p>
+          <Button className="mt-6" size="lg" onClick={() => window.location.href = '/mint'}>
+            <Sparkles className="mr-2 h-4 w-4" />
+            Mint Your First NFT
+          </Button>
         </div>
       )}
 
