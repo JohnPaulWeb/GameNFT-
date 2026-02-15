@@ -139,6 +139,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
           <MarketplaceProvider>{children}</MarketplaceProvider>
         </WalletProvider>
       </SuiClientProvider>
-    </QueryClientProvider>
+    </QueryClientProvider>    
   );
 }

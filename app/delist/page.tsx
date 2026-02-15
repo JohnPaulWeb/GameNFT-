@@ -163,7 +163,7 @@ export default function DelistPage() {
                 NFT Object ID
               </Label>
               <Input
-                id="nftObjectId"
+                id="EhhjK8DZde9ySAqoHQm7NvQCNii6LPQG2SvF4mJHciGB"
                 placeholder="0x1234...abcd"
                 value={nftObjectId}
                 onChange={(e) => setNftObjectId(e.target.value)}
