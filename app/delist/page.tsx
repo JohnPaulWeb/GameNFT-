@@ -2,10 +2,9 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useCurrentAccount, useSignAndExecuteTransaction } from '@mysten/dapp-kit';
-import { XCircle, Wallet } from 'lucide-react';
+import { useCurrentAccount, useSignAndExecuteTransaction, useSuiClient } from '@mysten/dapp-kit';
+import { PackageX, Wallet } from 'lucide-react';
 import { Transaction } from '@mysten/sui/transactions';
-import { bcs } from '@mysten/sui/bcs';
 
 import { useMarketplace } from '@/app/components/providers';
 import { Button } from '@/app/components/ui/button';
@@ -23,21 +22,22 @@ import { useToast } from '@/app/hooks/use-toast';
 import { CONTRACTS } from '@/app/components/contracts';
 
 export default function DelistPage() {
-  const [nftObjectId, setNftObjectId] = useState('');
+  const [nftId, setNftId] = useState('');
   const [isDelisting, setIsDelisting] = useState(false);
 
   const account = useCurrentAccount();
   const { toast } = useToast();
   const router = useRouter();
+  const client = useSuiClient();
   const { mutate: signAndExecuteTransaction } = useSignAndExecuteTransaction();
   const { delistNft } = useMarketplace();
 
-  const handleDelist = () => {
-    if (!nftObjectId.trim()) {
+  const handleDelist = async () => {
+    if (!nftId.trim()) {
       toast({
         variant: 'destructive',
         title: 'Missing Information',
-        description: 'Please enter the NFT Object ID to delist.',
+        description: 'Please enter the NFT ID to delist.',
       });
       return;
     }
@@ -54,25 +54,25 @@ export default function DelistPage() {
     setIsDelisting(true);
 
     try {
-      console.log('Delisting NFT:', nftObjectId);
+      console.log('Delisting NFT ID:', nftId);
+
+      // First check if the listing exists in the marketplace
+      const marketplaceData = await client.getObject({
+        id: CONTRACTS.MARKETPLACE_ID,
+        options: { showContent: true },
+      });
+
+      console.log('Marketplace data:', marketplaceData);
 
       const tx = new Transaction();
-
-      // ✅ Calls: entry fun delist_and_take<T: key + store, SUI>(
-      //   marketplace: &mut Marketplace<SUI>,
-      //   nft_id: ID,
-      //   ctx: &TxContext
-      // )
-      // nft_id is passed as a 32-byte address using bcs bytes
+      
+      // Call delist_and_take function
+      // Note: nft_id parameter is the ID (UID) of the NFT, not the listing object
       tx.moveCall({
-        target: `${CONTRACTS.PACKAGE_ID}::${CONTRACTS.MODULE_NAME}::delist_and_take`,
-        typeArguments: [
-          `${CONTRACTS.PACKAGE_ID}::${CONTRACTS.MODULE_NAME}::NFT`,
-          '0x2::sui::SUI',
-        ],
+        target: `${CONTRACTS.PACKAGE_ID}::nft_marketplace::delist_and_take`,
         arguments: [
-          tx.object(CONTRACTS.MARKETPLACE_ID),                    // &mut Marketplace<SUI>
-          tx.pure(bcs.Address.serialize(nftObjectId)),            // nft_id: ID (32-byte address)
+          tx.object(CONTRACTS.MARKETPLACE_ID), // marketplace object
+          tx.pure.id(nftId), // NFT ID (not listing ID)
         ],
       });
 
@@ -80,10 +80,9 @@ export default function DelistPage() {
         { transaction: tx },
         {
           onSuccess: (result: any) => {
-            console.log('Delist successful!', result);
+            console.log('✅ Delist successful!', result);
 
-            // Update local state
-            delistNft(nftObjectId);
+            delistNft(nftId);
 
             toast({
               title: 'NFT Delisted! ✅',
@@ -91,25 +90,42 @@ export default function DelistPage() {
             });
 
             setIsDelisting(false);
-            setNftObjectId('');
+            setNftId('');
 
             setTimeout(() => {
               router.push('/my-nfts');
             }, 2000);
           },
           onError: (error: any) => {
-            console.error('Delist failed:', error);
+            console.error('❌ Delist failed:', error);
+
+            let errorMessage = 'Transaction failed';
+
+            if (error?.message) {
+              const msg = error.message.toLowerCase();
+
+              if (msg.includes('enotseller') || msg.includes('not seller')) {
+                errorMessage = 'You are not the seller of this NFT. Only the seller can delist.';
+              } else if (msg.includes('elistingnotfound') || msg.includes('not found')) {
+                errorMessage = 'This NFT is not currently listed on the marketplace.';
+              } else if (msg.includes('insufficient') && msg.includes('gas')) {
+                errorMessage = 'Insufficient gas. Make sure you have enough SUI.';
+              } else {
+                errorMessage = error.message;
+              }
+            }
+
             toast({
               variant: 'destructive',
               title: 'Delist Failed',
-              description: error?.message || 'Transaction failed',
+              description: errorMessage,
             });
             setIsDelisting(false);
           },
         }
       );
     } catch (error) {
-      console.error('Error creating delist transaction:', error);
+      console.error('Error in delist:', error);
       toast({
         variant: 'destructive',
         title: 'Transaction Error',
@@ -121,18 +137,20 @@ export default function DelistPage() {
 
   return (
     <div className="flex justify-center py-8">
-      <Card className="w-full max-w-2xl border-2 shadow-xl">
+      <Card className="w-full max-w-2xl border-2 border-orange-200 shadow-xl">
         <CardHeader className="space-y-2">
-          <CardTitle className="text-2xl font-bold">Delist NFT</CardTitle>
+          <CardTitle className="text-2xl font-bold text-orange-600 dark:text-orange-400">
+            📦 Delist NFT
+          </CardTitle>
           <CardDescription>
-            Remove your NFT from the marketplace. It will be returned to your wallet.
+            Remove your NFT from the marketplace. The NFT will be returned to your wallet.
           </CardDescription>
           {account && (
             <div className="mt-4 flex items-center gap-3 rounded-lg border bg-muted/50 p-3">
               <Wallet className="h-5 w-5 text-primary" />
               <div className="flex flex-col">
                 <span className="text-xs font-medium text-muted-foreground">Connected Wallet</span>
-                <span className="font-mono text-sm font-semibold">
+                <span suppressHydrationWarning className="font-mono text-sm font-semibold">
                   {account.address.slice(0, 6)}...{account.address.slice(-4)}
                 </span>
               </div>
@@ -158,27 +176,43 @@ export default function DelistPage() {
           )}
 
           <div className="space-y-4">
+            <div className="rounded-lg border-2 border-orange-500/50 bg-orange-50 p-4 dark:bg-orange-950/20">
+              <p className="text-sm font-semibold text-orange-900 dark:text-orange-100">
+                📋 Important Notes:
+              </p>
+              <ul className="mt-2 space-y-1 text-sm text-orange-800 dark:text-orange-200">
+                <li><strong>1.</strong> You can only delist NFTs that you listed</li>
+                <li><strong>2.</strong> Enter the original NFT ID (not the listing object ID)</li>
+                <li><strong>3.</strong> The NFT will be returned to your wallet after delisting</li>
+                <li><strong>4.</strong> This action is free except for gas fees</li>
+              </ul>
+            </div>
+
+            <div className="rounded-lg border-2 border-blue-500/50 bg-blue-50 p-4 dark:bg-blue-950/20">
+              <p className="text-sm font-semibold text-blue-900 dark:text-blue-100">
+                💡 How to find your NFT ID:
+              </p>
+              <ul className="mt-2 space-y-1 text-sm text-blue-800 dark:text-blue-200">
+                <li>• Go to the Marketplace and find your listed NFT</li>
+                <li>• Copy the NFT ID shown in the listing details</li>
+                <li>• Or check your transaction history when you listed it</li>
+              </ul>
+            </div>
+
             <div className="space-y-2">
-              <Label htmlFor="nftObjectId" className="text-sm font-semibold">
-                NFT Object ID
+              <Label htmlFor="nftId" className="text-sm font-semibold">
+                NFT ID
               </Label>
               <Input
-                id="EhhjK8DZde9ySAqoHQm7NvQCNii6LPQG2SvF4mJHciGB"
+                id="nftId"
                 placeholder="0x1234...abcd"
-                value={nftObjectId}
-                onChange={(e) => setNftObjectId(e.target.value)}
+                value={nftId}
+                onChange={(e) => setNftId(e.target.value)}
                 disabled={isDelisting}
                 className="h-11 font-mono text-sm"
               />
               <p className="text-xs text-muted-foreground">
-                The Object ID of the NFT you want to remove from the marketplace.
-              </p>
-            </div>
-
-            <div className="rounded-lg border-2 border-orange-500/50 bg-orange-50 p-4 dark:bg-orange-950/20">
-              <p className="text-sm text-orange-900 dark:text-orange-100">
-                <strong>Note:</strong> Only you (the original seller) can delist your NFT.
-                The NFT will be transferred back to your wallet automatically.
+                The original NFT ID (UID) - the same ID used when listing
               </p>
             </div>
           </div>
@@ -186,14 +220,14 @@ export default function DelistPage() {
 
         <CardFooter className="border-t bg-muted/50 pt-6">
           <Button
-            variant="destructive"
-            className="w-full font-semibold shadow-sm"
+            variant="outline"
+            className="w-full font-semibold shadow-sm border-orange-500 text-orange-600 hover:bg-orange-50"
             size="lg"
             onClick={handleDelist}
-            disabled={isDelisting || !nftObjectId.trim() || !account}
+            disabled={isDelisting || !nftId.trim() || !account}
           >
             {isDelisting ? (
-              'Delisting from Blockchain...'
+              'Delisting NFT...'
             ) : !account ? (
               <>
                 <Wallet className="mr-2 h-4 w-4" />
@@ -201,8 +235,8 @@ export default function DelistPage() {
               </>
             ) : (
               <>
-                <XCircle className="mr-2 h-4 w-4" />
-                Delist NFT from Marketplace
+                <PackageX className="mr-2 h-4 w-4" />
+                Delist NFT
               </>
             )}
           </Button>

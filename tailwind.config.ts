@@ -8,6 +8,10 @@ const config: Config = {
   darkMode: 'class',
   theme: {
     extend: {
+      fontFamily: {
+        display: ['var(--font-display)', 'sans-serif'],
+        body: ['var(--font-body)', 'sans-serif'],
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -58,13 +62,41 @@ const config: Config = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
-      fontFamily: {
-        body: ['Space Grotesk', 'sans-serif'],
-        sans: ['Space Grotesk', 'sans-serif'],
+      boxShadow: {
+        'glow': '0 0 20px rgba(0, 240, 255, 0.3)',
+        'glow-lg': '0 0 40px rgba(0, 240, 255, 0.4)',
+        'glow-xl': '0 0 60px rgba(0, 240, 255, 0.5)',
+        'glow-accent': '0 0 30px var(--accent-glow)',
+        'glass': '0 8px 32px rgba(0, 0, 0, 0.3)',
+      },
+      animation: {
+        'fade-up': 'fadeUp 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+        'fade-in': 'fadeIn 0.4s ease-out',
+        'glow-pulse': 'glowPulse 3s ease-in-out infinite',
+        'scale-in': 'scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+      },
+      keyframes: {
+        fadeUp: {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        glowPulse: {
+          '0%, 100%': { boxShadow: '0 0 20px rgba(0, 240, 255, 0.2)' },
+          '50%': { boxShadow: '0 0 40px rgba(0, 240, 255, 0.4)' },
+        },
+        scaleIn: {
+          '0%': { opacity: '0', transform: 'scale(0.95)' },
+          '100%': { opacity: '1', transform: 'scale(1)' },
+        },
       },
     },
   },
   plugins: [],
+};
 };
 
 export default config;

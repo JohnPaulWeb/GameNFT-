@@ -1,9 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { useCurrentAccount, useSignAndExecuteTransaction } from '@mysten/dapp-kit';
+import { useCurrentAccount, useSignAndExecuteTransaction, useSuiClient } from '@mysten/dapp-kit';
 import { Tag, X, Flame, Wallet, Sparkles } from 'lucide-react';
 import { Transaction } from '@mysten/sui/transactions';
+import { bcs } from '@mysten/sui/bcs';
 
 import { useMarketplace } from '@/app/components/providers';
 import { NftCard } from '@/app/components/nft-card';
@@ -25,6 +26,7 @@ import { CONTRACTS } from '@/app/components/contracts';
 export default function MyNftsPage() {
   const { nfts, listNft, delistNft, burnNft } = useMarketplace();
   const account = useCurrentAccount();
+  const client = useSuiClient();
   const { toast } = useToast();
   const { mutate: signAndExecuteTransaction } = useSignAndExecuteTransaction();
 
@@ -43,19 +45,30 @@ export default function MyNftsPage() {
     const nft = myNfts.find((n) => n.id === burnNftId);
     if (!nft) return;
 
+    // Validate the NFT ID is a proper Sui Object ID before hitting the RPC
+    const cleanId = burnNftId.trim();
+    const isValidSuiId = /^0x[0-9a-fA-F]{64}$/.test(cleanId);
+    if (!isValidSuiId) {
+      toast({
+        variant: 'destructive',
+        title: 'Invalid NFT Object ID',
+        description:
+          'The stored NFT ID is not a valid Sui Object ID. ' +
+          'Please refresh the page or re-mint — the ID must start with 0x followed by 64 hex characters.',
+      });
+      setBurnNftId(null);
+      return;
+    }
+
     setIsBurning(true);
 
     try {
-      const tx = new Transaction();
+      console.log('Burning NFT:', cleanId);
 
-      // entry fun burn(nft: NFT)
-      // ✅ tx.object() with the NFT's on-chain object ID
-      // No typeArguments needed for burn — it takes NFT directly by value
+      const tx = new Transaction();
       tx.moveCall({
         target: `${CONTRACTS.PACKAGE_ID}::${CONTRACTS.MODULE_NAME}::burn`,
-        arguments: [
-          tx.object(burnNftId),
-        ],
+        arguments: [tx.object(cleanId)],
       });
 
       signAndExecuteTransaction(
@@ -70,15 +83,31 @@ export default function MyNftsPage() {
           },
           onError: (error: any) => {
             console.error('Burn failed:', error);
-            toast({ variant: 'destructive', title: 'Burn Failed', description: error?.message || 'Transaction failed' });
+            const msg = error?.message || error?.toString() || 'Transaction failed';
+            const friendlyMsg = msg.toLowerCase().includes('objectnotfound')
+              ? 'NFT not found on-chain. It may already be burned or the transaction not yet confirmed.'
+              : msg.toLowerCase().includes('invalidobjectownership') || msg.toLowerCase().includes('not owned')
+              ? 'You do not own this NFT, or it is still listed in the marketplace. Delist it first.'
+              : msg;
+            toast({
+              variant: 'destructive',
+              title: 'Burn Failed',
+              description: friendlyMsg,
+            });
             setIsBurning(false);
+            setBurnNftId(null);
           },
         }
       );
     } catch (error) {
       console.error('Burn tx error:', error);
-      toast({ variant: 'destructive', title: 'Transaction Error', description: error instanceof Error ? error.message : 'Failed.' });
+      toast({
+        variant: 'destructive',
+        title: 'Transaction Error',
+        description: error instanceof Error ? error.message : 'Failed.',
+      });
       setIsBurning(false);
+      setBurnNftId(null);
     }
   };
 
@@ -94,13 +123,21 @@ export default function MyNftsPage() {
     setIsListing(true);
 
     try {
-      // 1 SUI = 1_000_000_000 MIST
-      const priceInMist = BigInt(Math.floor(priceNumber * 1_000_000_000));
+      console.log('PACKAGE_ID:', CONTRACTS.PACKAGE_ID);
+      console.log('MODULE_NAME:', CONTRACTS.MODULE_NAME);
+      console.log('NETWORK:', CONTRACTS.NETWORK);
+      console.log('Listing NFT:', nft.id, 'for', price, 'SUI');
+
+      // ✅ Float-safe conversion from SUI to MIST (1 SUI = 1,000,000,000 MIST)
+      const [whole = '0', frac = ''] = price.trim().split('.');
+      const fracPadded = frac.padEnd(9, '0').slice(0, 9);
+      const priceInMist = BigInt(whole) * 1_000_000_000n + BigInt(fracPadded);
+
+      console.log('Price in MIST:', priceInMist.toString());
 
       const tx = new Transaction();
 
       // entry fun list<T: key + store, SUI>(marketplace, nft, price, ctx)
-      // ✅ tx.pure.u64() for the price — avoids bcs import type confusion
       tx.moveCall({
         target: `${CONTRACTS.PACKAGE_ID}::${CONTRACTS.MODULE_NAME}::list`,
         typeArguments: [
@@ -110,7 +147,7 @@ export default function MyNftsPage() {
         arguments: [
           tx.object(CONTRACTS.MARKETPLACE_ID),
           tx.object(nft.id),
-          tx.pure.u64(priceInMist),
+          tx.pure(bcs.u64().serialize(priceInMist)),  // ✅ Fixed: use bcs serialization
         ],
       });
 
@@ -127,14 +164,22 @@ export default function MyNftsPage() {
           },
           onError: (error: any) => {
             console.error('List failed:', error);
-            toast({ variant: 'destructive', title: 'Listing Failed', description: error?.message || 'Transaction failed' });
+            toast({ 
+              variant: 'destructive', 
+              title: 'Listing Failed', 
+              description: error?.message || error?.toString() || 'Transaction failed' 
+            });
             setIsListing(false);
           },
         }
       );
     } catch (error) {
       console.error('List tx error:', error);
-      toast({ variant: 'destructive', title: 'Transaction Error', description: error instanceof Error ? error.message : 'Failed.' });
+      toast({ 
+        variant: 'destructive', 
+        title: 'Transaction Error', 
+        description: error instanceof Error ? error.message : 'Failed.' 
+      });
       setIsListing(false);
     }
   };
@@ -144,10 +189,15 @@ export default function MyNftsPage() {
     setDelistingId(nftId);
 
     try {
+      console.log('PACKAGE_ID:', CONTRACTS.PACKAGE_ID);
+      console.log('MODULE_NAME:', CONTRACTS.MODULE_NAME);
+      console.log('NETWORK:', CONTRACTS.NETWORK);
+      console.log('Delisting NFT:', nftId);
+
       const tx = new Transaction();
 
       // entry fun delist_and_take<T: key + store, SUI>(marketplace, nft_id, ctx)
-      // ✅ nft_id is type ID (32 bytes) — use tx.pure.id() 
+      // ✅ nft_id is type ID — use tx.pure.id()
       tx.moveCall({
         target: `${CONTRACTS.PACKAGE_ID}::${CONTRACTS.MODULE_NAME}::delist_and_take`,
         typeArguments: [
@@ -156,7 +206,7 @@ export default function MyNftsPage() {
         ],
         arguments: [
           tx.object(CONTRACTS.MARKETPLACE_ID),
-          tx.pure.id(nftId),   // ✅ nft_id: ID — must be pure.id() not tx.object()
+          tx.pure.id(nftId),
         ],
       });
 
@@ -171,164 +221,241 @@ export default function MyNftsPage() {
           },
           onError: (error: any) => {
             console.error('Delist failed:', error);
-            toast({ variant: 'destructive', title: 'Delist Failed', description: error?.message || 'Transaction failed' });
+            toast({ 
+              variant: 'destructive', 
+              title: 'Delist Failed', 
+              description: error?.message || error?.toString() || 'Transaction failed' 
+            });
             setDelistingId(null);
           },
         }
       );
     } catch (error) {
       console.error('Delist tx error:', error);
-      toast({ variant: 'destructive', title: 'Transaction Error', description: error instanceof Error ? error.message : 'Failed.' });
+      toast({ 
+        variant: 'destructive', 
+        title: 'Transaction Error', 
+        description: error instanceof Error ? error.message : 'Failed.' 
+      });
       setDelistingId(null);
     }
   };
 
   if (!account) {
     return (
-      <div className="h-full w-full space-y-6">
-        <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight">My NFTs</h1>
-          <p className="text-muted-foreground">
-            Manage and list your NFT collection
-          </p>
-        </div>
-        <div className="flex min-h-[400px] flex-col items-center justify-center rounded-xl border-2 border-dashed bg-muted/30 p-12 text-center">
-          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-muted">
-            <Wallet className="h-10 w-10 text-muted-foreground/70" />
+      <div className="w-full min-h-screen flex flex-col bg-[hsl(var(--background))]">
+        <div className="flex-1 flex items-center justify-center px-4">
+          <div className="text-center space-y-6 max-w-md">
+            <div className="flex justify-center">
+              <div className="flex h-24 w-24 items-center justify-center rounded-full bg-cyan-400/10 border border-cyan-400/20">
+                <Wallet className="h-12 w-12 text-cyan-300/50" />
+              </div>
+            </div>
+            <div className="space-y-3">
+              <h1 className="text-4xl font-bold font-display text-white leading-tight">Authentication Required</h1>
+              <p className="text-[hsl(var(--text-secondary))] text-lg">
+                Connect your wallet to access and manage your NFT collection.
+              </p>
+            </div>
+            <div className="pt-2">
+              <p className="text-sm text-[hsl(var(--text-secondary))]">
+                Use the connect button in the header to authenticate your wallet.
+              </p>
+            </div>
           </div>
-          <h2 className="mt-6 text-2xl font-bold">Wallet Not Connected</h2>
-          <p className="mt-2 max-w-sm text-muted-foreground">
-            Please connect your wallet to view and manage your NFT collection
-          </p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="h-full w-full space-y-6">
-      {/* Header Section */}
-      <div className="space-y-2">
-        <h1 className="text-3xl font-bold tracking-tight">My NFTs</h1>
-        <p className="text-muted-foreground">
-          Manage and list your NFT collection
-        </p>
-      </div>
-
-      {/* Stats Bar */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <div className="flex items-center gap-3 rounded-lg border bg-card p-4 shadow-sm">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-            <Package className="h-5 w-5 text-primary" />
-          </div>
-          <div>
-            <p className="text-sm font-medium text-muted-foreground">Total NFTs</p>
-            <p className="text-2xl font-bold">{myNfts.length}</p>
-          </div>
+    <div className="w-full min-h-screen flex flex-col bg-[hsl(var(--background))]">
+      {/* Hero Section */}
+      <div className="relative overflow-hidden px-4 md:px-8 py-12 md:py-20">
+        {/* Ambient background glow */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-0 left-1/3 w-96 h-96 rounded-full opacity-10" style={{
+            background: 'radial-gradient(circle, rgba(0, 240, 255, 0.4), transparent)',
+            filter: 'blur(40px)',
+            pointerEvents: 'none',
+          }} />
         </div>
 
-        <div className="flex items-center gap-3 rounded-lg border bg-card p-4 shadow-sm">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/10">
-            <Tag className="h-5 w-5 text-accent" />
-          </div>
-          <div>
-            <p className="text-sm font-medium text-muted-foreground">Listed</p>
-            <p className="text-2xl font-bold">{myNfts.filter(n => n.isListed).length}</p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-3 rounded-lg border bg-card p-4 shadow-sm sm:col-span-2 lg:col-span-1">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-            <Wallet className="h-5 w-5 text-primary" />
-          </div>
-          <div className="min-w-0 flex-1">
-            <p className="text-sm font-medium text-muted-foreground">Your Wallet</p>
-            <p className="truncate font-mono text-sm font-semibold">
-              {account.address.slice(0, 8)}...{account.address.slice(-6)}
-            </p>
+        <div className="max-w-7xl mx-auto space-y-6">
+          {/* Header */}
+          <div className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-400/10 border border-cyan-400/30">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+              <span className="text-xs font-semibold text-cyan-300">Your Collection</span>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold font-display leading-tight tracking-tight text-white">
+              My NFTs
+              <span className="block text-2xl md:text-3xl font-normal text-[hsl(var(--text-secondary))] mt-2">
+                Manage your exclusive digital assets
+              </span>
+            </h1>
           </div>
         </div>
       </div>
 
-      {/* NFT Grid */}
-      {myNfts.length > 0 ? (
-        <div>
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-lg font-semibold">Your Collection</h2>
-            <span className="text-sm text-muted-foreground">
-              {myNfts.length} {myNfts.length === 1 ? 'item' : 'items'}
-            </span>
-          </div>
-          <div className="grid grid-cols-1 gap-6 justify-items-center sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {myNfts.map((nft) => (
-            <NftCard key={nft.id} nft={nft}>
-              <div className="flex flex-col gap-2 w-full">
-                {nft.isListed ? (
-                  <Button
-                    variant="outline"
-                    className="w-full font-semibold"
-                    size="lg"
-                    onClick={() => handleDelist(nft.id)}
-                    disabled={delistingId === nft.id}
-                  >
-                    <X className="mr-2 h-4 w-4" />
-                    {delistingId === nft.id ? 'Delisting...' : 'Delist'}
-                  </Button>
-                ) : (
-                  <Button
-                    className="w-full font-semibold shadow-sm"
-                    size="lg"
-                    onClick={() => setSelectedNft(nft.id)}
-                  >
-                    <Tag className="mr-2 h-4 w-4" />
-                    List for Sale
-                  </Button>
-                )}
-
-                {!nft.isListed && (
-                  <Button
-                    variant="destructive"
-                    className="w-full font-semibold"
-                    size="lg"
-                    onClick={() => setBurnNftId(nft.id)}
-                  >
-                    <Flame className="mr-2 h-4 w-4" />
-                    Burn NFT
-                  </Button>
-                )}
+      {/* Stats Section */}
+      <div className="px-4 md:px-8 py-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            {/* Total NFTs */}
+            <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-6 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-lg">
+              <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-2xl blur-xl"
+                style={{
+                  background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.1) 0%, transparent 70%)',
+                  pointerEvents: 'none',
+                }}
+              />
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="text-sm font-medium text-[hsl(var(--text-secondary))] mb-2">Total NFTs</p>
+                  <p className="text-3xl md:text-4xl font-bold font-display text-white">{myNfts.length}</p>
+                </div>
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-cyan-400/10 border border-cyan-400/20">
+                  <Package className="h-6 w-6 text-cyan-300" />
+                </div>
               </div>
-            </NftCard>
-          ))}
-        </div>
-        </div>
-      ) : (
-        <div className="flex min-h-[400px] flex-col items-center justify-center rounded-xl border-2 border-dashed bg-muted/30 p-12 text-center">
-          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-muted">
-            <Package className="h-10 w-10 text-muted-foreground/70" />
+            </div>
+
+            {/* Listed Items */}
+            <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-6 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-lg">
+              <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-2xl blur-xl"
+                style={{
+                  background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.1) 0%, transparent 70%)',
+                  pointerEvents: 'none',
+                }}
+              />
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="text-sm font-medium text-[hsl(var(--text-secondary))] mb-2">Listed</p>
+                  <p className="text-3xl md:text-4xl font-bold font-display text-white">{myNfts.filter(n => n.isListed).length}</p>
+                </div>
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-cyan-400/10 border border-cyan-400/20">
+                  <Tag className="h-6 w-6 text-cyan-300" />
+                </div>
+              </div>
+            </div>
+
+            {/* Connected Wallet */}
+            <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-6 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-lg col-span-1 sm:col-span-2 lg:col-span-1">
+              <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-2xl blur-xl"
+                style={{
+                  background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.1) 0%, transparent 70%)',
+                  pointerEvents: 'none',
+                }}
+              />
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-[hsl(var(--text-secondary))] mb-1">Connected Wallet</p>
+                  <p suppressHydrationWarning className="truncate font-mono text-sm font-semibold text-cyan-300">
+                    {account.address.slice(0, 8)}...{account.address.slice(-6)}
+                  </p>
+                </div>
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-cyan-400/10 border border-cyan-400/20 flex-shrink-0">
+                  <Wallet className="h-6 w-6 text-cyan-300" />
+                </div>
+              </div>
+            </div>
           </div>
-          <h2 className="mt-6 text-2xl font-bold">No NFTs Yet</h2>
-          <p className="mt-2 max-w-sm text-muted-foreground">
-            Start building your collection by minting your first NFT
-          </p>
-          <Button className="mt-6" size="lg" onClick={() => window.location.href = '/mint'}>
-            <Sparkles className="mr-2 h-4 w-4" />
-            Mint Your First NFT
-          </Button>
         </div>
-      )}
+      </div>
+
+      {/* Content Section */}
+      <div className="flex-1 px-4 md:px-8 py-8">
+        <div className="max-w-7xl mx-auto">
+          {myNfts.length > 0 ? (
+            <div className="space-y-6 animate-fade-in">
+              {/* Section Header */}
+              <div>
+                <h2 className="text-2xl md:text-3xl font-bold font-display text-white">Your Collection</h2>
+                <p className="text-sm text-[hsl(var(--text-secondary))] mt-1">
+                  {myNfts.length} {myNfts.length === 1 ? 'item' : 'items'} in your wallet
+                </p>
+              </div>
+
+              {/* NFT Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {myNfts.map((nft, index) => (
+                  <div key={nft.id} style={{ animationDelay: `${index * 50}ms` }} className="animate-fade-up">
+                    <NftCard nft={nft}>
+                      <div className="flex flex-col gap-2 w-full">
+                        {nft.isListed ? (
+                          <Button
+                            variant="outline"
+                            className="w-full font-semibold"
+                            size="lg"
+                            onClick={() => handleDelist(nft.id)}
+                            disabled={delistingId === nft.id}
+                          >
+                            <X className="mr-2 h-4 w-4" />
+                            {delistingId === nft.id ? 'Delisting...' : 'Delist'}
+                          </Button>
+                        ) : (
+                          <Button
+                            className="w-full font-semibold"
+                            size="lg"
+                            onClick={() => setSelectedNft(nft.id)}
+                          >
+                            <Tag className="mr-2 h-4 w-4" />
+                            List for Sale
+                          </Button>
+                        )}
+
+                        {!nft.isListed && (
+                          <Button
+                            variant="destructive"
+                            className="w-full font-semibold text-base"
+                            size="lg"
+                            onClick={() => setBurnNftId(nft.id)}
+                          >
+                            <Flame className="mr-2 h-4 w-4" />
+                            Burn NFT
+                          </Button>
+                        )}
+                      </div>
+                    </NftCard>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="flex min-h-[500px] flex-col items-center justify-center rounded-3xl border-2 border-dashed border-white/10 bg-gradient-to-br from-white/3 to-transparent p-12 text-center animate-fade-in">
+              <div className="flex h-24 w-24 items-center justify-center rounded-full bg-cyan-400/10 border border-cyan-400/20 mb-6">
+                <Package className="h-12 w-12 text-cyan-300/50" />
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold font-display text-white">Your Collection is Empty</h2>
+              <p className="mt-3 max-w-md text-[hsl(var(--text-secondary))] text-lg">
+                Start building your NFT portfolio by minting your first exclusive digital asset.
+              </p>
+              <Button 
+                size="lg" 
+                className="mt-8"
+                onClick={() => window.location.href = '/mint'}
+              >
+                <Sparkles className="mr-2 h-5 w-5" />
+                Mint Your First NFT
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
 
       {/* LIST DIALOG */}
       <Dialog open={!!selectedNft} onOpenChange={() => { setSelectedNft(null); setPrice(''); }}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-md rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl">
           <DialogHeader className="space-y-3">
-            <DialogTitle className="text-xl font-bold">List NFT for Sale</DialogTitle>
-            <DialogDescription>
-              Set a price in SUI. The NFT will be transferred into the marketplace contract.
+            <DialogTitle className="text-2xl font-bold font-display text-white">List NFT for Sale</DialogTitle>
+            <DialogDescription className="text-[hsl(var(--text-secondary))]">
+              Set your price in SUI. Your NFT will be transferred to the marketplace contract.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-6 py-4">
             <div className="space-y-3">
-              <Label htmlFor="price" className="text-sm font-semibold">Price (SUI)</Label>
+              <Label htmlFor="price" className="text-sm font-semibold text-white">Price (SUI)</Label>
               <Input
                 id="price"
                 type="number"
@@ -337,18 +464,22 @@ export default function MyNftsPage() {
                 onChange={(e) => setPrice(e.target.value)}
                 min="0.000000001"
                 step="0.1"
-                className="h-11"
                 disabled={isListing}
               />
-              <p className="text-xs text-muted-foreground">A 2% marketplace fee applies on sale.</p>
+              <p className="text-xs text-[hsl(var(--text-secondary))]">💡 A 2% marketplace fee applies on sale.</p>
             </div>
           </div>
           <DialogFooter className="gap-2 sm:gap-0">
-            <Button variant="outline" size="lg" onClick={() => { setSelectedNft(null); setPrice(''); }} disabled={isListing}>
+            <Button variant="ghost-premium" size="lg" onClick={() => { setSelectedNft(null); setPrice(''); }} disabled={isListing}>
               Cancel
             </Button>
             <Button size="lg" onClick={handleList} disabled={isListing || !price || parseFloat(price) <= 0}>
-              {isListing ? 'Listing on Blockchain...' : 'List for Sale'}
+              {isListing ? (
+                <>
+                  <div className="animate-spin mr-2">◆</div>
+                  Listing...
+                </>
+              ) : 'List for Sale'}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -356,20 +487,20 @@ export default function MyNftsPage() {
 
       {/* BURN CONFIRMATION DIALOG */}
       <Dialog open={!!burnNftId} onOpenChange={() => setBurnNftId(null)}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-md rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl">
           <DialogHeader className="space-y-3">
-            <DialogTitle className="text-xl font-bold text-red-600">🔥 Burn NFT?</DialogTitle>
-            <DialogDescription>
-              This will permanently destroy your NFT on the blockchain. This action <strong>cannot be undone</strong>.
+            <DialogTitle className="text-2xl font-bold font-display text-red-500">🔥 Burn NFT?</DialogTitle>
+            <DialogDescription className="text-[hsl(var(--text-secondary))]">
+              This will permanently destroy your NFT on the blockchain. This action <strong className="text-red-400">cannot be undone</strong>.
             </DialogDescription>
           </DialogHeader>
-          <div className="rounded-lg border-2 border-red-300 bg-red-50 p-4 dark:bg-red-950/20 my-2">
-            <p className="text-sm text-red-800 dark:text-red-200">
-              ⚠️ The NFT will be deleted forever. Make sure it is NOT currently listed in the marketplace.
+          <div className="rounded-xl border-2 border-red-500/30 bg-red-500/10 p-4 my-2">
+            <p className="text-sm text-red-300">
+              ⚠️ The NFT will be deleted forever. Ensure it is NOT currently listed in the marketplace.
             </p>
           </div>
           <DialogFooter className="gap-2 sm:gap-0">
-            <Button variant="outline" size="lg" onClick={() => setBurnNftId(null)} disabled={isBurning}>
+            <Button variant="ghost-premium" size="lg" onClick={() => setBurnNftId(null)} disabled={isBurning}>
               Cancel
             </Button>
             <Button variant="destructive" size="lg" onClick={handleBurn} disabled={isBurning}>

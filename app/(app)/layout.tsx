@@ -9,14 +9,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <Providers>
       <SidebarProvider defaultOpen={true}>
-        <div className="flex h-screen w-screen overflow-hidden bg-background">
+        <div className="flex h-screen w-screen overflow-hidden bg-[hsl(var(--background))]">
           <AppSidebar />
-          <SidebarInset className="flex min-w-0 flex-1 flex-col overflow-hidden">
+          <SidebarInset className="flex min-w-0 flex-1 flex-col overflow-hidden bg-[hsl(var(--background))]">
             <AppHeader />
-            <main className="min-h-0 flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
-              <div className="mx-auto w-full max-w-7xl">
-                {children}
-              </div>
+            <main className="min-h-0 flex-1 overflow-y-auto">
+              {children}
             </main>
           </SidebarInset>
         </div>

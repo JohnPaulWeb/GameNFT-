@@ -33,10 +33,6 @@ export default function BurnPage() {
   const { mutate: signAndExecuteTransaction } = useSignAndExecuteTransaction();
   const { burnNft } = useMarketplace();
 
-  // ✅ handleBurn is async so we can await client.getObject() to validate
-  // the NFT exists and is owned by the wallet BEFORE building the transaction.
-  // This converts the cryptic "Expected Object but received Object" SDK error
-  // into a clear, actionable message for the user.
   const handleBurn = async () => {
     if (!nftObjectId.trim()) {
       toast({
@@ -73,15 +69,14 @@ export default function BurnPage() {
       console.log('NETWORK:', CONTRACTS.NETWORK);
       console.log('Burning NFT:', nftObjectId);
 
-      // ─── Step 1: Validate the object on-chain ─────────────────────────────
+      // Validate the object on-chain
       const objectData = await client.getObject({
         id: nftObjectId,
-        options: { showOwner: true, showType: true },
+        options: { showOwner: true, showType: true, showContent: true },
       });
 
       console.log('Object data:', objectData);
 
-      // Object doesn't exist at all
       if (objectData.error || !objectData.data) {
         toast({
           variant: 'destructive',
@@ -92,8 +87,10 @@ export default function BurnPage() {
         return;
       }
 
-      // Check ownership — must be AddressOwner matching the connected wallet
       const owner = objectData.data.owner;
+      const objectType = objectData.data.type;
+
+      // Check ownership
       const isOwnedByWallet =
         owner &&
         typeof owner === 'object' &&
@@ -101,7 +98,6 @@ export default function BurnPage() {
         owner.AddressOwner === account.address;
 
       if (!isOwnedByWallet) {
-        // ObjectOwner means it's wrapped inside another object (e.g. a Listing in the marketplace Bag)
         const isWrapped = owner && typeof owner === 'object' && 'ObjectOwner' in owner;
         toast({
           variant: 'destructive',
@@ -114,13 +110,28 @@ export default function BurnPage() {
         return;
       }
 
-      console.log('Object verified — type:', objectData.data.type, '| owner:', owner);
+      // Verify this is actually an NFT from your contract
+      const expectedNftType = `${CONTRACTS.PACKAGE_ID}::nft_marketplace::NFT`;
+      console.log('Expected type:', expectedNftType);
+      console.log('Actual type:', objectType);
 
-      // ─── Step 2: Build and submit burn transaction ─────────────────────────
-      // entry fun burn(nft: NFT) — concrete type, no typeArguments needed
+      if (objectType !== expectedNftType) {
+        toast({
+          variant: 'destructive',
+          title: 'Invalid NFT Type',
+          description: `This object is not an NFT from this marketplace. Expected type: ${expectedNftType}`,
+        });
+        setIsBurning(false);
+        return;
+      }
+
+      console.log('✅ Object verified — type:', objectType, '| owner:', owner);
+
       const tx = new Transaction();
+      
+      // ✅ CORRECT: No typeArguments needed since burn(nft: NFT) is not generic
       tx.moveCall({
-        target: `${CONTRACTS.PACKAGE_ID}::${CONTRACTS.MODULE_NAME}::burn`,
+        target: `${CONTRACTS.PACKAGE_ID}::nft_marketplace::burn`,
         arguments: [
           tx.object(nftObjectId),
         ],
@@ -130,7 +141,7 @@ export default function BurnPage() {
         { transaction: tx },
         {
           onSuccess: (result: any) => {
-            console.log('Burn successful!', result);
+            console.log('🔥 Burn successful!', result);
 
             burnNft(nftObjectId);
 
@@ -148,11 +159,30 @@ export default function BurnPage() {
             }, 2000);
           },
           onError: (error: any) => {
-            console.error('Burn failed:', error);
+            console.error('❌ Burn failed:', error);
+            
+            let errorMessage = 'Transaction failed';
+            
+            if (error?.message) {
+              const msg = error.message.toLowerCase();
+              
+              if (msg.includes('invalidobjectownership') || msg.includes('not owned')) {
+                errorMessage = 'You do not own this NFT or it is currently listed in the marketplace. Please delist it first.';
+              } else if (msg.includes('objectnotfound')) {
+                errorMessage = 'NFT object not found on chain. Make sure the Object ID is correct.';
+              } else if (msg.includes('insufficient') && msg.includes('gas')) {
+                errorMessage = 'Insufficient gas. Please make sure you have enough SUI in your wallet.';
+              } else if (msg.includes('type')) {
+                errorMessage = 'Incorrect object type - this is not a valid NFT from this marketplace.';
+              } else {
+                errorMessage = error.message;
+              }
+            }
+            
             toast({
               variant: 'destructive',
               title: 'Burn Failed',
-              description: error?.message || error?.toString() || 'Transaction failed',
+              description: errorMessage,
             });
             setIsBurning(false);
           },
@@ -191,7 +221,7 @@ export default function BurnPage() {
             </div>
           )}
         </CardHeader>
-
+        
         <CardContent className="space-y-6">
           {!account && (
             <div className="rounded-lg border-2 border-yellow-500/50 bg-yellow-50 p-4 dark:bg-yellow-950/20">
@@ -210,7 +240,6 @@ export default function BurnPage() {
           )}
 
           <div className="space-y-4">
-            {/* Warning Banner */}
             <div className="rounded-lg border-2 border-red-500/50 bg-red-50 p-4 dark:bg-red-950/20">
               <p className="text-sm font-semibold text-red-900 dark:text-red-100">
                 ⚠️ WARNING: Burning is permanent and cannot be undone!
@@ -220,7 +249,6 @@ export default function BurnPage() {
               </p>
             </div>
 
-            {/* Requirements */}
             <div className="rounded-lg border-2 border-yellow-500/50 bg-yellow-50 p-4 dark:bg-yellow-950/20">
               <p className="text-sm font-semibold text-yellow-900 dark:text-yellow-100">
                 📋 Before burning:
@@ -253,7 +281,6 @@ export default function BurnPage() {
               </p>
             </div>
 
-            {/* Confirmation Checkbox */}
             <div className="flex items-start gap-3 rounded-lg border-2 border-red-300 bg-red-50 p-4 dark:bg-red-950/20">
               <input
                 type="checkbox"

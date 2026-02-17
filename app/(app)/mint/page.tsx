@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useCurrentAccount, useSignAndExecuteTransaction } from '@mysten/dapp-kit';
+import { useCurrentAccount, useSignAndExecuteTransaction, useSuiClient } from '@mysten/dapp-kit';
 import { Sparkles, Wallet } from 'lucide-react';
 import { Transaction } from '@mysten/sui/transactions';
 import { bcs } from '@mysten/sui/bcs';
@@ -32,7 +32,18 @@ export default function MintPage() {
   const account = useCurrentAccount();
   const { toast } = useToast();
   const router = useRouter();
-  const { mutate: signAndExecuteTransaction } = useSignAndExecuteTransaction();
+  const client = useSuiClient();
+  const { mutate: signAndExecuteTransaction } = useSignAndExecuteTransaction({
+    execute: async ({ bytes, signature }) =>
+      client.executeTransactionBlock({
+        transactionBlock: bytes,
+        signature,
+        options: {
+          showEffects: true,        // ✅ Required to get created object IDs
+          showObjectChanges: true,  // ✅ Backup way to get the object ID
+        },
+      }),
+  });
   const { addNft } = useMarketplace();
 
   const handleMint = () => {
@@ -79,20 +90,44 @@ export default function MintPage() {
         {
           onSuccess: (result: any) => {
             console.log('Mint successful! Full result:', result);
+            console.log('effects.created:', result?.effects?.created);
+            console.log('objectChanges:', result?.objectChanges);
 
-            // ✅ Extract the real on-chain Object ID from the transaction result
-            // This is the actual 0x... ID needed for list/delist/burn
-            const objectId =
-              result?.effects?.created?.[0]?.reference?.objectId  // standard location
-              ?? result?.objectChanges?.find(
-                  (c: any) => c.type === 'created' && c.objectType?.includes('NFT')
-                )?.objectId                                        // fallback location
-              ?? result?.digest;                                   // last resort fallback
+            // ✅ Method 1: from effects.created (needs showEffects: true)
+            const fromEffects = result?.effects?.created?.find(
+              (c: any) =>
+                typeof c.owner === 'object' &&
+                'AddressOwner' in c.owner &&
+                c.owner.AddressOwner === account.address
+            )?.reference?.objectId;
 
-            console.log('Minted NFT Object ID:', objectId);
+            // ✅ Method 2: from objectChanges (needs showObjectChanges: true)
+            const fromChanges = result?.objectChanges?.find(
+              (c: any) =>
+                c.type === 'created' &&
+                typeof c.owner === 'object' &&
+                'AddressOwner' in c.owner &&
+                c.owner.AddressOwner === account.address
+            )?.objectId;
+
+            const objectId = fromEffects ?? fromChanges;
+
+            // ❌ Never fall back to digest — it is NOT an Object ID
+            if (!objectId) {
+              console.error('Could not find NFT Object ID. Full result:', JSON.stringify(result, null, 2));
+              toast({
+                variant: 'destructive',
+                title: 'Mint Error',
+                description: 'NFT was minted but could not get its Object ID. Check the console.',
+              });
+              setIsMinting(false);
+              return;
+            }
+
+            console.log('✅ Real NFT Object ID:', objectId);
 
             const newNft = {
-              id: objectId,        // ✅ real on-chain ID — required for burn/list/delist
+              id: objectId,        // ✅ real on-chain 0x... ID — required for burn/list/delist
               name,
               description,
               imageUrl,
@@ -140,145 +175,201 @@ export default function MintPage() {
   };
 
   return (
-    <div className="h-full w-full space-y-6">
-      {/* Header Section */}
-      <div className="space-y-2">
-        <h1 className="text-3xl font-bold tracking-tight">Mint NFT</h1>
-        <p className="text-muted-foreground">
-          Create and mint your NFT directly on the Sui blockchain
-        </p>
-      </div>
+    <div className="w-full min-h-screen flex flex-col bg-[hsl(var(--background))]">
+      {/* Hero Section */}
+      <div className="relative overflow-hidden px-4 md:px-8 py-12 md:py-20">
+        {/* Ambient background glow */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-0 left-1/3 w-96 h-96 rounded-full opacity-10" style={{
+            background: 'radial-gradient(circle, rgba(0, 240, 255, 0.4), transparent)',
+            filter: 'blur(40px)',
+            pointerEvents: 'none',
+          }} />
+        </div>
 
-      {/* Stats/Info Bar */}
-      {account && (
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div className="flex items-center gap-3 rounded-lg border bg-card p-4 shadow-sm">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-              <Wallet className="h-5 w-5 text-primary" />
+        <div className="max-w-4xl mx-auto space-y-6">
+          <div className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-400/10 border border-cyan-400/30">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+              <span className="text-xs font-semibold text-cyan-300">Create & List</span>
             </div>
-            <div className="min-w-0 flex-1">
-              <p className="text-sm font-medium text-muted-foreground">Connected Wallet</p>
-              <p className="truncate font-mono text-sm font-semibold">
-                {account.address.slice(0, 8)}...{account.address.slice(-6)}
-              </p>
-            </div>
-          </div>
-          
-          <div className="flex items-center gap-3 rounded-lg border bg-card p-4 shadow-sm">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/10">
-              <Sparkles className="h-5 w-5 text-accent" />
-            </div>
-            <div>
-              <p className="text-sm font-medium text-muted-foreground">Network</p>
-              <p className="text-sm font-semibold capitalize">{CONTRACTS.NETWORK}</p>
-            </div>
+            <h1 className="text-4xl md:text-6xl font-bold font-display leading-tight tracking-tight text-white">
+              Mint Your
+              <span className="block bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-300 bg-clip-text text-transparent">
+                Exclusive NFT
+              </span>
+            </h1>
+            <p className="text-lg text-[hsl(var(--text-secondary))] max-w-2xl leading-relaxed">
+              Create unique gaming items and list them on our premium marketplace. Owned by you, verified on-chain.
+            </p>
           </div>
         </div>
-      )}
+      </div>
 
-      {/* Mint Form Card */}
-      <Card className="border shadow-md">
-        <CardHeader className="space-y-1 pb-4">
-          <CardTitle className="text-xl font-bold">NFT Details</CardTitle>
-          <CardDescription>
-            Fill in the information below to create your unique NFT
-          </CardDescription>
-        </CardHeader>
+      {/* Content Section */}
+      <div className="flex-1 px-4 md:px-8 py-8">
+        <div className="max-w-4xl mx-auto space-y-8">
+          {/* Info Cards */}
+          {account && (
+            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
+              <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-6 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-lg">
+                <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-2xl blur-xl"
+                  style={{
+                    background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.1) 0%, transparent 70%)',
+                    pointerEvents: 'none',
+                  }}
+                />
+                <div className="flex items-start justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-[hsl(var(--text-secondary))] mb-1">Connected Wallet</p>
+                    <p className="truncate font-mono text-sm font-semibold text-cyan-300">
+                      {account.address.slice(0, 8)}...{account.address.slice(-6)}
+                    </p>
+                  </div>
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-400/10 border border-cyan-400/20">
+                    <Wallet className="h-5 w-5 text-cyan-300" />
+                  </div>
+                </div>
+              </div>
 
-        <CardContent className="space-y-5">
-          {!account && (
-            <div className="rounded-lg border-2 border-yellow-500/50 bg-yellow-50 p-4 dark:bg-yellow-950/20">
-              <div className="flex items-start gap-3">
-                <Wallet className="h-5 w-5 flex-shrink-0 text-yellow-600 dark:text-yellow-500" />
-                <div>
-                  <h3 className="font-semibold text-yellow-900 dark:text-yellow-100">
-                    Wallet Not Connected
-                  </h3>
-                  <p className="mt-1 text-sm text-yellow-800 dark:text-yellow-200">
-                    Please connect your wallet using the button in the header to mint NFTs.
-                  </p>
+              <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-6 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-lg">
+                <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-2xl blur-xl"
+                  style={{
+                    background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.1) 0%, transparent 70%)',
+                    pointerEvents: 'none',
+                  }}
+                />
+                <div className="flex items-start justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-[hsl(var(--text-secondary))] mb-1">Network</p>
+                    <p className="text-sm font-semibold text-white capitalize">{CONTRACTS.NETWORK}</p>
+                  </div>
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-400/10 border border-cyan-400/20">
+                    <Sparkles className="h-5 w-5 text-cyan-300" />
+                  </div>
                 </div>
               </div>
             </div>
           )}
 
-          <div className="space-y-5">
-            <div className="space-y-2">
-              <Label htmlFor="name" className="font-semibold">NFT Name *</Label>
-              <Input
-                id="name"
-                placeholder="e.g., Legendary Sword"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                disabled={isMinting || !account}
-                className="h-11"
-              />
+          {/* Main Form Card */}
+          <div className="group relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl overflow-hidden">
+            <div className="absolute -inset-px opacity-0 group-hover:opacity-20 transition-opacity duration-300 -z-10 rounded-3xl blur-xl"
+              style={{
+                background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.1) 0%, transparent 70%)',
+                pointerEvents: 'none',
+              }}
+            />
+
+            <div className="p-8 md:p-12 space-y-8">
+              {/* Header */}
+              <div className="space-y-2">
+                <h2 className="text-3xl md:text-4xl font-bold font-display text-white">NFT Details</h2>
+                <p className="text-[hsl(var(--text-secondary))]">Fill in the information below to create your unique NFT</p>
+              </div>
+
+              {!account && (
+                <div className="rounded-xl border-2 border-cyan-400/50 bg-gradient-to-r from-cyan-500/10 to-transparent p-6">
+                  <div className="flex items-start gap-4">
+                    <Wallet className="h-6 w-6 flex-shrink-0 text-cyan-400 mt-0.5" />
+                    <div>
+                      <h3 className="font-semibold text-cyan-100 text-lg">
+                        Wallet Not Connected
+                      </h3>
+                      <p className="mt-2 text-sm text-cyan-200/80">
+                        Please connect your wallet using the button in the header to mint NFTs on the Sui blockchain.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <div className="space-y-6">
+                {/* Name Input */}
+                <div className="space-y-2">
+                  <Label htmlFor="name" className="font-semibold text-white">NFT Name *</Label>
+                  <Input
+                    id="name"
+                    placeholder="e.g., Legendary Sword"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    disabled={isMinting || !account}
+                    className="h-12 rounded-lg border border-white/10 bg-white/5 backdrop-blur-sm text-white placeholder:text-white/40 focus:border-cyan-400/50 focus:ring-0"
+                  />
+                </div>
+
+                {/* Description Input */}
+                <div className="space-y-2">
+                  <Label htmlFor="description" className="font-semibold text-white">Description *</Label>
+                  <Textarea
+                    id="description"
+                    placeholder="Describe your NFT's special features and attributes..."
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    disabled={isMinting || !account}
+                    rows={4}
+                    className="resize-none rounded-lg border border-white/10 bg-white/5 backdrop-blur-sm text-white placeholder:text-white/40 focus:border-cyan-400/50 focus:ring-0"
+                  />
+                </div>
+
+                {/* Image URL Input */}
+                <div className="space-y-2">
+                  <Label htmlFor="imageUrl" className="font-semibold text-white">Image URL *</Label>
+                  <Input
+                    id="imageUrl"
+                    type="url"
+                    placeholder="https://example.com/your-nft-image.png"
+                    value={imageUrl}
+                    onChange={(e) => setImageUrl(e.target.value)}
+                    disabled={isMinting || !account}
+                    className="h-12 rounded-lg border border-white/10 bg-white/5 backdrop-blur-sm text-white placeholder:text-white/40 focus:border-cyan-400/50 focus:ring-0"
+                  />
+                  <p className="text-xs text-[hsl(var(--text-secondary))]">
+                    Provide a direct URL to your NFT image (supports PNG, JPG, GIF, WebP)
+                  </p>
+                </div>
+
+                {/* Blockchain Info */}
+                <div className="rounded-xl border border-cyan-400/20 bg-cyan-400/5 p-4">
+                  <p className="text-sm text-white">
+                    <strong className="text-cyan-300">On-Chain Verification:</strong>{' '}
+                    <span className="text-[hsl(var(--text-secondary))]">
+                      Your NFT will be minted on Sui {CONTRACTS.NETWORK}. Gas fees will apply.
+                    </span>
+                  </p>
+                </div>
+              </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="description" className="font-semibold">Description *</Label>
-              <Textarea
-                id="description"
-                placeholder="Describe your NFT's special features and attributes..."
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                disabled={isMinting || !account}
-                rows={4}
-                className="resize-none"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="imageUrl" className="font-semibold">Image URL *</Label>
-              <Input
-                id="imageUrl"
-                type="url"
-                placeholder="https://example.com/your-nft-image.png"
-                value={imageUrl}
-                onChange={(e) => setImageUrl(e.target.value)}
-                disabled={isMinting || !account}
-                className="h-11"
-              />
-              <p className="text-xs text-muted-foreground">
-                Provide a direct URL to your NFT image (supports PNG, JPG, GIF)
-              </p>
-            </div>
-
-            <div className="rounded-lg border-2 border-primary/20 bg-primary/5 p-4">
-              <p className="text-sm">
-                <strong className="text-foreground">Blockchain Details:</strong>{' '}
-                <span className="text-muted-foreground">
-                  Your NFT will be minted on Sui{' '}
-                {CONTRACTS.NETWORK}. Gas fees will be required.
-                </span>
-              </p>
+            {/* Footer */}
+            <div className="border-t border-white/10 bg-gradient-to-t from-white/5 to-transparent p-8 md:p-12">
+              <Button
+                className="w-full font-semibold text-lg h-12"
+                size="lg"
+                onClick={handleMint}
+                disabled={isMinting || !name.trim() || !description.trim() || !imageUrl.trim() || !account}
+              >
+                {isMinting ? (
+                  <>
+                    <div className="animate-spin mr-2">◆</div>
+                    Minting on Blockchain...
+                  </>
+                ) : !account ? (
+                  <>
+                    <Wallet className="mr-2 h-5 w-5" />
+                    Connect Wallet to Mint
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="mr-2 h-5 w-5" />
+                    Mint NFT on Sui
+                  </>
+                )}
+              </Button>
             </div>
           </div>
-        </CardContent>
-
-        <CardFooter className="border-t bg-muted/30 pt-6">
-          <Button
-            className="w-full font-semibold shadow-md"
-            size="lg"
-            onClick={handleMint}
-            disabled={isMinting || !name.trim() || !description.trim() || !imageUrl.trim() || !account}
-          >
-            {isMinting ? (
-              'Minting on Blockchain...'
-            ) : !account ? (
-              <>
-                <Wallet className="mr-2 h-4 w-4" />
-                Connect Wallet to Mint
-              </>
-            ) : (
-              <>
-                <Sparkles className="mr-2 h-4 w-4" />
-                Mint NFT on Sui
-              </>
-            )}
-          </Button>
-        </CardFooter>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

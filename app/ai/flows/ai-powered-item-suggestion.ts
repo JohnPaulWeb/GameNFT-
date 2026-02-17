@@ -55,8 +55,8 @@ export async function aiPoweredItemSuggestion(
 
 const prompt = ai.definePrompt({
   name: 'aiPoweredItemSuggestionPrompt',
-  input: {schema: AIPoweredItemSuggestionInputSchema},
-  output: {schema: AIPoweredItemSuggestionOutputSchema},
+  input: { schema: AIPoweredItemSuggestionInputSchema },
+  output: { schema: AIPoweredItemSuggestionOutputSchema },
   prompt: `You are an AI assistant specializing in advising users on the most profitable items to mint and sell in the SuiPlay Marketplace.
 
   Analyze the provided market data, user inventory, and SUI account balance to determine the best item to mint and sell. Provide the estimated profit, reasoning behind the suggestion, and an assessment of whether the suggestion would be profitable to the user.
@@ -74,12 +74,9 @@ const prompt = ai.definePrompt({
 const aiPoweredItemSuggestionFlow = ai.defineFlow(
   {
     name: 'aiPoweredItemSuggestionFlow',
-    inputSchema: AIPoweredItemSuggestionInputSchema,
-    outputSchema: AIPoweredItemSuggestionOutputSchema,
   },
-  async (input: AIPoweredItemSuggestionInput) => {
+  async (input: AIPoweredItemSuggestionInput): Promise<AIPoweredItemSuggestionOutput> => {
     const {output} = await prompt(input);
     return output!;
   }
-  
 );

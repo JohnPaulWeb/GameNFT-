@@ -1,18 +1,44 @@
 import { AIAdvisorClient } from '@/app/components/ai-advisor-client';
-import { Card, CardContent } from '@/app/components/ui/card';
 
 export default function AIAdvisorPage() {
   return (
-    <div className="h-full w-full space-y-6">
-      {/* Header Section */}
-      <div className="space-y-2">
-        <h1 className="text-3xl font-bold tracking-tight">AI Advisor</h1>
-        <p className="text-muted-foreground">
-          Get intelligent recommendations for your NFT trading strategy
-        </p>
+    <div className="w-full min-h-screen flex flex-col bg-[hsl(var(--background))]">
+      {/* Hero Section */}
+      <div className="relative overflow-hidden px-4 md:px-8 py-12 md:py-20">
+        {/* Ambient background glow */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-0 left-1/3 w-96 h-96 rounded-full opacity-10" style={{
+            background: 'radial-gradient(circle, rgba(0, 240, 255, 0.4), transparent)',
+            filter: 'blur(40px)',
+            pointerEvents: 'none',
+          }} />
+        </div>
+
+        <div className="max-w-4xl mx-auto space-y-6">
+          <div className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-400/10 border border-cyan-400/30">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+              <span className="text-xs font-semibold text-cyan-300">AI-Powered Insights</span>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold font-display leading-tight tracking-tight text-white">
+              AI Advisor
+              <span className="block bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-300 bg-clip-text text-transparent">
+                Smart Trading Intelligence
+              </span>
+            </h1>
+            <p className="text-lg text-[hsl(var(--text-secondary))] max-w-2xl leading-relaxed">
+              Leverage AI-powered analysis to optimize your NFT trading strategy and maximize returns.
+            </p>
+          </div>
+        </div>
       </div>
-      
-      <AIAdvisorClient />
+
+      {/* Content Section */}
+      <div className="flex-1 px-4 md:px-8 py-8">
+        <div className="max-w-6xl mx-auto">
+          <AIAdvisorClient />
+        </div>
+      </div>
     </div>
   );
 }
