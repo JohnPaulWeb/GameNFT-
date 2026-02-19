@@ -5,7 +5,7 @@ import './globals.css';
 import { Providers } from '@/app/components/providers';
 
 export const metadata: Metadata = {
-  title: 'SuiPlay Marketplace - Premium NFT Trading',
+  title: 'SuiPlay Marketplace',
   description: 'Mint and trade game item NFTs on the SUI blockchain. A world-class Web3 marketplace experience.',
 };
 

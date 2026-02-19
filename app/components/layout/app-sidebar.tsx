@@ -99,7 +99,7 @@ export function AppSidebar() {
             </span>
           </div>
         </div>
-        <Button variant="ghost-premium" size="icon" className="ml-auto h-9 w-9" onClick={() => disconnect()}>
+        <Button variant="ghost" size="icon" className="ml-auto h-9 w-9" onClick={() => disconnect()}>
           <LogOut className="size-4" />
         </Button>
       </div>

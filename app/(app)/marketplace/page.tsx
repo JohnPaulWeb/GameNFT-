@@ -392,10 +392,10 @@ export default function MarketplacePage() {
                         name: listing.name,
                         description: listing.description,
                         imageUrl: listing.imageUrl,
+                        imageHint: listing.name,
                         owner: listing.seller,
                         isListed: true,
                         price: listing.price,
-                        rarity: 'common',
                       }}
                     >
                       <Button

@@ -131,7 +131,7 @@ export default function MyNftsPage() {
       // ✅ Float-safe conversion from SUI to MIST (1 SUI = 1,000,000,000 MIST)
       const [whole = '0', frac = ''] = price.trim().split('.');
       const fracPadded = frac.padEnd(9, '0').slice(0, 9);
-      const priceInMist = BigInt(whole) * 1_000_000_000n + BigInt(fracPadded);
+      const priceInMist = BigInt(whole) * BigInt('1000000000') + BigInt(fracPadded);
 
       console.log('Price in MIST:', priceInMist.toString());
 
@@ -470,7 +470,7 @@ export default function MyNftsPage() {
             </div>
           </div>
           <DialogFooter className="gap-2 sm:gap-0">
-            <Button variant="ghost-premium" size="lg" onClick={() => { setSelectedNft(null); setPrice(''); }} disabled={isListing}>
+            <Button variant="ghost" size="lg" onClick={() => { setSelectedNft(null); setPrice(''); }} disabled={isListing}>
               Cancel
             </Button>
             <Button size="lg" onClick={handleList} disabled={isListing || !price || parseFloat(price) <= 0}>
@@ -500,7 +500,7 @@ export default function MyNftsPage() {
             </p>
           </div>
           <DialogFooter className="gap-2 sm:gap-0">
-            <Button variant="ghost-premium" size="lg" onClick={() => setBurnNftId(null)} disabled={isBurning}>
+            <Button variant="ghost" size="lg" onClick={() => setBurnNftId(null)} disabled={isBurning}>
               Cancel
             </Button>
             <Button variant="destructive" size="lg" onClick={handleBurn} disabled={isBurning}>
