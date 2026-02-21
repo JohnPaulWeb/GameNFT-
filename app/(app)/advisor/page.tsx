@@ -2,16 +2,26 @@ import { AIAdvisorClient } from '@/app/components/ai-advisor-client';
 
 export default function AIAdvisorPage() {
   return (
-    <div className="w-full min-h-screen flex flex-col bg-[hsl(var(--background))]">
+    <div className="w-full min-h-screen flex flex-col relative">
       {/* Hero Section */}
       <div className="relative overflow-hidden px-4 md:px-8 py-12 md:py-20">
-        {/* Ambient background glow */}
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute top-0 left-1/3 w-96 h-96 rounded-full opacity-10" style={{
-            background: 'radial-gradient(circle, rgba(0, 240, 255, 0.4), transparent)',
-            filter: 'blur(40px)',
-            pointerEvents: 'none',
-          }} />
+        {/* Animated gradient overlay */}
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <div 
+            className="absolute top-0 left-1/2 w-[600px] h-[600px] rounded-full opacity-20 blur-3xl"
+            style={{
+              background: 'radial-gradient(circle, rgba(99, 102, 241, 0.5), rgba(16, 240, 252, 0.3), transparent)',
+              animation: 'aurora 18s ease-in-out infinite',
+            }} 
+          />
+          <div 
+            className="absolute top-1/4 right-1/3 w-96 h-96 rounded-full opacity-15 blur-3xl"
+            style={{
+              background: 'radial-gradient(circle, rgba(187, 100, 253, 0.4), transparent)',
+              animation: 'glow-pulse 14s ease-in-out infinite',
+              animationDelay: '3s',
+            }} 
+          />
         </div>
 
         <div className="max-w-4xl mx-auto space-y-6">

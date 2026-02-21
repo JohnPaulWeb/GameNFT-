@@ -175,16 +175,26 @@ export default function MintPage() {
   };
 
   return (
-    <div className="w-full min-h-screen flex flex-col bg-[hsl(var(--background))]">
+    <div className="w-full min-h-screen flex flex-col relative">
       {/* Hero Section */}
       <div className="relative overflow-hidden px-4 md:px-8 py-12 md:py-20">
-        {/* Ambient background glow */}
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute top-0 left-1/3 w-96 h-96 rounded-full opacity-10" style={{
-            background: 'radial-gradient(circle, rgba(0, 240, 255, 0.4), transparent)',
-            filter: 'blur(40px)',
-            pointerEvents: 'none',
-          }} />
+        {/* Animated gradient overlay */}
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <div 
+            className="absolute top-0 left-1/3 w-96 h-96 rounded-full opacity-20 blur-3xl"
+            style={{
+              background: 'radial-gradient(circle, rgba(0, 240, 255, 0.5), rgba(99, 102, 241, 0.3), transparent)',
+              animation: 'glow-pulse 8s ease-in-out infinite',
+            }} 
+          />
+          <div 
+            className="absolute top-1/4 right-1/4 w-72 h-72 rounded-full opacity-15 blur-3xl"
+            style={{
+              background: 'radial-gradient(circle, rgba(236, 72, 153, 0.4), transparent)',
+              animation: 'aurora 12s ease-in-out infinite',
+              animationDelay: '2s',
+            }} 
+          />
         </div>
 
         <div className="max-w-4xl mx-auto space-y-6">
@@ -194,9 +204,9 @@ export default function MintPage() {
               <span className="text-xs font-semibold text-cyan-300">Create & List</span>
             </div>
             <h1 className="text-4xl md:text-6xl font-bold font-display leading-tight tracking-tight text-white">
-              Mint Your
+              Mint Your Want
               <span className="block bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-300 bg-clip-text text-transparent">
-                Exclusive NFT
+                SuiPlay |  NFT
               </span>
             </h1>
             <p className="text-lg text-[hsl(var(--text-secondary))] max-w-2xl leading-relaxed">
@@ -253,7 +263,7 @@ export default function MintPage() {
           )}
 
           {/* Main Form Card */}
-          <div className="group relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl overflow-hidden">
+          <div className="group relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl">
             <div className="absolute -inset-px opacity-0 group-hover:opacity-20 transition-opacity duration-300 -z-10 rounded-3xl blur-xl"
               style={{
                 background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.1) 0%, transparent 70%)',
@@ -277,13 +287,13 @@ export default function MintPage() {
                         Wallet Not Connected
                       </h3>
                       <p className="mt-2 text-sm text-cyan-200/80">
-                        Please connect your wallet using the button in the header to mint NFTs on the Sui blockchain.
+                        Please connect your Sui wallet using the button in the header to mint NFTs on the Sui blockchain.
                       </p>
                     </div>
                   </div>
                 </div>
               )}
-
+        
               <div className="space-y-6">
                 {/* Name Input */}
                 <div className="space-y-2">
@@ -325,11 +335,11 @@ export default function MintPage() {
                     className="h-12 rounded-lg border border-white/10 bg-white/5 backdrop-blur-sm text-white placeholder:text-white/40 focus:border-cyan-400/50 focus:ring-0"
                   />
                   <p className="text-xs text-[hsl(var(--text-secondary))]">
-                    Provide a direct URL to your NFT image (supports PNG, JPG, GIF, WebP)
+                    Provide a direct URL to your NFT images (supports PNG, JPG, GIF, WebP)
                   </p>
                 </div>
 
-                {/* Blockchain Info */}
+                {/* Ito yung blockchain info  */}
                 <div className="rounded-xl border border-cyan-400/20 bg-cyan-400/5 p-4">
                   <p className="text-sm text-white">
                     <strong className="text-cyan-300">On-Chain Verification:</strong>{' '}
@@ -341,7 +351,7 @@ export default function MintPage() {
               </div>
             </div>
 
-            {/* Footer */}
+            {/* ito yung footer */}
             <div className="border-t border-white/10 bg-gradient-to-t from-white/5 to-transparent p-8 md:p-12">
               <Button
                 className="w-full font-semibold text-lg h-12"

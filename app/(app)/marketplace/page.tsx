@@ -94,6 +94,7 @@ export default function MarketplacePage() {
             id: item.nftId,
             options: { showContent: true, showOwner: true, showType: true },
           });
+        
 
           console.log(`NFT ${item.nftId} owner:`, nftObject.data?.owner);
 
@@ -237,18 +238,28 @@ export default function MarketplacePage() {
   };
 
   return (
-    <div className="w-full min-h-screen flex flex-col bg-[hsl(var(--background))]">
+    <div className="w-full min-h-screen flex flex-col relative">
       {/* Hero Section */}
       <div className="relative overflow-hidden px-4 md:px-8 py-12 md:py-20">
-        {/* Ambient background glow */}
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute top-0 left-1/3 w-96 h-96 rounded-full opacity-10" style={{
-            background: 'radial-gradient(circle, rgba(0, 240, 255, 0.4), transparent)',
-            filter: 'blur(40px)',
-            pointerEvents: 'none',
-          }} />
+        {/* Animated gradient overlay */}
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <div 
+            className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full opacity-20 blur-3xl"
+            style={{
+              background: 'radial-gradient(circle, rgba(16, 240, 252, 0.5), rgba(99, 102, 241, 0.3), transparent)',
+              animation: 'aurora 15s ease-in-out infinite',
+            }} 
+          />
+          <div 
+            className="absolute top-1/3 right-1/4 w-96 h-96 rounded-full opacity-15 blur-3xl"
+            style={{
+              background: 'radial-gradient(circle, rgba(245, 158, 11, 0.4), rgba(236, 72, 153, 0.2), transparent)',
+              animation: 'glow-pulse 10s ease-in-out infinite',
+              animationDelay: '3s',
+            }} 
+          />
         </div>
-
+        
         <div className="max-w-7xl mx-auto space-y-6">
           {/* Header with title and refresh */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -258,7 +269,7 @@ export default function MarketplacePage() {
                 <span className="text-xs font-semibold text-cyan-300">Live Marketplace</span>
               </div>
               <h1 className="text-4xl md:text-6xl font-bold font-display leading-tight tracking-tight text-white">
-                Premium NFT
+                Makerspace | Innovhub 
                 <span className="block bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-300 bg-clip-text text-transparent">
                   Marketplace
                 </span>
@@ -267,6 +278,8 @@ export default function MarketplacePage() {
                 Discover, mint, and trade exclusive gaming NFTs on the Sui blockchain. Experience premium Web3 trading.
               </p>
             </div>
+
+            {/* ito yung button  */}
             <Button
               variant="outline"
               size="lg"

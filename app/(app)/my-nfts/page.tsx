@@ -243,7 +243,7 @@ export default function MyNftsPage() {
 
   if (!account) {
     return (
-      <div className="w-full min-h-screen flex flex-col bg-[hsl(var(--background))]">
+      <div className="w-full min-h-screen flex flex-col relative">
         <div className="flex-1 flex items-center justify-center px-4">
           <div className="text-center space-y-6 max-w-md">
             <div className="flex justify-center">
@@ -269,16 +269,26 @@ export default function MyNftsPage() {
   }
 
   return (
-    <div className="w-full min-h-screen flex flex-col bg-[hsl(var(--background))]">
+    <div className="w-full min-h-screen flex flex-col relative">
       {/* Hero Section */}
       <div className="relative overflow-hidden px-4 md:px-8 py-12 md:py-20">
-        {/* Ambient background glow */}
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute top-0 left-1/3 w-96 h-96 rounded-full opacity-10" style={{
-            background: 'radial-gradient(circle, rgba(0, 240, 255, 0.4), transparent)',
-            filter: 'blur(40px)',
-            pointerEvents: 'none',
-          }} />
+        {/* Animated gradient overlay */}
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <div 
+            className="absolute top-0 right-1/4 w-[450px] h-[450px] rounded-full opacity-20 blur-3xl"
+            style={{
+              background: 'radial-gradient(circle, rgba(99, 102, 241, 0.5), rgba(16, 240, 252, 0.3), transparent)',
+              animation: 'glow-pulse 12s ease-in-out infinite',
+            }} 
+          />
+          <div 
+            className="absolute top-1/3 left-1/4 w-80 h-80 rounded-full opacity-15 blur-3xl"
+            style={{
+              background: 'radial-gradient(circle, rgba(16, 185, 129, 0.4), transparent)',
+              animation: 'aurora 16s ease-in-out infinite',
+              animationDelay: '4s',
+            }} 
+          />
         </div>
 
         <div className="max-w-7xl mx-auto space-y-6">
