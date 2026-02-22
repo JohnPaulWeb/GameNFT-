@@ -27,21 +27,31 @@ export function NftCard({ nft, children, className }: NftCardProps) {
       className={cn(
         'group relative flex h-full w-full flex-col overflow-hidden rounded-2xl',
         'border border-white/10 bg-gradient-to-br from-white/5 to-transparent',
-        'backdrop-blur-xl transition-all duration-300',
-        'hover:border-cyan-400/60 hover:shadow-lg',
+        'backdrop-blur-xl transition-all duration-500 ease-out',
+        'hover:border-cyan-400/60 hover:shadow-2xl hover:shadow-cyan-400/20',
+        'hover:-translate-y-2 hover:scale-[1.02]',
         'animate-fade-up',
         className
       )}
     >
-      {/* Ambient glow effect */}
-      <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-2xl blur-xl"
+      {/* Enhanced ambient glow effect */}
+      <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 rounded-2xl blur-2xl"
         style={{
-          background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.2) 0%, transparent 70%)',
+          background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.3) 0%, rgba(99, 102, 241, 0.2) 50%, transparent 70%)',
           pointerEvents: 'none',
         }}
       />
       
-      {/* Image container with glow */}
+      {/* Corner accent glow */}
+      <div className="absolute top-0 right-0 w-32 h-32 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"
+        style={{
+          background: 'radial-gradient(circle at top right, rgba(16, 240, 252, 0.2), transparent 70%)',
+          pointerEvents: 'none',
+          filter: 'blur(30px)',
+        }}
+      />
+      
+      {/* Image container with enhanced glow */}
       <div className="relative aspect-square w-full flex-shrink-0 overflow-hidden bg-gradient-to-br from-white/5 to-white/[0.02]">
         {/* Loading shimmer */}
         {!imageLoaded && (
@@ -53,8 +63,8 @@ export function NftCard({ nft, children, className }: NftCardProps) {
           alt={nft.name}
           fill
           className={cn(
-            'object-cover transition-all duration-500 ease-out',
-            'group-hover:scale-110 group-hover:brightness-110',
+            'object-cover transition-all duration-700 ease-out',
+            'group-hover:scale-[1.15] group-hover:brightness-110 group-hover:saturate-110',
             imageLoaded ? 'opacity-100' : 'opacity-0'
           )}
           data-ai-hint={nft.imageHint}
@@ -64,13 +74,22 @@ export function NftCard({ nft, children, className }: NftCardProps) {
           onLoadingComplete={() => setImageLoaded(true)}
         />
         
-        {/* Gradient overlay for depth */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        {/* Enhanced gradient overlay for depth */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
         
-        {/* Glow border on hover */}
-        <div className="absolute inset-0 rounded-2xl border border-cyan-400/0 group-hover:border-cyan-400/30 transition-all duration-300"
+        {/* Animated glow border on hover */}
+        <div className="absolute inset-0 rounded-t-2xl border-2 border-cyan-400/0 group-hover:border-cyan-400/40 transition-all duration-500"
           style={{
-            boxShadow: 'inset 0 0 20px rgba(0, 240, 255, 0.1)',
+            boxShadow: '0 0 0 rgba(0, 240, 255, 0)',
+          }}
+        />
+        
+        {/* Shine effect on hover */}
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+          style={{
+            background: 'linear-gradient(135deg, transparent 40%, rgba(255, 255, 255, 0.1) 50%, transparent 60%)',
+            transform: 'translateX(-100%)',
+            animation: 'shine 2s ease-in-out infinite',
           }}
         />
       </div>

@@ -14,6 +14,7 @@ export default function AIAdvisorPage() {
               animation: 'aurora 18s ease-in-out infinite',
             }} 
           />
+          
           <div 
             className="absolute top-1/4 right-1/3 w-96 h-96 rounded-full opacity-15 blur-3xl"
             style={{

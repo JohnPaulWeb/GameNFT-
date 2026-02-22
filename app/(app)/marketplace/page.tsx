@@ -10,6 +10,7 @@ import { Button } from '@/app/components/ui/button';
 import { NftCard } from '@/app/components/nft-card';
 import { useToast } from '@/app/hooks/use-toast';
 import { CONTRACTS } from '@/app/components/contracts';
+import { LoadingState } from '@/app/components/ui/loading-spinner';
 
 interface ListedNFT {
   listingId: string;
@@ -369,20 +370,7 @@ export default function MarketplacePage() {
       <div className="flex-1 px-4 md:px-8 py-8">
         <div className="max-w-7xl mx-auto">
           {isLoading ? (
-            <div className="flex min-h-[500px] items-center justify-center">
-              <div className="text-center space-y-4">
-                <div className="flex justify-center">
-                  <div className="relative h-16 w-16">
-                    <div className="absolute inset-0 rounded-full border-2 border-white/10" />
-                    <div className="absolute inset-0 rounded-full border-t-2 border-cyan-400 animate-spin" />
-                  </div>
-                </div>
-                <div>
-                  <p className="text-lg text-white font-semibold">Loading Marketplace</p>
-                  <p className="text-sm text-[hsl(var(--text-secondary))] mt-1">Querying blockchain...</p>
-                </div>
-              </div>
-            </div>
+            <LoadingState message="Loading Marketplace" submessage="Querying blockchain..." />
           ) : listings.length > 0 ? (
             <div className="space-y-6 animate-fade-in">
               {/* Section Header */}
