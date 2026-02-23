@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
+import { Flame, TrendingUp, Award } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -58,6 +59,32 @@ export function NftCard({ nft, children, className }: NftCardProps) {
           <div className="absolute inset-0 shimmer" />
         )}
         
+        {/* Trending Badge (Top Right) */}
+        {nft.isListed && (
+          <div className="absolute top-3 right-3 z-10">
+            <div className="px-2.5 py-1 rounded-lg backdrop-blur-xl bg-gradient-to-r from-cyan-500/90 to-cyan-600/90 border border-cyan-400/50 shadow-lg shadow-cyan-400/25 flex items-center gap-1.5">
+              <TrendingUp className="h-3.5 w-3.5 text-white" />
+              <span className="text-xs font-bold text-white">Listed</span>
+            </div>
+          </div>
+        )}
+        
+        {/* Rarity Badge (Top Left) */}
+        {nft.rarity && (
+          <div className="absolute top-3 left-3 z-10">
+            <div className={cn(
+              "px-2.5 py-1 rounded-lg backdrop-blur-xl border shadow-lg flex items-center gap-1.5",
+              nft.rarity === 'legendary' && "bg-gradient-to-r from-amber-500/90 to-orange-600/90 border-amber-400/50 shadow-amber-400/25",
+              nft.rarity === 'epic' && "bg-gradient-to-r from-purple-500/90 to-purple-600/90 border-purple-400/50 shadow-purple-400/25",
+              nft.rarity === 'rare' && "bg-gradient-to-r from-blue-500/90 to-blue-600/90 border-blue-400/50 shadow-blue-400/25",
+              nft.rarity === 'common' && "bg-gradient-to-r from-slate-500/90 to-slate-600/90 border-slate-400/50 shadow-slate-400/25"
+            )}>
+              <Award className="h-3.5 w-3.5 text-white" />
+              <span className="text-xs font-bold text-white capitalize">{nft.rarity}</span>
+            </div>
+          </div>
+        )}
+        
         <Image
           src={nft.imageUrl}
           alt={nft.name}
@@ -107,9 +134,17 @@ export function NftCard({ nft, children, className }: NftCardProps) {
       
       <CardContent className="flex-grow pb-3">
         {nft.isListed && nft.price ? (
-          <div className="flex items-center justify-between rounded-xl bg-gradient-to-r from-cyan-500/10 to-transparent p-3 border border-cyan-400/20 group-hover:border-cyan-400/40 transition-colors">
-            <span className="text-xs font-medium text-[hsl(var(--text-secondary))]">Price</span>
-            <div className="flex items-baseline gap-1.5">
+          <div className="relative overflow-hidden flex items-center justify-between rounded-xl bg-gradient-to-r from-cyan-500/10 to-transparent p-3 border border-cyan-400/20 group-hover:border-cyan-400/40 transition-colors">
+            {/* Animated shimmer on hover */}
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              style={{
+                background: 'linear-gradient(90deg, transparent 0%, rgba(0, 240, 255, 0.1) 50%, transparent 100%)',
+                backgroundSize: '200% 100%',
+                animation: 'shimmer 2s ease-in-out infinite',
+              }}
+            />
+            <span className="text-xs font-medium text-[hsl(var(--text-secondary))] z-10">Price</span>
+            <div className="flex items-baseline gap-1.5 z-10">
               <span className="text-2xl md:text-3xl font-bold text-cyan-300 font-display">
                 {nft.price}
               </span>

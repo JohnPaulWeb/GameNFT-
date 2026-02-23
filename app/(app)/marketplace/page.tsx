@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useCurrentAccount, useSignAndExecuteTransaction, useSuiClient } from '@mysten/dapp-kit';
-import { ShoppingCart, Wallet, TrendingUp, Package, RefreshCw } from 'lucide-react';
+import { ShoppingCart, Wallet, TrendingUp, Package, RefreshCw, Search, SlidersHorizontal, Grid3x3, LayoutGrid, Sparkles } from 'lucide-react';
 import { Transaction } from '@mysten/sui/transactions';
 import { bcs } from '@mysten/sui/bcs';
 
@@ -11,6 +11,7 @@ import { NftCard } from '@/app/components/nft-card';
 import { useToast } from '@/app/hooks/use-toast';
 import { CONTRACTS } from '@/app/components/contracts';
 import { LoadingState } from '@/app/components/ui/loading-spinner';
+import { NftGridSkeleton } from '@/app/components/ui/nft-skeleton';
 
 interface ListedNFT {
   listingId: string;
@@ -27,6 +28,9 @@ export default function MarketplacePage() {
   const [listings, setListings] = useState<ListedNFT[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [buyingId, setBuyingId] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState<'newest' | 'price-low' | 'price-high'>('newest');
+  const [gridView, setGridView] = useState<'comfortable' | 'compact'>('comfortable');
 
   const account = useCurrentAccount();
   const client = useSuiClient();
@@ -270,17 +274,17 @@ export default function MarketplacePage() {
                 <span className="text-xs font-semibold text-cyan-300">Live Marketplace</span>
               </div>
               <h1 className="text-4xl md:text-6xl font-bold font-display leading-tight tracking-tight text-white">
-                Makerspace | Innovhub 
-                <span className="block bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-300 bg-clip-text text-transparent">
-                  Marketplace
+                <span className="block text-2xl md:text-3xl font-normal text-[hsl(var(--text-secondary))] mb-2">Makerspace Innovhub</span>
+                <span className="bg-gradient-to-r from-cyan-300 via-cyan-400 to-indigo-400 bg-clip-text text-transparent">
+                  NFT Marketplace
                 </span>
               </h1>
               <p className="text-lg text-[hsl(var(--text-secondary))] max-w-2xl leading-relaxed">
-                Discover, mint, and trade exclusive gaming NFTs on the Sui blockchain. Experience premium Web3 trading.
+                Discover, collect, and trade exclusive digital assets on the Sui blockchain
               </p>
             </div>
 
-            {/* ito yung button  */}
+            {/* ito yung button for Loading   */}
             <Button
               variant="outline"
               size="lg"
@@ -370,21 +374,88 @@ export default function MarketplacePage() {
       <div className="flex-1 px-4 md:px-8 py-8">
         <div className="max-w-7xl mx-auto">
           {isLoading ? (
-            <LoadingState message="Loading Marketplace" submessage="Querying blockchain..." />
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <div className="h-8 w-48 rounded-lg bg-white/10 shimmer" />
+                <div className="h-4 w-64 rounded-lg bg-white/5 shimmer" />
+              </div>
+              <NftGridSkeleton count={8} />
+            </div>
           ) : listings.length > 0 ? (
             <div className="space-y-6 animate-fade-in">
-              {/* Section Header */}
+              {/* Search and Filter Bar */}
+              <div className="flex flex-col md:flex-row gap-4">
+                {/* Search */}
+                <div className="relative flex-1">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[hsl(var(--text-muted))]" />
+                  <input
+                    type="text"
+                    placeholder="Search NFTs by name..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-12 pr-4 py-3 rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl text-white placeholder:text-[hsl(var(--text-muted))] focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all"
+                  />
+                </div>
+
+                {/* Sort */}
+                <div className="flex gap-3">
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value as any)}
+                    className="px-4 py-3 rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl text-white focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all cursor-pointer"
+                  >
+                    <option value="newest" className="bg-[hsl(var(--bg-tertiary))]">Newest First</option>
+                    <option value="price-low" className="bg-[hsl(var(--bg-tertiary))]">Price: Low to High</option>
+                    <option value="price-high" className="bg-[hsl(var(--bg-tertiary))]">Price: High to Low</option>
+                  </select>
+
+                  {/* Grid View Toggle */}
+                  <div className="flex gap-2 p-1 rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl">
+                    <button
+                      onClick={() => setGridView('comfortable')}
+                      className={`p-2 rounded-lg transition-all ${
+                        gridView === 'comfortable'
+                          ? 'bg-cyan-400/20 text-cyan-300'
+                          : 'text-[hsl(var(--text-muted))] hover:text-white hover:bg-white/5'
+                      }`}
+                    >
+                      <LayoutGrid className="h-5 w-5" />
+                    </button>
+                    <button
+                      onClick={() => setGridView('compact')}
+                      className={`p-2 rounded-lg transition-all ${
+                        gridView === 'compact'
+                          ? 'bg-cyan-400/20 text-cyan-300'
+                          : 'text-[hsl(var(--text-muted))] hover:text-white hover:bg-white/5'
+                      }`}
+                    >
+                      <Grid3x3 className="h-5 w-5" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Results Header */}
               <div className="flex items-center justify-between">
                 <div>
                   <h2 className="text-2xl md:text-3xl font-bold font-display text-white">Available NFTs</h2>
                   <p className="text-sm text-[hsl(var(--text-secondary))] mt-1">
-                    {listings.length} {listings.length === 1 ? 'item' : 'items'} available for trading
+                    {(() => {
+                      const filtered = listings.filter(l => 
+                        l.name.toLowerCase().includes(searchQuery.toLowerCase())
+                      );
+                      return `${filtered.length} ${filtered.length === 1 ? 'item' : 'items'} ${searchQuery ? 'found' : 'available'}`;
+                    })()}
                   </p>
                 </div>
               </div>
 
               {/* NFT Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <div className={`grid gap-6 ${
+                gridView === 'comfortable'
+                  ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
+                  : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
+              }`}>
                 {listings.map((listing, index) => (
                   <div key={listing.nftId} style={{ animationDelay: `${index * 50}ms` }} className="animate-fade-up">
                     <NftCard
@@ -443,7 +514,7 @@ export default function MarketplacePage() {
               )}
               {!account && (
                 <p className="mt-8 text-sm text-[hsl(var(--text-secondary))]">
-                  Connect your wallet to start trading
+                  Connect your wallet to start your Journey
                 </p>
               )}
             </div>
