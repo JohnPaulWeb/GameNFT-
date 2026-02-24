@@ -45,6 +45,7 @@ const menuItems = [
   },
 ];
 
+
 export function AppSidebar() {
   const pathname = usePathname();
   const account = useCurrentAccount();
@@ -135,7 +136,7 @@ export function AppSidebar() {
           }}
         />
       </div>
-
+      
       <SidebarHeader className="border-b border-white/10 bg-gradient-to-b from-white/5 to-transparent relative">
         <div className="flex items-center gap-3 px-4 py-5">
           <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-400/30 to-cyan-500/10 border border-cyan-400/40 shadow-lg shadow-cyan-400/20 relative">

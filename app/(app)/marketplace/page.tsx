@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useCurrentAccount, useSignAndExecuteTransaction, useSuiClient } from '@mysten/dapp-kit';
-import { ShoppingCart, Wallet, TrendingUp, Package, RefreshCw, Search, SlidersHorizontal, Grid3x3, LayoutGrid, Sparkles } from 'lucide-react';
+import { ShoppingCart, Wallet, TrendingUp, Package, RefreshCw, Search, Grid3x3, LayoutGrid } from 'lucide-react';
 import { Transaction } from '@mysten/sui/transactions';
 import { bcs } from '@mysten/sui/bcs';
 
@@ -10,7 +10,6 @@ import { Button } from '@/app/components/ui/button';
 import { NftCard } from '@/app/components/nft-card';
 import { useToast } from '@/app/hooks/use-toast';
 import { CONTRACTS } from '@/app/components/contracts';
-import { LoadingState } from '@/app/components/ui/loading-spinner';
 import { NftGridSkeleton } from '@/app/components/ui/nft-skeleton';
 
 interface ListedNFT {
@@ -299,11 +298,11 @@ export default function MarketplacePage() {
         </div>
       </div>
 
-      {/* Stats Section */}
+      {/* ito yung Stats Section */}
       <div className="px-4 md:px-8 py-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {/* Listed Items Stat */}
+            {/* ito yung Listed Items Stat */}
             <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-6 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-lg">
               <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-2xl blur-xl"
                 style={{
@@ -384,54 +383,64 @@ export default function MarketplacePage() {
           ) : listings.length > 0 ? (
             <div className="space-y-6 animate-fade-in">
               {/* Search and Filter Bar */}
-              <div className="flex flex-col md:flex-row gap-4">
-                {/* Search */}
-                <div className="relative flex-1">
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[hsl(var(--text-muted))]" />
-                  <input
-                    type="text"
-                    placeholder="Search NFTs by name..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl text-white placeholder:text-[hsl(var(--text-muted))] focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all"
-                  />
+              <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-4 md:p-5 space-y-4">
+                <div className="flex flex-col md:flex-row gap-4">
+                  {/* Search */}
+                  <div className="relative flex-1">
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[hsl(var(--text-muted))]" />
+                    <input
+                      type="text"
+                      placeholder="Search NFTs by name..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full pl-12 pr-4 py-3 rounded-xl border border-white/10 bg-white/5 text-white placeholder:text-[hsl(var(--text-muted))] focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all"
+                    />
+                  </div>
+
+                  {/* Sort */}
+                  <div className="flex gap-3">
+                    <select
+                      value={sortBy}
+                      onChange={(e) => setSortBy(e.target.value as any)}
+                      className="px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-white focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all cursor-pointer"
+                    >
+                      <option value="newest" className="bg-[hsl(var(--bg-tertiary))]">Newest First</option>
+                      <option value="price-low" className="bg-[hsl(var(--bg-tertiary))]">Price: Low to High</option>
+                      <option value="price-high" className="bg-[hsl(var(--bg-tertiary))]">Price: High to Low</option>
+                    </select>
+
+                    {/* Grid View Toggle */}
+                    <div className="flex gap-2 p-1 rounded-xl border border-white/10 bg-white/5">
+                      <button
+                        onClick={() => setGridView('comfortable')}
+                        className={`p-2 rounded-lg transition-all ${
+                          gridView === 'comfortable'
+                            ? 'bg-cyan-400/20 text-cyan-300'
+                            : 'text-[hsl(var(--text-muted))] hover:text-white hover:bg-white/5'
+                        }`}
+                      >
+                        <LayoutGrid className="h-5 w-5" />
+                      </button>
+                      <button
+                        onClick={() => setGridView('compact')}
+                        className={`p-2 rounded-lg transition-all ${
+                          gridView === 'compact'
+                            ? 'bg-cyan-400/20 text-cyan-300'
+                            : 'text-[hsl(var(--text-muted))] hover:text-white hover:bg-white/5'
+                        }`}
+                      >
+                        <Grid3x3 className="h-5 w-5" />
+                      </button>
+                    </div>
+                  </div>
                 </div>
 
-                {/* Sort */}
-                <div className="flex gap-3">
-                  <select
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value as any)}
-                    className="px-4 py-3 rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl text-white focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all cursor-pointer"
-                  >
-                    <option value="newest" className="bg-[hsl(var(--bg-tertiary))]">Newest First</option>
-                    <option value="price-low" className="bg-[hsl(var(--bg-tertiary))]">Price: Low to High</option>
-                    <option value="price-high" className="bg-[hsl(var(--bg-tertiary))]">Price: High to Low</option>
-                  </select>
-
-                  {/* Grid View Toggle */}
-                  <div className="flex gap-2 p-1 rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl">
-                    <button
-                      onClick={() => setGridView('comfortable')}
-                      className={`p-2 rounded-lg transition-all ${
-                        gridView === 'comfortable'
-                          ? 'bg-cyan-400/20 text-cyan-300'
-                          : 'text-[hsl(var(--text-muted))] hover:text-white hover:bg-white/5'
-                      }`}
-                    >
-                      <LayoutGrid className="h-5 w-5" />
-                    </button>
-                    <button
-                      onClick={() => setGridView('compact')}
-                      className={`p-2 rounded-lg transition-all ${
-                        gridView === 'compact'
-                          ? 'bg-cyan-400/20 text-cyan-300'
-                          : 'text-[hsl(var(--text-muted))] hover:text-white hover:bg-white/5'
-                      }`}
-                    >
-                      <Grid3x3 className="h-5 w-5" />
-                    </button>
-                  </div>
+                <div className="flex flex-wrap gap-2">
+                  <span className="text-xs font-semibold text-[hsl(var(--text-secondary))] mr-1">Quick filters:</span>
+                  <button className="px-3 py-1.5 rounded-full text-xs font-semibold text-cyan-200 bg-cyan-400/10 border border-cyan-400/20 hover:bg-cyan-400/20 transition">Trending</button>
+                  <button className="px-3 py-1.5 rounded-full text-xs font-semibold text-white/80 bg-white/5 border border-white/10 hover:bg-white/10 transition">Under 5 SUI</button>
+                  <button className="px-3 py-1.5 rounded-full text-xs font-semibold text-white/80 bg-white/5 border border-white/10 hover:bg-white/10 transition">New Drops</button>
+                  <button className="px-3 py-1.5 rounded-full text-xs font-semibold text-white/80 bg-white/5 border border-white/10 hover:bg-white/10 transition">Legendary</button>
                 </div>
               </div>
 
@@ -449,8 +458,8 @@ export default function MarketplacePage() {
                   </p>
                 </div>
               </div>
-
-              {/* NFT Grid */}
+              
+              {/* NFT's Grid */}
               <div className={`grid gap-6 ${
                 gridView === 'comfortable'
                   ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'

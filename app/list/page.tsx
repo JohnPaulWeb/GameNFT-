@@ -230,7 +230,6 @@ export default function ListPage() {
             </div>
           )}
         </CardHeader>
-
         <CardContent className="space-y-6">
           {!account && (
             <div className="rounded-lg border-2 border-yellow-500/50 bg-yellow-50 p-4 dark:bg-yellow-950/20">

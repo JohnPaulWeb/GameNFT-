@@ -197,20 +197,25 @@ export default function MintPage() {
           />
         </div>
 
-        <div className="max-w-4xl mx-auto space-y-6">
-          <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-400/10 border border-cyan-400/30">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-              <span className="text-xs font-semibold text-cyan-300">Create & List</span>
-            </div>
-            <h1 className="text-4xl md:text-6xl font-bold font-display leading-tight tracking-tight text-white">
-              Mint Your Want
-              <span className="block bg-gradient-to-r from-cyan-300 via-cyan-400 to-cyan-300 bg-clip-text text-transparent">
-                SuiPlay |  NFT
+        <div className="max-w-5xl mx-auto space-y-8">
+          <div className="space-y-4 animate-slide-in-down">
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-gradient-to-r from-cyan-500/20 to-indigo-500/20 border border-cyan-400/40 backdrop-blur-sm">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
               </span>
-            </h1>
-            <p className="text-lg text-[hsl(var(--text-secondary))] max-w-2xl leading-relaxed">
-              Create unique gaming items and list them on our premium marketplace. Owned by you, verified on-chain.
+              <span className="text-xs font-bold text-cyan-300 tracking-wider uppercase">Mint & List Your NFT</span>
+            </div>
+            <div className="space-y-2">
+              <h1 className="text-5xl md:text-7xl font-bold font-display leading-tight tracking-tight text-white">
+                Create Your
+                <span className="block bg-gradient-to-r from-cyan-300 via-indigo-400 to-cyan-400 bg-clip-text text-transparent animate-fade-up" style={{animationDelay: '0.1s'}}>
+                  Game NFT
+                </span>
+              </h1>
+            </div>
+            <p className="text-lg md:text-xl text-[hsl(var(--text-secondary))] max-w-3xl leading-relaxed font-light animate-fade-up" style={{animationDelay: '0.2s'}}>
+              Design and mint unique gaming items, then list them on the premium SuiPlay marketplace. Full on-chain ownership, permanent blockchain verification.
             </p>
           </div>
         </div>
@@ -222,6 +227,24 @@ export default function MintPage() {
           <div className="grid gap-8 lg:grid-cols-2">
             {/* Left Column - Form */}
             <div className="space-y-8">
+              <div className="grid gap-3 sm:grid-cols-3 mb-2">
+                <div className="group relative overflow-hidden rounded-xl border border-cyan-400/20 bg-gradient-to-br from-cyan-500/10 to-indigo-500/5 backdrop-blur-md px-4 py-4 transition-all duration-300 hover:border-cyan-400/40 hover:bg-cyan-500/15">
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity -z-10" style={{background: 'radial-gradient(circle at center, rgba(0,240,255,0.1), transparent)'}}></div>
+                  <p className="text-xs font-semibold text-cyan-300/70 mb-1 tracking-wider uppercase">Step 1</p>
+                  <p className="text-sm font-bold text-white">Add Details</p>
+                </div>
+                <div className="group relative overflow-hidden rounded-xl border border-indigo-400/20 bg-gradient-to-br from-indigo-500/10 to-cyan-500/5 backdrop-blur-md px-4 py-4 transition-all duration-300 hover:border-indigo-400/40 hover:bg-indigo-500/15">
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity -z-10" style={{background: 'radial-gradient(circle at center, rgba(99,102,241,0.1), transparent)'}}></div>
+                  <p className="text-xs font-semibold text-indigo-300/70 mb-1 tracking-wider uppercase">Step 2</p>
+                  <p className="text-sm font-bold text-white">Preview</p>
+                </div>
+                <div className="group relative overflow-hidden rounded-xl border border-cyan-400/20 bg-gradient-to-br from-cyan-500/10 to-indigo-500/5 backdrop-blur-md px-4 py-4 transition-all duration-300 hover:border-cyan-400/40 hover:bg-cyan-500/15">
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity -z-10" style={{background: 'radial-gradient(circle at center, rgba(0,240,255,0.1), transparent)'}}></div>
+                  <p className="text-xs font-semibold text-cyan-300/70 mb-1 tracking-wider uppercase">Step 3</p>
+                  <p className="text-sm font-bold text-white">Mint on Sui</p>
+                </div>
+              </div>
+
               {/* Info Cards */}
               {account && (
                 <div className="grid gap-4 grid-cols-2">
@@ -299,86 +322,106 @@ export default function MintPage() {
             
                   <div className="space-y-6">
                     {/* Name Input */}
-                    <div className="space-y-2">
-                      <Label htmlFor="name" className="font-semibold text-white">NFT Name *</Label>
-                      <Input
-                        id="name"
-                        placeholder="e.g., Legendary Sword"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        disabled={isMinting || !account}
-                        className="h-12 rounded-lg border border-white/10 bg-white/5 backdrop-blur-sm text-white placeholder:text-white/40 focus:border-cyan-400/50 focus:ring-0"
-                      />
+                    <div className="space-y-3 group">
+                      <Label htmlFor="name" className="font-bold text-white text-sm tracking-tight">NFT Name <span className="text-cyan-400 text-xs">required</span></Label>
+                      <div className="relative">
+                        <Input
+                          id="name"
+                          placeholder="e.g., Legendary Frost Sword"
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          disabled={isMinting || !account}
+                          className="h-12 rounded-xl border border-white/15 bg-gradient-to-r from-white/8 to-white/3 backdrop-blur-md text-white placeholder:text-white/35 focus:border-cyan-400/60 focus:ring-0 focus:bg-gradient-to-r focus:from-white/10 focus:to-white/5 transition-all duration-300 font-medium"
+                        />
+                        <div className="absolute inset-0 rounded-xl pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" style={{background: 'radial-gradient(ellipse at center, rgba(0,240,255,0.1), transparent)', inset: '-1px'}}></div>
+                      </div>
+                      <p className="text-xs text-white/50 font-light">Keep it concise and memorable (under 30 characters)</p>
                     </div>
 
                     {/* Description Input */}
-                    <div className="space-y-2">
-                      <Label htmlFor="description" className="font-semibold text-white">Description *</Label>
-                      <Textarea
-                        id="description"
-                        placeholder="Describe your NFT's special features and attributes..."
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        disabled={isMinting || !account}
-                        rows={4}
-                        className="resize-none rounded-lg border border-white/10 bg-white/5 backdrop-blur-sm text-white placeholder:text-white/40 focus:border-cyan-400/50 focus:ring-0"
-                      />
+                    <div className="space-y-3 group">
+                      <Label htmlFor="description" className="font-bold text-white text-sm tracking-tight">Description <span className="text-cyan-400 text-xs">required</span></Label>
+                      <div className="relative">
+                        <Textarea
+                          id="description"
+                          placeholder="Describe your NFT's special features, abilities, rarity tier, and unique attributes..."
+                          value={description}
+                          onChange={(e) => setDescription(e.target.value)}
+                          disabled={isMinting || !account}
+                          rows={4}
+                          className="resize-none rounded-xl border border-white/15 bg-gradient-to-r from-white/8 to-white/3 backdrop-blur-md text-white placeholder:text-white/35 focus:border-cyan-400/60 focus:ring-0 focus:bg-gradient-to-r focus:from-white/10 focus:to-white/5 transition-all duration-300 font-medium"
+                        />
+                        <div className="absolute inset-0 rounded-xl pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" style={{background: 'radial-gradient(ellipse at center, rgba(0,240,255,0.1), transparent)', inset: '-1px'}}></div>
+                      </div>
+                      <p className="text-xs text-white/50 font-light">Highlight what makes this item special (150-200 characters is ideal)</p>
                     </div>
 
-                    {/* Ito yung Images */}
-                    <div className="space-y-2">
-                      <Label htmlFor="imageUrl" className="font-semibold text-white">Image URL *</Label>
-                      <Input
-                        id="imageUrl"
-                        type="url"
-                        placeholder="https://example.com/your-nft-image.png"
-                        value={imageUrl}
-                        onChange={(e) => setImageUrl(e.target.value)}
-                        disabled={isMinting || !account}
-                        className="h-12 rounded-lg border border-white/10 bg-white/5 backdrop-blur-sm text-white placeholder:text-white/40 focus:border-cyan-400/50 focus:ring-0"
-                      />
-                      <p className="text-xs text-[hsl(var(--text-secondary))]">
-                        Provide a direct URL to your NFT image (supports PNG, JPG, GIF, WebP)
+                    {/* Image URL Input */}
+                    <div className="space-y-3 group">
+                      <Label htmlFor="imageUrl" className="font-bold text-white text-sm tracking-tight">Image URL <span className="text-cyan-400 text-xs">required</span></Label>
+                      <div className="relative">
+                        <Input
+                          id="imageUrl"
+                          type="url"
+                          placeholder="https://example.com/nft-image-1024x1024.png"
+                          value={imageUrl}
+                          onChange={(e) => setImageUrl(e.target.value)}
+                          disabled={isMinting || !account}
+                          className="h-12 rounded-xl border border-white/15 bg-gradient-to-r from-white/8 to-white/3 backdrop-blur-md text-white placeholder:text-white/35 focus:border-cyan-400/60 focus:ring-0 focus:bg-gradient-to-r focus:from-white/10 focus:to-white/5 transition-all duration-300 font-medium"
+                        />
+                        <div className="absolute inset-0 rounded-xl pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" style={{background: 'radial-gradient(ellipse at center, rgba(0,240,255,0.1), transparent)', inset: '-1px'}}></div>
+                      </div>
+                      <p className="text-xs text-white/50 font-light">
+                        Direct link to image file • Supports PNG, JPG, GIF, WebP • Recommend 1024x1024px square
                       </p>
                     </div>
 
-                    {/* ito naman yung Blockchain info  */}
-                    <div className="rounded-xl border border-cyan-400/20 bg-cyan-400/5 p-4">
-                      <p className="text-sm text-white">
-                        <strong className="text-cyan-300">On-Chain Verification:</strong>{' '}
-                        <span className="text-[hsl(var(--text-secondary))]">
-                          Your NFT will be minted on Sui {CONTRACTS.NETWORK}. Gas fees will apply.
-                        </span>
-                      </p>
+                    {/* Blockchain Info */}
+                    <div className="group relative overflow-hidden rounded-xl border border-cyan-400/30 bg-gradient-to-r from-cyan-500/15 to-indigo-500/10 backdrop-blur-sm p-5 transition-all duration-300 hover:border-cyan-400/50 hover:bg-cyan-500/20">
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity -z-10 rounded-xl" style={{background: 'radial-gradient(ellipse at center, rgba(0,240,255,0.15), transparent)', pointerEvents: 'none'}}></div>
+                      <div className="flex gap-3">
+                        <div className="flex-shrink-0">
+                          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-500/20 border border-cyan-400/40">
+                            <Sparkles className="h-5 w-5 text-cyan-300" />
+                          </div>
+                        </div>
+                        <div className="flex-grow min-w-0">
+                          <p className="font-bold text-cyan-100 text-sm mb-1">On-Chain Verification</p>
+                          <p className="text-sm text-cyan-200/75 leading-relaxed">
+                            Your NFT will be permanently minted on Sui {CONTRACTS.NETWORK}. Small gas fees in SUI tokens will apply.
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
 
                 {/* Footer */}
-                <div className="border-t border-white/10 bg-gradient-to-t from-white/5 to-transparent p-8">
+                <div className="border-t border-white/10 bg-gradient-to-t from-cyan-500/10 via-white/5 to-transparent p-8">
                   <Button
-                    className="w-full font-semibold text-lg h-12"
+                    className="w-full font-bold text-lg h-14 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-600 hover:to-indigo-700 text-white shadow-lg shadow-cyan-500/40 hover:shadow-xl hover:shadow-cyan-500/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                     size="lg"
                     onClick={handleMint}
                     disabled={isMinting || !name.trim() || !description.trim() || !imageUrl.trim() || !account}
                   >
                     {isMinting ? (
                       <>
-                        <div className="animate-spin mr-2">◆</div>
-                        Minting on Blockchain...
+                        <div className="animate-spin mr-3" style={{animation: 'spin 1s linear infinite'}}>◆</div>
+                        <span>Minting on Blockchain...</span>
                       </>
                     ) : !account ? (
                       <>
                         <Wallet className="mr-2 h-5 w-5" />
-                        Connect Wallet to Mint
+                        <span>Connect Wallet to Mint</span>
                       </>
                     ) : (
                       <>
                         <Sparkles className="mr-2 h-5 w-5" />
-                        Mint NFT on Sui
+                        <span>Mint NFT on Sui</span>
                       </>
                     )}
                   </Button>
+                  <p className="text-xs text-white/50 text-center mt-4 font-light">All fields are required. Make sure your wallet is connected before minting.</p>
                 </div>
               </div>
             </div>
@@ -413,6 +456,8 @@ export default function MintPage() {
                       }}
                     />
                   ) : (
+
+                    // div
                     <div className="flex h-full w-full items-center justify-center">
                       <div className="text-center space-y-2">
                         <Sparkles className="h-12 w-12 text-[hsl(var(--text-muted))] mx-auto" />
@@ -423,7 +468,7 @@ export default function MintPage() {
                   
                   {/* Enhanced gradient overlay for depth */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                </div>
+                </div>  
                 
                 <CardHeader className="space-y-2 pb-2">
                   <CardTitle className="line-clamp-2 text-lg md:text-xl font-bold font-display tracking-tight leading-snug">
@@ -437,11 +482,29 @@ export default function MintPage() {
                 <CardContent className="flex-grow pb-3">
                   <div className="px-3 py-2 rounded-lg bg-white/5 border border-white/10">
                     <span className="text-xs font-semibold text-[hsl(var(--text-secondary))]">
-                      Ready to Mint
+                      Ready to Mint 
                     </span>
                   </div>
                 </CardContent>
               </Card>
+
+              <div className="group relative overflow-hidden rounded-2xl border border-indigo-400/20 bg-gradient-to-br from-indigo-500/15 to-cyan-500/10 backdrop-blur-xl p-6 space-y-4 transition-all duration-300 hover:border-indigo-400/40">
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity -z-10 rounded-2xl" style={{background: 'radial-gradient(ellipse at center, rgba(99,102,241,0.1), transparent)', pointerEvents: 'none'}}></div>
+                <div className="flex items-center gap-3">
+                  <div className="flex-shrink-0">
+                    <div className="h-8 w-8 rounded-lg bg-indigo-500/30 border border-indigo-400/50 flex items-center justify-center">
+                      <span className="text-lg">💡</span>
+                    </div>
+                  </div>
+                  <h4 className="text-sm font-bold text-indigo-100 tracking-tight">Pro Tips for Success</h4>
+                </div>
+                <div className="space-y-3 text-sm text-indigo-100/80 font-light">
+                  <div className="flex gap-3"><div className="text-cyan-400 flex-shrink-0 font-bold">✓</div><p>Use 1024x1024px square images for optimal display</p></div>
+                  <div className="flex gap-3"><div className="text-cyan-400 flex-shrink-0 font-bold">✓</div><p>Keep NFT names concise and memorable (under 30 chars)</p></div>
+                  <div className="flex gap-3"><div className="text-cyan-400 flex-shrink-0 font-bold">✓</div><p>Write engaging descriptions (150-200 characters)</p></div>
+                  <div className="flex gap-3"><div className="text-cyan-400 flex-shrink-0 font-bold">✓</div><p>Ensure image URLs are direct (not shortened links)</p></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

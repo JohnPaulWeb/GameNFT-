@@ -190,6 +190,7 @@ export class BlockchainMarketplace {
     } catch (error) {
       console.error('Error fetching marketplace stats:', error);
       return null;
+
     }
   }
 }

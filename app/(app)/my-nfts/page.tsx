@@ -64,7 +64,7 @@ export default function MyNftsPage() {
 
     try {
       console.log('Burning NFT:', cleanId);
-
+ 
       const tx = new Transaction();
       tx.moveCall({
         target: `${CONTRACTS.PACKAGE_ID}::${CONTRACTS.MODULE_NAME}::burn`,
@@ -301,7 +301,7 @@ export default function MyNftsPage() {
             <h1 className="text-4xl md:text-6xl font-bold font-display leading-tight tracking-tight text-white">
               My NFTs
               <span className="block text-2xl md:text-3xl font-normal text-[hsl(var(--text-secondary))] mt-2">
-                Manage your exclusive digital assets
+                Manage your exclusive digital assets 
               </span>
             </h1>
           </div>
@@ -448,6 +448,8 @@ export default function MyNftsPage() {
               >
                 <Sparkles className="mr-2 h-5 w-5" />
                 Mint Your First NFT
+
+                
               </Button>
             </div>
           )}

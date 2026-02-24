@@ -21,7 +21,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               }}
             />
             
-            {/* Glow effect - top right */}
+            {/* Glow effection - top right */}
             <div 
               className="absolute -top-1/3 -right-1/3 w-2/3 h-2/3 rounded-full opacity-15 blur-3xl"
               style={{
@@ -43,7 +43,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
             {/* Floating particles */}
             {[...Array(5)].map((_, i) => (
-              <div
+              <div 
                 key={i}
                 className="absolute w-1 h-1 bg-cyan-400/30 rounded-full"
                 style={{
