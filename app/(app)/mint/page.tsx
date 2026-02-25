@@ -228,19 +228,19 @@ export default function MintPage() {
             {/* Left Column - Form */}
             <div className="space-y-8">
               <div className="grid gap-3 sm:grid-cols-3 mb-2">
-                <div className="group relative overflow-hidden rounded-xl border border-cyan-400/20 bg-gradient-to-br from-cyan-500/10 to-indigo-500/5 backdrop-blur-md px-4 py-4 transition-all duration-300 hover:border-cyan-400/40 hover:bg-cyan-500/15">
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity -z-10" style={{background: 'radial-gradient(circle at center, rgba(0,240,255,0.1), transparent)'}}></div>
-                  <p className="text-xs font-semibold text-cyan-300/70 mb-1 tracking-wider uppercase">Step 1</p>
+                <div className="group relative overflow-hidden rounded-xl border border-cyan-400/30 bg-gradient-to-br from-cyan-500/20 to-indigo-500/10 backdrop-blur-md px-4 py-4 transition-all duration-300 hover:border-cyan-400/60 hover:bg-cyan-500/25 hover:shadow-lg hover:shadow-cyan-500/20">
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity -z-10" style={{background: 'radial-gradient(circle at center, rgba(0,240,255,0.15), transparent)'}}></div>
+                  <p className="text-xs font-semibold text-cyan-300 mb-1 tracking-wider uppercase">Step 1</p>
                   <p className="text-sm font-bold text-white">Add Details</p>
                 </div>
-                <div className="group relative overflow-hidden rounded-xl border border-indigo-400/20 bg-gradient-to-br from-indigo-500/10 to-cyan-500/5 backdrop-blur-md px-4 py-4 transition-all duration-300 hover:border-indigo-400/40 hover:bg-indigo-500/15">
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity -z-10" style={{background: 'radial-gradient(circle at center, rgba(99,102,241,0.1), transparent)'}}></div>
-                  <p className="text-xs font-semibold text-indigo-300/70 mb-1 tracking-wider uppercase">Step 2</p>
+                <div className="group relative overflow-hidden rounded-xl border border-indigo-400/30 bg-gradient-to-br from-indigo-500/20 to-cyan-500/10 backdrop-blur-md px-4 py-4 transition-all duration-300 hover:border-indigo-400/60 hover:bg-indigo-500/25 hover:shadow-lg hover:shadow-indigo-500/20">
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity -z-10" style={{background: 'radial-gradient(circle at center, rgba(99,102,241,0.15), transparent)'}}></div>
+                  <p className="text-xs font-semibold text-indigo-300 mb-1 tracking-wider uppercase">Step 2</p>
                   <p className="text-sm font-bold text-white">Preview</p>
                 </div>
-                <div className="group relative overflow-hidden rounded-xl border border-cyan-400/20 bg-gradient-to-br from-cyan-500/10 to-indigo-500/5 backdrop-blur-md px-4 py-4 transition-all duration-300 hover:border-cyan-400/40 hover:bg-cyan-500/15">
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity -z-10" style={{background: 'radial-gradient(circle at center, rgba(0,240,255,0.1), transparent)'}}></div>
-                  <p className="text-xs font-semibold text-cyan-300/70 mb-1 tracking-wider uppercase">Step 3</p>
+                <div className="group relative overflow-hidden rounded-xl border border-cyan-400/30 bg-gradient-to-br from-cyan-500/20 to-indigo-500/10 backdrop-blur-md px-4 py-4 transition-all duration-300 hover:border-cyan-400/60 hover:bg-cyan-500/25 hover:shadow-lg hover:shadow-cyan-500/20">
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity -z-10" style={{background: 'radial-gradient(circle at center, rgba(0,240,255,0.15), transparent)'}}></div>
+                  <p className="text-xs font-semibold text-cyan-300 mb-1 tracking-wider uppercase">Step 3</p>
                   <p className="text-sm font-bold text-white">Mint on Sui</p>
                 </div>
               </div>
@@ -248,40 +248,40 @@ export default function MintPage() {
               {/* Info Cards */}
               {account && (
                 <div className="grid gap-4 grid-cols-2">
-                  <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-4 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-lg">
+                  <div className="group relative overflow-hidden rounded-2xl border border-cyan-400/40 bg-gradient-to-br from-cyan-500/20 to-indigo-500/10 backdrop-blur-xl p-4 transition-all duration-300 hover:border-cyan-400/70 hover:shadow-lg hover:shadow-cyan-500/25 hover:-translate-y-1">
                     <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-2xl blur-xl"
                       style={{
-                        background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.1) 0%, transparent 70%)',
+                        background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.2) 0%, transparent 70%)',
                         pointerEvents: 'none',
                       }}
                     />
                     <div className="flex items-start justify-between">
                       <div>
-                        <p className="text-xs font-medium text-[hsl(var(--text-secondary))] mb-1">Connected Wallet</p>
-                        <p className="truncate font-mono text-xs font-semibold text-cyan-300">
+                        <p className="text-xs font-semibold text-cyan-300/90 mb-1 tracking-wider uppercase">Connected Wallet</p>
+                        <p className="truncate font-mono text-xs font-bold text-cyan-200">
                           {account.address.slice(0, 6)}...{account.address.slice(-4)}
                         </p>
                       </div>
-                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-400/10 border border-cyan-400/20">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400/30 to-cyan-400/10 border border-cyan-400/50">
                         <Wallet className="h-4 w-4 text-cyan-300" />
                       </div>
                     </div>
                   </div>
 
-                  <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-4 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-lg">
+                  <div className="group relative overflow-hidden rounded-2xl border border-indigo-400/40 bg-gradient-to-br from-indigo-500/20 to-cyan-500/10 backdrop-blur-xl p-4 transition-all duration-300 hover:border-indigo-400/70 hover:shadow-lg hover:shadow-indigo-500/25 hover:-translate-y-1">
                     <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-2xl blur-xl"
                       style={{
-                        background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.1) 0%, transparent 70%)',
+                        background: 'radial-gradient(circle at center, rgba(99,102,241,0.2) 0%, transparent 70%)',
                         pointerEvents: 'none',
                       }}
                     />
                     <div className="flex items-start justify-between">
                       <div>
-                        <p className="text-xs font-medium text-[hsl(var(--text-secondary))] mb-1">Network</p>
-                        <p className="text-xs font-semibold text-white capitalize">{CONTRACTS.NETWORK}</p>
+                        <p className="text-xs font-semibold text-indigo-300/90 mb-1 tracking-wider uppercase">Network</p>
+                        <p className="text-xs font-bold text-white capitalize">{CONTRACTS.NETWORK}</p>
                       </div>
-                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-400/10 border border-cyan-400/20">
-                        <Sparkles className="h-4 w-4 text-cyan-300" />
+                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-400/30 to-indigo-400/10 border border-indigo-400/50">
+                        <Sparkles className="h-4 w-4 text-indigo-300" />
                       </div>
                     </div>
                   </div>
@@ -289,10 +289,10 @@ export default function MintPage() {
               )}
 
               {/* Main Form Card */}
-              <div className="group relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl">
-                <div className="absolute -inset-px opacity-0 group-hover:opacity-20 transition-opacity duration-300 -z-10 rounded-3xl blur-xl"
+              <div className="group relative overflow-hidden rounded-3xl border border-cyan-400/30 bg-gradient-to-br from-cyan-500/15 to-indigo-500/10 backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/50 hover:shadow-lg hover:shadow-cyan-500/20">
+                <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-3xl blur-xl"
                   style={{
-                    background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.1) 0%, transparent 70%)',
+                    background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.15) 0%, transparent 70%)',
                     pointerEvents: 'none',
                   }}
                 />
@@ -305,14 +305,16 @@ export default function MintPage() {
                   </div>
 
                   {!account && (
-                    <div className="rounded-xl border-2 border-cyan-400/50 bg-gradient-to-r from-cyan-500/10 to-transparent p-6">
+                    <div className="rounded-xl border-2 border-cyan-400/60 bg-gradient-to-r from-cyan-500/20 to-indigo-500/10 backdrop-blur-sm p-6 shadow-lg shadow-cyan-500/20">
                       <div className="flex items-start gap-4">
-                        <Wallet className="h-6 w-6 flex-shrink-0 text-cyan-400 mt-0.5" />
+                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400/40 to-cyan-400/10 border border-cyan-400/60 flex-shrink-0">
+                          <Wallet className="h-5 w-5 text-cyan-300" />
+                        </div>
                         <div>
-                          <h3 className="font-semibold text-cyan-100 text-lg">
+                          <h3 className="font-bold text-cyan-100 text-lg">
                             Wallet Not Connected
                           </h3>
-                          <p className="mt-2 text-sm text-cyan-200/80">
+                          <p className="mt-2 text-sm text-cyan-200/90 leading-relaxed">
                             Please connect your Sui wallet using the button in the header to mint NFTs on the Sui blockchain.
                           </p>
                         </div>
@@ -331,9 +333,9 @@ export default function MintPage() {
                           value={name}
                           onChange={(e) => setName(e.target.value)}
                           disabled={isMinting || !account}
-                          className="h-12 rounded-xl border border-white/15 bg-gradient-to-r from-white/8 to-white/3 backdrop-blur-md text-white placeholder:text-white/35 focus:border-cyan-400/60 focus:ring-0 focus:bg-gradient-to-r focus:from-white/10 focus:to-white/5 transition-all duration-300 font-medium"
+                          className="h-12 rounded-xl border border-cyan-400/30 bg-gradient-to-r from-white/8 to-white/3 backdrop-blur-md text-white placeholder:text-white/35 focus:border-cyan-400/70 focus:ring-0 focus:bg-gradient-to-r focus:from-white/12 focus:to-white/6 transition-all duration-300 font-medium shadow-lg shadow-cyan-500/0 focus:shadow-lg focus:shadow-cyan-500/20"
                         />
-                        <div className="absolute inset-0 rounded-xl pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" style={{background: 'radial-gradient(ellipse at center, rgba(0,240,255,0.1), transparent)', inset: '-1px'}}></div>
+                        <div className="absolute inset-0 rounded-xl pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" style={{background: 'radial-gradient(ellipse at center, rgba(0,240,255,0.15), transparent)', inset: '-1px'}}></div>
                       </div>
                       <p className="text-xs text-white/50 font-light">Keep it concise and memorable (under 30 characters)</p>
                     </div>
@@ -349,9 +351,9 @@ export default function MintPage() {
                           onChange={(e) => setDescription(e.target.value)}
                           disabled={isMinting || !account}
                           rows={4}
-                          className="resize-none rounded-xl border border-white/15 bg-gradient-to-r from-white/8 to-white/3 backdrop-blur-md text-white placeholder:text-white/35 focus:border-cyan-400/60 focus:ring-0 focus:bg-gradient-to-r focus:from-white/10 focus:to-white/5 transition-all duration-300 font-medium"
+                          className="resize-none rounded-xl border border-cyan-400/30 bg-gradient-to-r from-white/8 to-white/3 backdrop-blur-md text-white placeholder:text-white/35 focus:border-cyan-400/70 focus:ring-0 focus:bg-gradient-to-r focus:from-white/12 focus:to-white/6 transition-all duration-300 font-medium shadow-lg shadow-cyan-500/0 focus:shadow-lg focus:shadow-cyan-500/20"
                         />
-                        <div className="absolute inset-0 rounded-xl pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" style={{background: 'radial-gradient(ellipse at center, rgba(0,240,255,0.1), transparent)', inset: '-1px'}}></div>
+                        <div className="absolute inset-0 rounded-xl pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" style={{background: 'radial-gradient(ellipse at center, rgba(0,240,255,0.15), transparent)', inset: '-1px'}}></div>
                       </div>
                       <p className="text-xs text-white/50 font-light">Highlight what makes this item special (150-200 characters is ideal)</p>
                     </div>
@@ -367,9 +369,9 @@ export default function MintPage() {
                           value={imageUrl}
                           onChange={(e) => setImageUrl(e.target.value)}
                           disabled={isMinting || !account}
-                          className="h-12 rounded-xl border border-white/15 bg-gradient-to-r from-white/8 to-white/3 backdrop-blur-md text-white placeholder:text-white/35 focus:border-cyan-400/60 focus:ring-0 focus:bg-gradient-to-r focus:from-white/10 focus:to-white/5 transition-all duration-300 font-medium"
+                          className="h-12 rounded-xl border border-cyan-400/30 bg-gradient-to-r from-white/8 to-white/3 backdrop-blur-md text-white placeholder:text-white/35 focus:border-cyan-400/70 focus:ring-0 focus:bg-gradient-to-r focus:from-white/12 focus:to-white/6 transition-all duration-300 font-medium shadow-lg shadow-cyan-500/0 focus:shadow-lg focus:shadow-cyan-500/20"
                         />
-                        <div className="absolute inset-0 rounded-xl pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" style={{background: 'radial-gradient(ellipse at center, rgba(0,240,255,0.1), transparent)', inset: '-1px'}}></div>
+                        <div className="absolute inset-0 rounded-xl pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" style={{background: 'radial-gradient(ellipse at center, rgba(0,240,255,0.15), transparent)', inset: '-1px'}}></div>
                       </div>
                       <p className="text-xs text-white/50 font-light">
                         Direct link to image file • Supports PNG, JPG, GIF, WebP • Recommend 1024x1024px square
@@ -377,11 +379,11 @@ export default function MintPage() {
                     </div>
 
                     {/* Blockchain Info */}
-                    <div className="group relative overflow-hidden rounded-xl border border-cyan-400/30 bg-gradient-to-r from-cyan-500/15 to-indigo-500/10 backdrop-blur-sm p-5 transition-all duration-300 hover:border-cyan-400/50 hover:bg-cyan-500/20">
-                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity -z-10 rounded-xl" style={{background: 'radial-gradient(ellipse at center, rgba(0,240,255,0.15), transparent)', pointerEvents: 'none'}}></div>
+                    <div className="group relative overflow-hidden rounded-xl border border-cyan-400/40 bg-gradient-to-r from-cyan-500/20 to-indigo-500/10 backdrop-blur-sm p-5 transition-all duration-300 hover:border-cyan-400/70 hover:bg-cyan-500/25 hover:shadow-lg hover:shadow-cyan-500/25 hover:-translate-y-1">
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity -z-10 rounded-xl" style={{background: 'radial-gradient(ellipse at center, rgba(0,240,255,0.2), transparent)', pointerEvents: 'none'}}></div>
                       <div className="flex gap-3">
                         <div className="flex-shrink-0">
-                          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-500/20 border border-cyan-400/40">
+                          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400/40 to-cyan-400/10 border border-cyan-400/60">
                             <Sparkles className="h-5 w-5 text-cyan-300" />
                           </div>
                         </div>
@@ -397,9 +399,9 @@ export default function MintPage() {
                 </div>
 
                 {/* Footer */}
-                <div className="border-t border-white/10 bg-gradient-to-t from-cyan-500/10 via-white/5 to-transparent p-8">
+                <div className="border-t border-cyan-400/20 bg-gradient-to-t from-cyan-500/15 via-white/5 to-transparent p-8">
                   <Button
-                    className="w-full font-bold text-lg h-14 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-600 hover:to-indigo-700 text-white shadow-lg shadow-cyan-500/40 hover:shadow-xl hover:shadow-cyan-500/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full font-bold text-lg h-14 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-600 hover:to-indigo-700 text-white shadow-xl shadow-cyan-500/50 hover:shadow-2xl hover:shadow-cyan-500/60 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 active:scale-95"
                     size="lg"
                     onClick={handleMint}
                     disabled={isMinting || !name.trim() || !description.trim() || !imageUrl.trim() || !account}
@@ -434,12 +436,12 @@ export default function MintPage() {
               </div>
 
               <Card
-                className="group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl transition-all duration-500 ease-out hover:border-cyan-400/60 hover:shadow-2xl hover:shadow-cyan-400/20 animate-fade-up"
+                className="group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-cyan-400/30 bg-gradient-to-br from-cyan-500/10 to-indigo-500/5 backdrop-blur-xl transition-all duration-500 ease-out hover:border-cyan-400/70 hover:shadow-2xl hover:shadow-cyan-400/30 hover:-translate-y-1 animate-fade-up"
               >
                 {/* Enhanced ambient glow effect */}
                 <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 rounded-2xl blur-2xl"
                   style={{
-                    background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.3) 0%, rgba(99, 102, 241, 0.2) 50%, transparent 70%)',
+                    background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.4) 0%, rgba(99, 102, 241, 0.3) 50%, transparent 70%)',
                     pointerEvents: 'none',
                   }}
                 />
@@ -480,8 +482,8 @@ export default function MintPage() {
                 </CardHeader>
                 
                 <CardContent className="flex-grow pb-3">
-                  <div className="px-3 py-2 rounded-lg bg-white/5 border border-white/10">
-                    <span className="text-xs font-semibold text-[hsl(var(--text-secondary))]">
+                  <div className="px-3 py-2 rounded-lg bg-gradient-to-r from-cyan-500/20 to-indigo-500/10 border border-cyan-400/40">
+                    <span className="text-xs font-semibold text-cyan-300 tracking-wide">
                       Ready to Mint 
                     </span>
                   </div>

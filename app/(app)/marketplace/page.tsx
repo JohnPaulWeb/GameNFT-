@@ -298,68 +298,94 @@ export default function MarketplacePage() {
         </div>
       </div>
 
-      {/* ito yung Stats Section */}
+      {/* Stats Section - Enhanced */}
       <div className="px-4 md:px-8 py-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {/* ito yung Listed Items Stat */}
-            <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-6 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-lg">
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+            {/* Listed Items Stat */}
+            <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-6 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-lg hover:shadow-cyan-500/20 hover:-translate-y-1">
               <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-2xl blur-xl"
                 style={{
-                  background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.1) 0%, transparent 70%)',
+                  background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.2) 0%, transparent 70%)',
                   pointerEvents: 'none',
                 }}
               />
-              <div className="flex items-start justify-between">
+              <div className="relative z-10 flex items-start justify-between">
                 <div>
-                  <p className="text-sm font-medium text-[hsl(var(--text-secondary))] mb-2">Listed Items</p>
+                  <p className="text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-2">Listed Items</p>
                   <p className="text-3xl md:text-4xl font-bold font-display text-white">{listings.length}</p>
+                  <p className="text-xs text-[hsl(var(--text-secondary))] mt-1">Items available</p>
                 </div>
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-cyan-400/10 border border-cyan-400/20">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-400/30 to-cyan-500/10 border border-cyan-400/30">
                   <Package className="h-6 w-6 text-cyan-300" />
                 </div>
               </div>
             </div>
 
             {/* Total Volume Stat */}
-            <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-6 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-lg">
+            <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-6 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-lg hover:shadow-cyan-500/20 hover:-translate-y-1">
               <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-2xl blur-xl"
                 style={{
-                  background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.1) 0%, transparent 70%)',
+                  background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.2) 0%, transparent 70%)',
                   pointerEvents: 'none',
                 }}
               />
-              <div className="flex items-start justify-between">
+              <div className="relative z-10 flex items-start justify-between">
                 <div>
-                  <p className="text-sm font-medium text-[hsl(var(--text-secondary))] mb-2">Total Volume</p>
+                  <p className="text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-2">Total Volume</p>
                   <p className="text-3xl md:text-4xl font-bold font-display text-white">
                     {listings.reduce((sum, l) => sum + l.price, 0).toFixed(0)}
                   </p>
                   <p className="text-xs text-cyan-300 mt-1">SUI</p>
                 </div>
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-cyan-400/10 border border-cyan-400/20">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-400/30 to-cyan-500/10 border border-cyan-400/30">
                   <TrendingUp className="h-6 w-6 text-cyan-300" />
+                </div>
+              </div>
+            </div>
+
+            {/* Floor Price Stat */}
+            <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-6 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-lg hover:shadow-cyan-500/20 hover:-translate-y-1">
+              <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-2xl blur-xl"
+                style={{
+                  background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.2) 0%, transparent 70%)',
+                  pointerEvents: 'none',
+                }}
+              />
+              <div className="relative z-10 flex items-start justify-between">
+                <div>
+                  <p className="text-xs font-semibold text-amber-300 uppercase tracking-wider mb-2">Floor Price</p>
+                  <p className="text-3xl md:text-4xl font-bold font-display text-white">
+                    {listings.length > 0 ? Math.min(...listings.map(l => l.price)).toFixed(2) : '0'}
+                  </p>
+                  <p className="text-xs text-amber-300 mt-1">SUI</p>
+                </div>
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-amber-400/30 to-orange-500/10 border border-amber-400/30">
+                  <TrendingUp className="h-6 w-6 text-amber-300" />
                 </div>
               </div>
             </div>
 
             {/* Connected Wallet Stat */}
             {account && (
-              <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-6 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-lg col-span-1 sm:col-span-2 lg:col-span-1">
+              <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-6 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-lg hover:shadow-cyan-500/20 hover:-translate-y-1">
                 <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-2xl blur-xl"
                   style={{
-                    background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.1) 0%, transparent 70%)',
+                    background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.2) 0%, transparent 70%)',
                     pointerEvents: 'none',
                   }}
                 />
-                <div className="flex items-start justify-between">
+                <div className="relative z-10 flex items-start justify-between">
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-[hsl(var(--text-secondary))] mb-2">Connected Wallet</p>
-                    <p className="truncate font-mono text-sm font-semibold text-cyan-300">
-                      {account.address.slice(0, 8)}...{account.address.slice(-6)}
+                    <p className="text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-2">Connected Wallet</p>
+                    <p className="truncate font-mono text-sm font-semibold text-white">
+                      {account.address.slice(0, 8)}...
+                    </p>
+                    <p className="text-xs text-[hsl(var(--text-secondary))] mt-1 truncate">
+                      {account.address.slice(-8)}
                     </p>
                   </div>
-                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-cyan-400/10 border border-cyan-400/20 flex-shrink-0">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-400/30 to-cyan-500/10 border border-cyan-400/30 flex-shrink-0">
                     <Wallet className="h-6 w-6 text-cyan-300" />
                   </div>
                 </div>
@@ -393,7 +419,7 @@ export default function MarketplacePage() {
                       placeholder="Search NFTs by name..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full pl-12 pr-4 py-3 rounded-xl border border-white/10 bg-white/5 text-white placeholder:text-[hsl(var(--text-muted))] focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all"
+                      className="w-full pl-12 pr-4 py-3 rounded-xl border border-white/15 bg-gradient-to-r from-white/8 to-white/3 backdrop-blur-sm text-white placeholder:text-[hsl(var(--text-muted))] focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all font-medium"
                     />
                   </div>
 
@@ -402,7 +428,7 @@ export default function MarketplacePage() {
                     <select
                       value={sortBy}
                       onChange={(e) => setSortBy(e.target.value as any)}
-                      className="px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-white focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all cursor-pointer"
+                      className="px-4 py-3 rounded-xl border border-white/15 bg-gradient-to-r from-white/8 to-white/3 backdrop-blur-sm text-white font-medium focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all cursor-pointer"
                     >
                       <option value="newest" className="bg-[hsl(var(--bg-tertiary))]">Newest First</option>
                       <option value="price-low" className="bg-[hsl(var(--bg-tertiary))]">Price: Low to High</option>
@@ -410,23 +436,23 @@ export default function MarketplacePage() {
                     </select>
 
                     {/* Grid View Toggle */}
-                    <div className="flex gap-2 p-1 rounded-xl border border-white/10 bg-white/5">
+                    <div className="flex gap-2 p-1.5 rounded-xl border border-white/15 bg-gradient-to-r from-white/8 to-white/3 backdrop-blur-sm">
                       <button
                         onClick={() => setGridView('comfortable')}
-                        className={`p-2 rounded-lg transition-all ${
+                        className={`p-2.5 rounded-lg transition-all font-medium text-sm ${
                           gridView === 'comfortable'
-                            ? 'bg-cyan-400/20 text-cyan-300'
-                            : 'text-[hsl(var(--text-muted))] hover:text-white hover:bg-white/5'
+                            ? 'bg-gradient-to-r from-cyan-500/40 to-cyan-500/20 text-cyan-200 border border-cyan-400/30 shadow-lg shadow-cyan-500/20'
+                            : 'text-[hsl(var(--text-muted))] hover:text-white hover:bg-white/10'
                         }`}
                       >
                         <LayoutGrid className="h-5 w-5" />
                       </button>
                       <button
                         onClick={() => setGridView('compact')}
-                        className={`p-2 rounded-lg transition-all ${
+                        className={`p-2.5 rounded-lg transition-all font-medium text-sm ${
                           gridView === 'compact'
-                            ? 'bg-cyan-400/20 text-cyan-300'
-                            : 'text-[hsl(var(--text-muted))] hover:text-white hover:bg-white/5'
+                            ? 'bg-gradient-to-r from-cyan-500/40 to-cyan-500/20 text-cyan-200 border border-cyan-400/30 shadow-lg shadow-cyan-500/20'
+                            : 'text-[hsl(var(--text-muted))] hover:text-white hover:bg-white/10'
                         }`}
                       >
                         <Grid3x3 className="h-5 w-5" />
@@ -437,10 +463,10 @@ export default function MarketplacePage() {
 
                 <div className="flex flex-wrap gap-2">
                   <span className="text-xs font-semibold text-[hsl(var(--text-secondary))] mr-1">Quick filters:</span>
-                  <button className="px-3 py-1.5 rounded-full text-xs font-semibold text-cyan-200 bg-cyan-400/10 border border-cyan-400/20 hover:bg-cyan-400/20 transition">Trending</button>
-                  <button className="px-3 py-1.5 rounded-full text-xs font-semibold text-white/80 bg-white/5 border border-white/10 hover:bg-white/10 transition">Under 5 SUI</button>
-                  <button className="px-3 py-1.5 rounded-full text-xs font-semibold text-white/80 bg-white/5 border border-white/10 hover:bg-white/10 transition">New Drops</button>
-                  <button className="px-3 py-1.5 rounded-full text-xs font-semibold text-white/80 bg-white/5 border border-white/10 hover:bg-white/10 transition">Legendary</button>
+                  <button className="px-3 py-1.5 rounded-full text-xs font-semibold text-cyan-200 bg-gradient-to-r from-cyan-500/30 to-cyan-600/20 border border-cyan-400/40 hover:from-cyan-500/40 hover:to-cyan-600/30 hover:shadow-lg hover:shadow-cyan-500/20 transition-all">Trending</button>
+                  <button className="px-3 py-1.5 rounded-full text-xs font-semibold text-white/90 bg-gradient-to-r from-white/10 to-white/5 border border-white/20 hover:from-white/15 hover:to-white/10 hover:shadow-lg hover:shadow-white/10 transition-all">Under 5 SUI</button>
+                  <button className="px-3 py-1.5 rounded-full text-xs font-semibold text-white/90 bg-gradient-to-r from-white/10 to-white/5 border border-white/20 hover:from-white/15 hover:to-white/10 hover:shadow-lg hover:shadow-white/10 transition-all">New Drops</button>
+                  <button className="px-3 py-1.5 rounded-full text-xs font-semibold text-amber-200 bg-gradient-to-r from-amber-500/30 to-orange-600/20 border border-amber-400/40 hover:from-amber-500/40 hover:to-orange-600/30 hover:shadow-lg hover:shadow-amber-500/20 transition-all">Legendary</button>
                 </div>
               </div>
 
