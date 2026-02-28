@@ -138,11 +138,12 @@ export default function MintPage() {
             };
             addNft(newNft);
 
+            // ito yung When Minting Success
             toast({
               title: 'Mint Successful! 🎉',
               description: `${name} has been minted on Sui blockchain!`,
             });
-
+            
             setIsMinting(false);
             setName('');
             setDescription('');
@@ -163,6 +164,7 @@ export default function MintPage() {
           },
         }
       );
+      // ito yung  is say when error 
     } catch (error) {
       console.error('Error creating transaction:', error);
       toast({
@@ -196,7 +198,7 @@ export default function MintPage() {
             }} 
           />
         </div>
-
+        
         <div className="max-w-5xl mx-auto space-y-8">
           <div className="space-y-4 animate-slide-in-down">
             <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-gradient-to-r from-cyan-500/20 to-indigo-500/20 border border-cyan-400/40 backdrop-blur-sm">
@@ -208,7 +210,7 @@ export default function MintPage() {
             </div>
             <div className="space-y-2">
               <h1 className="text-5xl md:text-7xl font-bold font-display leading-tight tracking-tight text-white">
-                Create Your
+                Create Your 1st NFT 
                 <span className="block bg-gradient-to-r from-cyan-300 via-indigo-400 to-cyan-400 bg-clip-text text-transparent animate-fade-up" style={{animationDelay: '0.1s'}}>
                   Game NFT
                 </span>
@@ -221,11 +223,11 @@ export default function MintPage() {
         </div>
       </div>
 
-      {/* Content Section */}
+      {/* ito yung Content Section */}
       <div className="flex-1 px-4 md:px-8 py-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid gap-8 lg:grid-cols-2">
-            {/* Left Column - Form */}
+            {/* ito yung  Left Column - Form */}
             <div className="space-y-8">
               <div className="grid gap-3 sm:grid-cols-3 mb-2">
                 <div className="group relative overflow-hidden rounded-xl border border-cyan-400/30 bg-gradient-to-br from-cyan-500/20 to-indigo-500/10 backdrop-blur-md px-4 py-4 transition-all duration-300 hover:border-cyan-400/60 hover:bg-cyan-500/25 hover:shadow-lg hover:shadow-cyan-500/20">
@@ -245,7 +247,7 @@ export default function MintPage() {
                 </div>
               </div>
 
-              {/* Info Cards */}
+              {/* ito yung Info Cards */}
               {account && (
                 <div className="grid gap-4 grid-cols-2">
                   <div className="group relative overflow-hidden rounded-2xl border border-cyan-400/40 bg-gradient-to-br from-cyan-500/20 to-indigo-500/10 backdrop-blur-xl p-4 transition-all duration-300 hover:border-cyan-400/70 hover:shadow-lg hover:shadow-cyan-500/25 hover:-translate-y-1">
@@ -268,6 +270,7 @@ export default function MintPage() {
                     </div>
                   </div>
 
+                  
                   <div className="group relative overflow-hidden rounded-2xl border border-indigo-400/40 bg-gradient-to-br from-indigo-500/20 to-cyan-500/10 backdrop-blur-xl p-4 transition-all duration-300 hover:border-indigo-400/70 hover:shadow-lg hover:shadow-indigo-500/25 hover:-translate-y-1">
                     <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-2xl blur-xl"
                       style={{
@@ -288,7 +291,7 @@ export default function MintPage() {
                 </div>
               )}
 
-              {/* Main Form Card */}
+              {/* ito yung Main Form Card */}
               <div className="group relative overflow-hidden rounded-3xl border border-cyan-400/30 bg-gradient-to-br from-cyan-500/15 to-indigo-500/10 backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/50 hover:shadow-lg hover:shadow-cyan-500/20">
                 <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-3xl blur-xl"
                   style={{
@@ -298,7 +301,7 @@ export default function MintPage() {
                 />
 
                 <div className="p-8 space-y-8">
-                  {/* Header */}
+                  {/* ito yung Header */}
                   <div className="space-y-2">
                     <h2 className="text-2xl md:text-3xl font-bold font-display text-white">NFT Details</h2>
                     <p className="text-[hsl(var(--text-secondary))]">Fill in the information below to create your unique NFT</p>
@@ -323,7 +326,7 @@ export default function MintPage() {
                   )}
             
                   <div className="space-y-6">
-                    {/* Name Input */}
+                    {/* ito yung Name Input */}
                     <div className="space-y-3 group">
                       <Label htmlFor="name" className="font-bold text-white text-sm tracking-tight">NFT Name <span className="text-cyan-400 text-xs">required</span></Label>
                       <div className="relative">
@@ -340,7 +343,7 @@ export default function MintPage() {
                       <p className="text-xs text-white/50 font-light">Keep it concise and memorable (under 30 characters)</p>
                     </div>
 
-                    {/* Description Input */}
+                    {/* ito yung Description Input */}
                     <div className="space-y-3 group">
                       <Label htmlFor="description" className="font-bold text-white text-sm tracking-tight">Description <span className="text-cyan-400 text-xs">required</span></Label>
                       <div className="relative">
@@ -378,7 +381,7 @@ export default function MintPage() {
                       </p>
                     </div>
 
-                    {/* Blockchain Info */}
+                    {/* ito yung  Blockchain Info */}
                     <div className="group relative overflow-hidden rounded-xl border border-cyan-400/40 bg-gradient-to-r from-cyan-500/20 to-indigo-500/10 backdrop-blur-sm p-5 transition-all duration-300 hover:border-cyan-400/70 hover:bg-cyan-500/25 hover:shadow-lg hover:shadow-cyan-500/25 hover:-translate-y-1">
                       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity -z-10 rounded-xl" style={{background: 'radial-gradient(ellipse at center, rgba(0,240,255,0.2), transparent)', pointerEvents: 'none'}}></div>
                       <div className="flex gap-3">
@@ -398,7 +401,7 @@ export default function MintPage() {
                   </div>
                 </div>
 
-                {/* Footer */}
+                {/* ito yung Footer */}
                 <div className="border-t border-cyan-400/20 bg-gradient-to-t from-cyan-500/15 via-white/5 to-transparent p-8">
                   <Button
                     className="w-full font-bold text-lg h-14 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-600 hover:to-indigo-700 text-white shadow-xl shadow-cyan-500/50 hover:shadow-2xl hover:shadow-cyan-500/60 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 active:scale-95"
@@ -428,7 +431,7 @@ export default function MintPage() {
               </div>
             </div>
 
-            {/* Right Column - Live Preview */}
+            {/* ito yung Right Column - Live Preview */}
             <div className="space-y-4 lg:sticky lg:top-24 lg:self-start">
               <div className="space-y-2">
                 <h3 className="text-xl font-bold font-display text-white">Live Preview</h3>
@@ -449,7 +452,7 @@ export default function MintPage() {
                 {/* ito yung Image container */}
                 <div className="relative aspect-square w-full flex-shrink-0 overflow-hidden bg-gradient-to-br from-white/5 to-white/[0.02]">
                   {imageUrl ? (
-                    <img
+                    <img 
                       src={imageUrl}
                       alt={name || 'Preview'}
                       className="object-cover w-full h-full transition-all duration-700 ease-out group-hover:scale-[1.15] group-hover:brightness-110 group-hover:saturate-110"
@@ -458,7 +461,7 @@ export default function MintPage() {
                       }}
                     />
                   ) : (
-
+                    
                     // div
                     <div className="flex h-full w-full items-center justify-center">
                       <div className="text-center space-y-2">
@@ -468,10 +471,11 @@ export default function MintPage() {
                     </div>
                   )}
                   
-                  {/* Enhanced gradient overlay for depth */}
+                  {/* ito yung Enhanced gradient overlay for depth */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                 </div>  
                 
+                {/* ito yung CardHeader */}
                 <CardHeader className="space-y-2 pb-2">
                   <CardTitle className="line-clamp-2 text-lg md:text-xl font-bold font-display tracking-tight leading-snug">
                     {name || 'Your NFT Name'}
@@ -484,7 +488,7 @@ export default function MintPage() {
                 <CardContent className="flex-grow pb-3">
                   <div className="px-3 py-2 rounded-lg bg-gradient-to-r from-cyan-500/20 to-indigo-500/10 border border-cyan-400/40">
                     <span className="text-xs font-semibold text-cyan-300 tracking-wide">
-                      Ready to Mint 
+                      Ready to Minting
                     </span>
                   </div>
                 </CardContent>
@@ -514,3 +518,4 @@ export default function MintPage() {
     </div>
   );
 }
+

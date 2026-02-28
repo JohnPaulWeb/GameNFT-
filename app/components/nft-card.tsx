@@ -100,7 +100,7 @@ export function NftCard({ nft, children, className }: NftCardProps) {
           fill
           className={cn(
             'object-cover transition-all duration-700 ease-out',
-            'group-hover:scale-[1.18] group-hover:brightness-125 group-hover:saturate-125',
+            'group-hover:scale-[1.08] group-hover:brightness-110 group-hover:saturate-110',
             imageLoaded ? 'opacity-100' : 'opacity-0'
           )}
           data-ai-hint={nft.imageHint}

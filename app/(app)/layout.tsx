@@ -13,16 +13,16 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           {/* Animated Background Layers */}
           <div className="fixed inset-0 pointer-events-none overflow-hidden">
             {/* Aurora effect - top left */}
-            <div 
+            <div
               className="absolute -top-1/2 -left-1/2 w-full h-full rounded-full opacity-20 blur-3xl"
               style={{
                 background: 'radial-gradient(circle, rgba(99, 102, 241, 0.3), rgba(187, 100, 253, 0.2), transparent)',
                 animation: 'aurora 20s ease-in-out infinite',
               }}
             />
-            
+
             {/* Glow effection - top right */}
-            <div 
+            <div
               className="absolute -top-1/3 -right-1/3 w-2/3 h-2/3 rounded-full opacity-15 blur-3xl"
               style={{
                 background: 'radial-gradient(circle, rgba(16, 240, 252, 0.4), rgba(99, 102, 241, 0.2), transparent)',
@@ -30,9 +30,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 animationDelay: '2s',
               }}
             />
-            
+
             {/* Bottom accent glow */}
-            <div 
+            <div
               className="absolute -bottom-1/2 left-1/3 w-2/3 h-2/3 rounded-full opacity-10 blur-3xl"
               style={{
                 background: 'radial-gradient(circle, rgba(236, 72, 153, 0.3), rgba(245, 158, 11, 0.2), transparent)',
@@ -43,7 +43,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
             {/* Floating particles */}
             {[...Array(5)].map((_, i) => (
-              <div 
+              <div
                 key={i}
                 className="absolute w-1 h-1 bg-cyan-400/30 rounded-full"
                 style={{

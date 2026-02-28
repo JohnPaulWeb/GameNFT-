@@ -323,23 +323,23 @@ export default function MarketplacePage() {
             </div>
 
             {/* Total Volume Stat */}
-            <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-6 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-lg hover:shadow-cyan-500/20 hover:-translate-y-1">
+            <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-6 transition-all duration-300 hover:border-amber-400/50 hover:shadow-lg hover:shadow-amber-500/20 hover:-translate-y-1">
               <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-2xl blur-xl"
                 style={{
-                  background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.2) 0%, transparent 70%)',
+                  background: 'radial-gradient(circle at center, rgba(245, 158, 11, 0.2) 0%, transparent 70%)',
                   pointerEvents: 'none',
                 }}
               />
               <div className="relative z-10 flex items-start justify-between">
                 <div>
-                  <p className="text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-2">Total Volume</p>
+                  <p className="text-xs font-semibold text-amber-300 uppercase tracking-wider mb-2">Total Volume</p>
                   <p className="text-3xl md:text-4xl font-bold font-display text-white">
                     {listings.reduce((sum, l) => sum + l.price, 0).toFixed(0)}
                   </p>
-                  <p className="text-xs text-cyan-300 mt-1">SUI</p>
+                  <p className="text-xs text-amber-300 mt-1">SUI</p>
                 </div>
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-400/30 to-cyan-500/10 border border-cyan-400/30">
-                  <TrendingUp className="h-6 w-6 text-cyan-300" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-amber-400/30 to-yellow-500/10 border border-amber-400/30">
+                  <TrendingUp className="h-6 w-6 text-amber-300" />
                 </div>
               </div>
             </div>
@@ -368,16 +368,16 @@ export default function MarketplacePage() {
 
             {/* Connected Wallet Stat */}
             {account && (
-              <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-6 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-lg hover:shadow-cyan-500/20 hover:-translate-y-1">
+              <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-6 transition-all duration-300 hover:border-emerald-400/50 hover:shadow-lg hover:shadow-emerald-500/20 hover:-translate-y-1">
                 <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-2xl blur-xl"
                   style={{
-                    background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.2) 0%, transparent 70%)',
+                    background: 'radial-gradient(circle at center, rgba(16, 185, 129, 0.2) 0%, transparent 70%)',
                     pointerEvents: 'none',
                   }}
                 />
                 <div className="relative z-10 flex items-start justify-between">
                   <div className="flex-1">
-                    <p className="text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-2">Connected Wallet</p>
+                    <p className="text-xs font-semibold text-emerald-300 uppercase tracking-wider mb-2">Connected Wallet</p>
                     <p className="truncate font-mono text-sm font-semibold text-white">
                       {account.address.slice(0, 8)}...
                     </p>
@@ -385,8 +385,8 @@ export default function MarketplacePage() {
                       {account.address.slice(-8)}
                     </p>
                   </div>
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-400/30 to-cyan-500/10 border border-cyan-400/30 flex-shrink-0">
-                    <Wallet className="h-6 w-6 text-cyan-300" />
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-400/30 to-emerald-500/10 border border-emerald-400/30 flex-shrink-0">
+                    <Wallet className="h-6 w-6 text-emerald-300" />
                   </div>
                 </div>
               </div>

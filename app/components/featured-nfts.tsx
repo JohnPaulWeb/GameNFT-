@@ -21,7 +21,7 @@ interface FeaturedNFTsProps {
 
 export function FeaturedNFTs({ items = [], onItemClick }: FeaturedNFTsProps) {
   // Sample featured items if none provided
-  const featuredItems = items.length > 0 ? items : [
+  const featuredItems =  items.length > 0 ? items : [
     {
       id: '1',
       name: 'Legendary Dragon',

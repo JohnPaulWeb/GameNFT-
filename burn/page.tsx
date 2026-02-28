@@ -296,6 +296,7 @@ export default function BurnPage() {
               >
                 I understand this action is <strong>permanent and irreversible</strong>.
                 I confirm I want to burn this NFT forever.
+
               </Label>
             </div>
           </div>
@@ -314,13 +315,14 @@ export default function BurnPage() {
             ) : !account ? (
               <>
                 <Wallet className="mr-2 h-4 w-4" />
-                Connect Wallet to Burn
+                Connect Wallet to Burn 
               </>
             ) : (
               <>
                 <Flame className="mr-2 h-4 w-4" />
-                Burn NFT Forever
+                Burn NFT 
               </>
+              
             )}
           </Button>
         </CardFooter>

@@ -301,72 +301,72 @@ export default function MyNftsPage() {
             <h1 className="text-4xl md:text-6xl font-bold font-display leading-tight tracking-tight text-white">
               My NFTs
               <span className="block text-2xl md:text-3xl font-normal text-[hsl(var(--text-secondary))] mt-2">
-                Manage your exclusive digital assets 
+                Manage your exclusive Digital assets 
               </span>
             </h1>
           </div>
         </div>
       </div>
-
-      {/* Stats Section */}
+      
+      {/* ito yung Stats Section */}
       <div className="px-4 md:px-8 py-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {/* Total NFTs */}
-            <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-6 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-lg">
+            <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-6 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-lg hover:shadow-cyan-500/20">
               <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-2xl blur-xl"
                 style={{
-                  background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.1) 0%, transparent 70%)',
+                  background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.2) 0%, transparent 70%)',
                   pointerEvents: 'none',
                 }}
               />
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-sm font-medium text-[hsl(var(--text-secondary))] mb-2">Total NFTs</p>
+                  <p className="text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-2">Total NFTs</p>
                   <p className="text-3xl md:text-4xl font-bold font-display text-white">{myNfts.length}</p>
                 </div>
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-cyan-400/10 border border-cyan-400/20">
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400/30 to-cyan-500/10 border border-cyan-400/30">
                   <Package className="h-6 w-6 text-cyan-300" />
                 </div>
               </div>
             </div>
 
-            {/* Listed Items */}
-            <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-6 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-lg">
+            {/* ito yung  Listed Items */}
+            <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-6 transition-all duration-300 hover:border-indigo-400/50 hover:shadow-lg hover:shadow-indigo-500/20">
               <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-2xl blur-xl"
                 style={{
-                  background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.1) 0%, transparent 70%)',
+                  background: 'radial-gradient(circle at center, rgba(99, 102, 241, 0.2) 0%, transparent 70%)',
                   pointerEvents: 'none',
                 }}
               />
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-sm font-medium text-[hsl(var(--text-secondary))] mb-2">Listed</p>
+                  <p className="text-xs font-semibold text-indigo-300 uppercase tracking-wider mb-2">Listed</p>
                   <p className="text-3xl md:text-4xl font-bold font-display text-white">{myNfts.filter(n => n.isListed).length}</p>
                 </div>
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-cyan-400/10 border border-cyan-400/20">
-                  <Tag className="h-6 w-6 text-cyan-300" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-400/30 to-indigo-500/10 border border-indigo-400/30">
+                  <Tag className="h-6 w-6 text-indigo-300" />
                 </div>
               </div>
             </div>
 
-            {/* Connected Wallet */}
-            <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-6 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-lg col-span-1 sm:col-span-2 lg:col-span-1">
+            {/* ito yungc Connected Wallet */}
+            <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-6 transition-all duration-300 hover:border-emerald-400/50 hover:shadow-lg hover:shadow-emerald-500/20 col-span-1 sm:col-span-2 lg:col-span-1">
               <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-2xl blur-xl"
                 style={{
-                  background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.1) 0%, transparent 70%)',
+                  background: 'radial-gradient(circle at center, rgba(16, 185, 129, 0.2) 0%, transparent 70%)',
                   pointerEvents: 'none',
                 }}
               />
               <div className="flex items-start justify-between">
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-[hsl(var(--text-secondary))] mb-1">Connected Wallet</p>
-                  <p suppressHydrationWarning className="truncate font-mono text-sm font-semibold text-cyan-300">
+                  <p className="text-xs font-semibold text-emerald-300 uppercase tracking-wider mb-1">Connected Wallet</p>
+                  <p suppressHydrationWarning className="truncate font-mono text-sm font-semibold text-white">
                     {account.address.slice(0, 8)}...{account.address.slice(-6)}
                   </p>
                 </div>
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-cyan-400/10 border border-cyan-400/20 flex-shrink-0">
-                  <Wallet className="h-6 w-6 text-cyan-300" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-400/30 to-emerald-500/10 border border-emerald-400/30 flex-shrink-0">
+                  <Wallet className="h-6 w-6 text-emerald-300" />
                 </div>
               </div>
             </div>
@@ -374,12 +374,12 @@ export default function MyNftsPage() {
         </div>
       </div>
 
-      {/* Content Section */}
+      {/*ito yung Content Section */}
       <div className="flex-1 px-4 md:px-8 py-8">
         <div className="max-w-7xl mx-auto">
           {myNfts.length > 0 ? (
             <div className="space-y-6 animate-fade-in">
-              {/* Section Header */}
+              {/*ito yung  Section Header */}
               <div>
                 <h2 className="text-2xl md:text-3xl font-bold font-display text-white">Your Collection</h2>
                 <p className="text-sm text-[hsl(var(--text-secondary))] mt-1">
@@ -423,7 +423,7 @@ export default function MyNftsPage() {
                             onClick={() => setBurnNftId(nft.id)}
                           >
                             <Flame className="mr-2 h-4 w-4" />
-                            Burn NFT
+                            Burn NFT 
                           </Button>
                         )}
                       </div>
@@ -456,7 +456,7 @@ export default function MyNftsPage() {
         </div>
       </div>
 
-      {/* LIST DIALOG */}
+      {/* ito yung LIST DIALOG */}
       <Dialog open={!!selectedNft} onOpenChange={() => { setSelectedNft(null); setPrice(''); }}>
         <DialogContent className="sm:max-w-md rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl">
           <DialogHeader className="space-y-3">
@@ -497,7 +497,7 @@ export default function MyNftsPage() {
         </DialogContent>
       </Dialog>
 
-      {/* BURN CONFIRMATION DIALOG */}
+      {/*ito yung  BURN CONFIRMATION DIALOG */}
       <Dialog open={!!burnNftId} onOpenChange={() => setBurnNftId(null)}>
         <DialogContent className="sm:max-w-md rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl">
           <DialogHeader className="space-y-3">
@@ -513,7 +513,7 @@ export default function MyNftsPage() {
           </div>
           <DialogFooter className="gap-2 sm:gap-0">
             <Button variant="ghost" size="lg" onClick={() => setBurnNftId(null)} disabled={isBurning}>
-              Cancel
+              Cancel   
             </Button>
             <Button variant="destructive" size="lg" onClick={handleBurn} disabled={isBurning}>
               <Flame className="mr-2 h-4 w-4" />
