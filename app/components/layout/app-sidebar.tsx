@@ -68,11 +68,11 @@ export function AppSidebar() {
   });
 
   
-  // ito naman yung user profile
+  // User profile section
   const UserProfile = () => {
     if (!account) {
       return (
-        <div className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/[0.08]">
+        <div className="flex items-center gap-3 p-3 rounded-lg bg-[hsl(var(--bg-secondary))] border border-[hsl(var(--border-default))]">
           <Skeleton className="h-9 w-9 rounded-full" />
           <div className="flex w-full flex-col gap-1.5">
             <Skeleton className="h-3.5 w-3/4" />
@@ -85,28 +85,28 @@ export function AppSidebar() {
     const balanceInSui = coinBalance ? (Number(coinBalance.totalBalance) / 1_000_000_000).toFixed(2) : '0.00';
 
     return (
-      <div className="flex items-center gap-3 p-3 rounded-xl border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.07] transition-colors duration-200 group">
+      <div className="flex items-center gap-3 p-3 rounded-lg border border-[hsl(var(--border-default))] bg-[hsl(var(--bg-secondary))] hover:bg-[hsl(var(--bg-tertiary))] transition-colors duration-200 group">
         <div className="relative shrink-0">
-          <Avatar className="h-9 w-9 border border-cyan-400/30">
+          <Avatar className="h-9 w-9 border border-[hsl(var(--accent-indigo)_/_0.3)]">
             <AvatarImage
               src={`https://api.dicebear.com/8.x/pixel-art/svg?seed=${account.address}`}
               alt="User Avatar"
               data-ai-hint="user avatar"
             />
-            <AvatarFallback className="bg-cyan-400/10 text-cyan-300 font-bold text-xs">{account.address.slice(2, 4).toUpperCase()}</AvatarFallback>
+            <AvatarFallback className="bg-[hsl(var(--accent-indigo)_/_0.1)] text-[hsl(var(--accent-indigo))] font-medium text-xs">{account.address.slice(2, 4).toUpperCase()}</AvatarFallback>
           </Avatar>
-          <div className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-400 border-2 border-[hsl(var(--bg-void))]" />
+          <div className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-[hsl(var(--accent-emerald))] border-2 border-[hsl(var(--bg-primary))]" />
         </div>
         <div className="flex flex-col overflow-hidden flex-1 min-w-0">
-          <span className="font-semibold truncate text-xs text-white/90">
+          <span className="font-medium truncate text-xs text-white">
             {account.label || `${account.address.slice(0, 6)}...${account.address.slice(-4)}`}
           </span>
-          <div className="flex items-center gap-1 text-xs text-white/50">
-            <Wallet className="size-3 text-cyan-400/70" />
+          <div className="flex items-center gap-1 text-xs text-[hsl(var(--text-secondary))]">
+            <Wallet className="size-3 text-[hsl(var(--accent-indigo))]" />
             {isLoading ? (
-              <span className="text-white/40">...</span>
+              <span className="text-[hsl(var(--text-muted))]">...</span>
             ) : (
-              <><span className="text-cyan-300/90">{balanceInSui}</span><span className="ml-0.5">SUI</span></>
+              <><span className="text-[hsl(var(--accent-cyan))]">{balanceInSui}</span><span className="ml-0.5">SUI</span></>
             )}
           </div>
         </div>
@@ -124,22 +124,19 @@ export function AppSidebar() {
   }
 // dito magsisimula yung code mo 
   return (
-    <Sidebar collapsible="none" className="border-r border-white/[0.08] bg-[hsl(var(--bg-void))]">
-      {/* ito naman yung sidebarHeader */}
-      <SidebarHeader className="border-b border-white/[0.07]">
-        <div className="flex items-center gap-3 px-4 py-4">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-cyan-400/10 border border-cyan-400/25">
-            <span className="text-base font-bold text-cyan-300">◆</span>
+    <Sidebar collapsible="none" className="border-r border-[hsl(var(--border-subtle))] bg-[hsl(var(--bg-primary))]">
+      <SidebarHeader className="border-b border-[hsl(var(--border-subtle))] p-0">
+        <div className="flex items-center gap-3 px-4 py-5">
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[hsl(var(--accent-indigo)_/_0.1)] border border-[hsl(var(--accent-indigo)_/_0.25)]">
+            <span className="text-base font-semibold text-[hsl(var(--accent-indigo))]">◆</span>
           </div>
           <div className="flex flex-col">
-            <span className="text-base font-bold font-display text-white leading-tight tracking-tight">SuiPlay</span>
-            <span className="text-[10px] text-white/40 font-medium tracking-wider uppercase">NFT Marketplace</span>
+            <span className="text-base font-semibold font-display text-white leading-tight tracking-tight">SuiPlay</span>
+            <span className="text-[10px] text-[hsl(var(--text-muted))] font-medium tracking-wider uppercase">Marketplace</span>
           </div>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent" />
       </SidebarHeader>
 
-      {/* ito naman yung sidebarcontent */}
       <SidebarContent className="gap-0 px-0">
         <SidebarMenu className="gap-1 px-3 py-4">
           {menuItems.map((item) => (
@@ -149,25 +146,25 @@ export function AppSidebar() {
                 isActive={pathname === item.href}
                 tooltip={item.label}
                 className={cn(
-                  "rounded-lg transition-colors duration-150 font-medium text-white/50 hover:text-white hover:bg-white/[0.07]",
-                  pathname === item.href && "bg-cyan-400/10 border border-cyan-400/25 text-cyan-200 hover:text-cyan-100 hover:bg-cyan-400/15"
+                  "rounded-lg transition-colors duration-150 font-medium text-[hsl(var(--text-secondary))] hover:text-white hover:bg-[hsl(var(--bg-secondary))]",
+                  pathname === item.href && "bg-[hsl(var(--accent-indigo)_/_0.1)] border border-[hsl(var(--accent-indigo)_/_0.25)] text-[hsl(var(--accent-indigo))] hover:text-[hsl(var(--accent-indigo))] hover:bg-[hsl(var(--accent-indigo)_/_0.15)]"
                 )}
               >
                 <Link href={item.href} className="flex items-center gap-3 px-3 py-2.5 w-full">
                   <div className={cn(
                     "flex h-8 w-8 items-center justify-center rounded-md transition-colors duration-150",
                     pathname === item.href
-                      ? "bg-cyan-400/15 border border-cyan-400/30"
-                      : "bg-white/[0.05] border border-white/[0.08]"
+                      ? "bg-[hsl(var(--accent-indigo)_/_0.15)] border border-[hsl(var(--accent-indigo)_/_0.3)]"
+                      : "bg-[hsl(var(--bg-secondary))] border border-[hsl(var(--border-default))]"
                   )}>
                     <item.icon className={cn(
                       "h-4 w-4",
-                      pathname === item.href ? "text-cyan-300" : "text-white/50"
+                      pathname === item.href ? "text-[hsl(var(--accent-indigo))]" : "text-[hsl(var(--text-secondary))]"
                     )} />
                   </div>
                   <span className="flex-1 text-sm font-medium">{item.label}</span>
                   {pathname === item.href && (
-                    <div className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
+                    <div className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--accent-indigo))]" />
                   )}
                 </Link>
               </SidebarMenuButton>
@@ -175,7 +172,7 @@ export function AppSidebar() {
           ))}
         </SidebarMenu>
       </SidebarContent>
-      <SidebarFooter className="border-t border-white/[0.07] p-3">
+      <SidebarFooter className="border-t border-[hsl(var(--border-subtle))] p-3">
         <UserProfile />
       </SidebarFooter>
     </Sidebar>
