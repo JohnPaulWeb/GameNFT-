@@ -251,11 +251,9 @@ export default function MarketplacePage() {
   // dito magsisimula yung code mo here
 
   return (
-
-
-<div className="relative min-h-screen w-full">
-      <section className="px-6 pb-8 pt-10 md:px-8 md:pb-10 md:pt-12">
-        <div className="mx-auto flex max-w-7xl flex-col gap-6 md:flex-row md:items-end md:justify-between">
+    <div className="w-full">
+      <section className="px-6 pb-8 pt-8 md:px-8 md:pb-10 md:pt-10 max-w-7xl mx-auto w-full">
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 rounded-full border border-[hsl(var(--border-default))] bg-[hsl(var(--bg-secondary))] px-3 py-1.5">
               <span className="h-2 w-2 rounded-full bg-[hsl(var(--accent-indigo))]" />
@@ -280,8 +278,8 @@ export default function MarketplacePage() {
         </div>
       </section>
 
-      <section className="px-6 pb-8 md:px-8 md:pb-10">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-3 sm:grid-cols-3">
+      <section className="px-6 pb-8 md:px-8 md:pb-10 max-w-7xl mx-auto w-full">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           <div className="rounded-lg border border-[hsl(var(--border-default))] bg-[hsl(var(--bg-secondary))] p-5">
             <div className="mb-3 flex items-center justify-between">
               <p className="text-xs font-medium uppercase tracking-wider text-[hsl(var(--text-secondary))]">Listed</p>
@@ -322,8 +320,8 @@ export default function MarketplacePage() {
         </div>
       </section>
 
-      <section className="px-4 pb-12 md:px-8 md:pb-16">
-        <div className="mx-auto max-w-7xl">
+      <section className="px-6 pb-12 md:px-8 md:pb-16 max-w-7xl mx-auto w-full">
+        <div>
           {isLoading ? (
             // ito naman yung skeleton loader kapag naglo-load pa ng listings
             <div className="space-y-6">
