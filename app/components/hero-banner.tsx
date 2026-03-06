@@ -19,108 +19,100 @@ export function HeroBanner({ onExplore, stats }: HeroBannerProps) {
   ];
 
   return (
-    <div className="relative w-full h-auto min-h-[500px] md:min-h-[600px] overflow-hidden rounded-3xl">
+    <div className="relative w-full h-auto min-h-[450px] md:min-h-[550px] overflow-hidden rounded-2xl">
       {/* Background Elements */}
       <div className="absolute inset-0 -z-10">
-        {/* Gradient Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0c0e18] via-[#1a1f3a] to-[#0a0c14]" />
+        {/* Refined Gradient Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0D0D0D] via-[#141414] to-[#0A0A0A]" />
 
-        {/* Animated Gradient Orbs */}
+        {/* Subtle Animated Orbs */}
         <div 
-          className="absolute top-0 right-1/4 w-96 h-96 rounded-full opacity-30 blur-3xl"
+          className="absolute top-0 right-1/4 w-96 h-96 rounded-full opacity-15 blur-3xl"
           style={{
-            background: 'radial-gradient(circle, rgba(16, 240, 252, 0.4), transparent)',
-            animation: 'aurora 20s ease-in-out infinite',
+            background: 'radial-gradient(circle, rgba(74, 123, 167, 0.3), transparent)',
+            animation: 'aurora 25s ease-in-out infinite',
           }}
         />
         
-        {/* ito naman yung div */}
         <div 
-          className="absolute -bottom-32 left-1/3 w-80 h-80 rounded-full opacity-20 blur-3xl"
+          className="absolute -bottom-32 left-1/3 w-80 h-80 rounded-full opacity-10 blur-3xl"
           style={{
-            background: 'radial-gradient(circle, rgba(99, 102, 241, 0.3), transparent)',
-            animation: 'glow-pulse 15s ease-in-out infinite',
+            background: 'radial-gradient(circle, rgba(212, 163, 115, 0.25), transparent)',
+            animation: 'glow-pulse 20s ease-in-out infinite',
             animationDelay: '3s',
           }}
         />
 
-        {/* Grid Pattern */}
+        {/* Minimal Grid Pattern */}
         <div 
-          className="absolute inset-0 opacity-5"
+          className="absolute inset-0 opacity-[0.03]"
           style={{
-            backgroundImage: 'linear-gradient(0deg, transparent 24%, rgba(0, 240, 255, 0.1) 25%, rgba(0, 240, 252, 0.1) 26%, transparent 27%, transparent 74%, rgba(0, 240, 255, 0.1) 75%, rgba(0, 240, 252, 0.1) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(0, 240, 255, 0.1) 25%, rgba(0, 240, 252, 0.1) 26%, transparent 27%, transparent 74%, rgba(0, 240, 255, 0.1) 75%, rgba(0, 240, 252, 0.1) 76%, transparent 77%, transparent)',
-            backgroundSize: '50px 50px',
-            animation: 'drift 20s linear infinite',
+            backgroundImage: 'linear-gradient(0deg, transparent 24%, rgba(212, 163, 115, 0.08) 25%, rgba(212, 163, 115, 0.08) 26%, transparent 27%, transparent 74%, rgba(212, 163, 115, 0.08) 75%, rgba(212, 163, 115, 0.08) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(212, 163, 115, 0.08) 25%, rgba(212, 163, 115, 0.08) 26%, transparent 27%, transparent 74%, rgba(212, 163, 115, 0.08) 75%, rgba(212, 163, 115, 0.08) 76%, transparent 77%, transparent)',
+            backgroundSize: '80px 80px',
           }}
         />
       </div>
 
       {/* Content */}
-      <div className="relative h-full min-h-[500px] md:min-h-[600px] flex flex-col justify-between p-8 md:p-12">
+      <div className="relative h-full min-h-[450px] md:min-h-[550px] flex flex-col justify-between p-8 md:p-12">
         {/* Main Content */}
-        <div className="flex-1 flex flex-col justify-center max-w-2xl space-y-8">
+        <div className="flex-1 flex flex-col justify-center max-w-3xl space-y-6">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 w-fit px-3 py-1.5 rounded-full bg-cyan-400/10 border border-cyan-400/30 animate-fade-up">
-            <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-            <span className="text-sm font-semibold text-cyan-300 uppercase tracking-wider">Premium NFT Marketplace</span>
+          <div className="inline-flex items-center gap-2 w-fit px-3 py-1.5 rounded-full bg-[hsl(var(--accent-indigo)_/_0.08)] border border-[hsl(var(--accent-indigo)_/_0.25)] animate-fade-up">
+            <div className="w-2 h-2 rounded-full bg-[hsl(var(--accent-indigo))] animate-pulse" />
+            <span className="text-xs font-medium text-[hsl(var(--accent-indigo))] uppercase tracking-wider">Premium NFT Marketplace</span>
           </div>
 
-          {/* ito naman yung Main Head */}
-          <div className="space-y-4 animate-fade-up" style={{ animationDelay: '0.1s' }}>
-            <h1 className="text-5xl md:text-7xl font-bold font-display leading-tight tracking-tight text-white">
-              <span className="block mb-2 text-2xl md:text-3xl font-normal text-[hsl(var(--text-secondary))]">
+          {/* Main Heading */}
+          <div className="space-y-3 animate-fade-up" style={{ animationDelay: '0.1s' }}>
+            <h1 className="text-5xl md:text-6xl font-medium font-display leading-tight tracking-tight text-white">
+              <span className="block mb-2 text-lg font-normal text-[hsl(var(--text-secondary))]">
                 Welcome to
               </span>
-              <span className="bg-gradient-to-r from-cyan-300 via-cyan-400 to-indigo-500 bg-clip-text text-transparent">
+              <span className="text-gradient-brand">
                 SuiPlay NFT
               </span>
             </h1>
           </div>
 
-          {/* ito naman yung Description */}
-          <p className="text-lg md:text-xl text-[hsl(var(--text-secondary))] max-w-xl leading-relaxed animate-fade-up" style={{ animationDelay: '0.2s' }}>
-            Experience the future of digital collectibles. Trade rare NFTs, discover exclusive items, and join the most vibrant Web3 community powered by Sui blockchain.
+          {/* Description */}
+          <p className="text-base md:text-lg text-[hsl(var(--text-secondary))] max-w-2xl leading-relaxed animate-fade-up font-light" style={{ animationDelay: '0.2s' }}>
+            Trade curated digital collectibles on the Sui blockchain. Experience seamless transactions, transparent pricing, and a thriving community of collectors and creators.
           </p>
 
-          {/* ito naman yung CTA buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 animate-fade-up" style={{ animationDelay: '0.3s' }}>
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-3 animate-fade-up pt-2" style={{ animationDelay: '0.3s' }}>
             <Button
               onClick={onExplore}
-              className="group bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-400 hover:to-cyan-500 text-white font-semibold text-base px-8 py-6 rounded-xl shadow-xl shadow-cyan-500/30 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/50 hover:-translate-y-1"
+              className="group btn-primary"
             >
-              {/* ito naman yung icon  */}
-              <Sparkles className="h-5 w-5 mr-2" />
+              <Sparkles className="h-4 w-4 mr-2" />
               Explore Marketplace
-              <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-0.5 transition-transform" />
             </Button>
-            {/* ito naman yung button */}
             <Button
               variant="outline"
-              className="border-white/20 hover:border-cyan-400/50 text-white hover:text-cyan-300 font-semibold text-base px-8 py-6 rounded-xl hover:bg-cyan-400/10 transition-all duration-300"
+              className="btn-outline"
             >
               Learn More
             </Button>
           </div>
         </div>
 
-        {/* ito naman yung stats bar botoom*/}
-        <div className="grid grid-cols-3 gap-4 pt-8 border-t border-white/10 animate-fade-up" style={{ animationDelay: '0.4s' }}>
+        {/* Stats Bar */}
+        <div className="grid grid-cols-3 gap-4 pt-8 border-t border-[hsl(var(--border-default))] animate-fade-up" style={{ animationDelay: '0.4s' }}>
           {defaultStats.map((stat, index) => (
-            <div key={index} className="group relative flex flex-col gap-1 p-4 rounded-xl bg-gradient-to-br from-white/5 to-white/2 border border-white/10 hover:border-cyan-400/50 hover:bg-gradient-to-br hover:from-white/8 hover:to-white/3 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/10">
-              <span className="text-xs font-semibold text-[hsl(var(--text-secondary))] uppercase tracking-wider">
+            <div key={index} className="group relative flex flex-col gap-1 p-4 rounded-lg bg-gradient-to-br from-[hsl(var(--bg-secondary)_/_0.6)] to-[hsl(var(--bg-tertiary)_/_0.4)] border border-[hsl(var(--border-subtle))] hover:border-[hsl(var(--accent-indigo)_/_0.3)] transition-all duration-300 hover:bg-gradient-to-br hover:from-[hsl(var(--bg-secondary)_/_0.8)] hover:to-[hsl(var(--bg-tertiary)_/_0.6)]">
+              <span className="text-xs font-medium text-[hsl(var(--text-secondary))] uppercase tracking-wider">
                 {stat.label}
               </span>
-              <span className="text-lg md:text-2xl font-bold font-display text-white">
+              <span className="text-lg md:text-2xl font-semibold font-display text-white">
                 {stat.value}
               </span>
             </div>
           ))}
         </div>
       </div>
-
-      {/* ito naman yung Decorative Elements */}
-      <div className="absolute top-8 left-8 w-20 h-20 rounded-full border border-cyan-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      <div className="absolute bottom-8 right-8 w-16 h-16 rounded-full border border-indigo-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
     </div>
   );
 }

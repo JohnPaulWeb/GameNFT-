@@ -9,92 +9,92 @@
 @layer base {
   :root {
     /* =============================================
-       BACKGROUND SYSTEM — Deep obsidian with depth
+       BACKGROUND SYSTEM — Premium dark with refined contrast
     ============================================= */
-    --bg-void: 220 20% 3%; /* #060810 - true deep black-blue */
-    --bg-primary: 222 18% 6%; /* #0C0E18 - main background */
-    --bg-secondary: 224 16% 10%; /* #161922 - elevated surface */
-    --bg-tertiary: 226 14% 14%; /* #1E2130 - card/panel surface */
-    --bg-elevated: 228 12% 18%; /* #272B3C - hover/active surface */
+    --bg-void: 0 0% 3%; /* #0A0A0A - true black */
+    --bg-primary: 0 0% 5%; /* #0D0D0D - main background */
+    --bg-secondary: 0 0% 8%; /* #141414 - elevated surface */
+    --bg-tertiary: 0 0% 11%; /* #1C1C1C - card/panel surface */
+    --bg-elevated: 0 0% 14%; /* #242424 - hover/active surface */
 
     /* =============================================
-       MULTI-ACCENT COLOR SYSTEM
-       Inspired by Foundation / SuperRare / Blur
+       REFINED ACCENT COLOR SYSTEM
+       Premium Web3 marketplace aesthetic
     ============================================= */
 
-    /* — Accent 1: Electric Indigo (primary brand) */
-    --accent-indigo: 248 100% 69%; /* #6366F1 */
-    --accent-indigo-light: 248 100% 80%; /* #A5B4FC */
-    --accent-indigo-dim: 248 80% 20%; /* subtle bg tint */
+    /* — Accent 1: Refined Slate (primary brand) */
+    --accent-indigo: 210 40% 48%; /* #4A7BA7 - sophisticated blue */
+    --accent-indigo-light: 210 40% 65%; /* #7FA8C9 */
+    --accent-indigo-dim: 210 30% 20%; /* subtle bg tint */
 
-    /* — Accent 2: Luminous Cyan (interactive/links) */
-    --accent-cyan: 187 100% 53%; /* #10F0FC */
-    --accent-cyan-light: 187 100% 75%; /* #7FF8FD */
-    --accent-cyan-dim: 187 80% 12%; /* subtle bg tint */
+    /* — Accent 2: Soft Bronze (premium highlight) */
+    --accent-cyan: 28 85% 60%; /* #D4A373 - warm bronze */
+    --accent-cyan-light: 28 85% 75%; /* #E5C4A0 */
+    --accent-cyan-dim: 28 70% 15%; /* subtle bg tint */
 
-    /* — Accent 3: Violet-Rose (rare/premium badge) */
-    --accent-rose: 320 90% 65%; /* #EC4899 */
-    --accent-rose-light: 320 90% 80%; /* #F9A8D4 */
-    --accent-rose-dim: 320 70% 15%; /* subtle bg tint */
+    /* — Accent 3: Muted Rose (rare/premium) */
+    --accent-rose: 0 45% 60%; /* #C26666 - sophisticated rose */
+    --accent-rose-light: 0 45% 75%; /* #D88888 */
+    --accent-rose-dim: 0 35% 15%; /* subtle bg tint */
 
-    /* — Accent 4: Amber-Gold (price/value highlights) */
-    --accent-gold: 38 95% 58%; /* #F59E0B */
-    --accent-gold-light: 38 95% 75%; /* #FCD34D */
-    --accent-gold-dim: 38 80% 12%; /* subtle bg tint */
+    /* — Accent 4: Refined Gold (value highlights) */
+    --accent-gold: 36 85% 55%; /* #D4A574 - refined gold */
+    --accent-gold-light: 36 85% 70%; /* #E5C4A0 */
+    --accent-gold-dim: 36 75% 12%; /* subtle bg tint */
 
-    /* — Accent 5: Emerald (success/verified) */
-    --accent-emerald: 158 80% 45%; /* #10B981 */
-    --accent-emerald-light: 158 80% 65%; /* #6EE7B7 */
-    --accent-emerald-dim: 158 60% 10%; /* subtle bg tint */
+    /* — Accent 5: Muted Emerald (success) */
+    --accent-emerald: 150 40% 50%; /* #68A893 - muted emerald */
+    --accent-emerald-light: 150 40% 65%; /* #8BC4B0 */
+    --accent-emerald-dim: 150 30% 12%; /* subtle bg tint */
 
     /* =============================================
        GRADIENT PRESETS
     ============================================= */
     --gradient-brand: linear-gradient(
       135deg,
-      hsl(248 100% 69%),
-      hsl(187 100% 53%)
+      hsl(210 40% 48%),
+      hsl(28 85% 60%)
     );
     --gradient-rare: linear-gradient(
       135deg,
-      hsl(320 90% 65%),
-      hsl(248 100% 69%)
+      hsl(0 45% 60%),
+      hsl(210 40% 48%)
     );
-    --gradient-gold: linear-gradient(135deg, hsl(38 95% 58%), hsl(320 90% 65%));
+    --gradient-gold: linear-gradient(135deg, hsl(36 85% 55%), hsl(0 45% 60%));
     --gradient-aurora: linear-gradient(
       135deg,
-      hsl(248 100% 69%),
-      hsl(187 100% 53%),
-      hsl(158 80% 45%)
+      hsl(210 40% 48%),
+      hsl(28 85% 60%),
+      hsl(150 40% 50%)
     );
     --gradient-sunset: linear-gradient(
       135deg,
-      hsl(38 95% 58%),
-      hsl(320 90% 65%),
-      hsl(248 100% 69%)
+      hsl(36 85% 55%),
+      hsl(0 45% 60%),
+      hsl(210 40% 48%)
     );
     --gradient-surface: linear-gradient(
       160deg,
-      hsl(226 14% 14% / 0.9),
-      hsl(222 18% 6% / 0.95)
+      hsl(0 0% 11% / 0.8),
+      hsl(0 0% 5% / 0.95)
     );
 
     /* =============================================
        TEXT SYSTEM
     ============================================= */
-    --text-primary: 0 0% 97%; /* #F7F7F7 */
-    --text-secondary: 220 15% 70%; /* #A8AFBE */
-    --text-muted: 220 10% 48%; /* #717A8C */
-    --text-ghost: 220 8% 30%; /* #454D5C */
+    --text-primary: 0 0% 95%; /* #F2F2F2 */
+    --text-secondary: 0 0% 65%; /* #A6A6A6 */
+    --text-muted: 0 0% 48%; /* #7A7A7A */
+    --text-ghost: 0 0% 32%; /* #515151 */
 
     /* =============================================
        BORDER SYSTEM
     ============================================= */
-    --border-subtle: 220 15% 14%; /* barely visible */
-    --border-default: 220 15% 20%; /* standard border */
-    --border-strong: 220 15% 28%; /* prominent border */
-    --border-brand: 248 100% 69%; /* indigo accent border */
-    --border-glow: 187 100% 53%; /* cyan glow border */
+    --border-subtle: 0 0% 12%; /* barely visible */
+    --border-default: 0 0% 18%; /* standard border */
+    --border-strong: 0 0% 24%; /* prominent border */
+    --border-brand: 210 40% 48%; /* refined blue border */
+    --border-glow: 28 85% 60%; /* bronze glow border */
 
     /* =============================================
        SHADCN / DESIGN TOKEN MAPPING
@@ -113,12 +113,12 @@
     --muted-foreground: var(--text-muted);
     --accent: var(--accent-cyan);
     --accent-foreground: var(--bg-primary);
-    --destructive: 0 72% 58%;
+    --destructive: 0 80% 56%;
     --destructive-foreground: 0 0% 98%;
     --border: var(--border-default);
     --input: var(--bg-tertiary);
     --ring: var(--accent-indigo);
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
     /* Charts */
     --chart-1: var(--accent-indigo);
@@ -426,28 +426,34 @@
   }
 
   h1 {
-    font-size: clamp(2.25rem, 5vw, 4rem);
-    line-height: 1.1;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.15;
+    font-weight: 600;
   }
   h2 {
-    font-size: clamp(1.75rem, 4vw, 3rem);
-    line-height: 1.15;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    line-height: 1.2;
+    font-weight: 600;
   }
   h3 {
-    font-size: clamp(1.4rem, 3vw, 2.25rem);
-    line-height: 1.2;
+    font-size: clamp(1.2rem, 3vw, 1.875rem);
+    line-height: 1.25;
+    font-weight: 600;
   }
   h4 {
-    font-size: clamp(1.2rem, 2vw, 1.75rem);
+    font-size: clamp(1rem, 2vw, 1.5rem);
     line-height: 1.3;
+    font-weight: 600;
   }
   h5 {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     line-height: 1.4;
+    font-weight: 500;
   }
   h6 {
     font-size: 1rem;
     line-height: 1.5;
+    font-weight: 500;
   }
 
   ::selection {
@@ -508,8 +514,12 @@
     overflow: hidden;
     border-radius: var(--radius);
     border: 1px solid hsl(var(--border-default));
-    background: var(--gradient-surface);
-    backdrop-filter: blur(20px);
+    background: linear-gradient(
+      160deg,
+      hsl(0 0% 11% / 0.6),
+      hsl(0 0% 5% / 0.95)
+    );
+    backdrop-filter: blur(12px) saturate(120%);
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
@@ -519,9 +529,9 @@
     inset: 0;
     background: linear-gradient(
       135deg,
-      hsl(var(--accent-indigo) / 0.06),
+      hsl(var(--accent-indigo) / 0.05),
       transparent 50%,
-      hsl(var(--accent-cyan) / 0.04)
+      hsl(var(--accent-cyan) / 0.03)
     );
     pointer-events: none;
     border-radius: inherit;
@@ -530,12 +540,12 @@
   }
 
   .premium-card:hover {
-    border-color: hsl(var(--accent-indigo) / 0.4);
-    transform: translateY(-3px);
+    border-color: hsl(var(--accent-indigo) / 0.35);
+    transform: translateY(-2px);
     box-shadow:
-      0 20px 40px hsl(var(--bg-void) / 0.6),
-      0 0 0 1px hsl(var(--accent-indigo) / 0.25),
-      0 0 30px hsl(var(--accent-indigo) / 0.12);
+      0 16px 32px hsl(var(--bg-void) / 0.5),
+      0 0 0 1px hsl(var(--accent-indigo) / 0.2),
+      0 0 24px hsl(var(--accent-indigo) / 0.08);
   }
 
   .premium-card:hover::before {
@@ -546,19 +556,23 @@
   .nft-card {
     position: relative;
     overflow: hidden;
-    border-radius: 1rem;
+    border-radius: var(--radius);
     border: 1px solid hsl(var(--border-default));
-    background: hsl(var(--bg-tertiary));
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: linear-gradient(
+      160deg,
+      hsl(0 0% 11% / 0.5),
+      hsl(0 0% 8% / 0.95)
+    );
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .nft-card:hover {
-    border-color: hsl(var(--accent-indigo) / 0.5);
-    transform: translateY(-4px) scale(1.01);
+    border-color: hsl(var(--accent-indigo) / 0.4);
+    transform: translateY(-3px);
     box-shadow:
-      0 30px 60px hsl(var(--bg-void) / 0.7),
-      0 0 40px hsl(var(--accent-indigo) / 0.15),
-      inset 0 1px 0 hsl(0 0% 100% / 0.06);
+      0 20px 40px hsl(var(--bg-void) / 0.6),
+      0 0 32px hsl(var(--accent-indigo) / 0.12),
+      inset 0 1px 0 hsl(0 0% 100% / 0.04);
   }
 
   /* ── Buttons ── */
@@ -568,22 +582,22 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0.6875rem 1.5rem;
-    font-weight: 600;
+    padding: 0.75rem 1.75rem;
+    font-weight: 500;
     font-size: 0.9375rem;
-    border-radius: 0.625rem;
+    border-radius: var(--radius);
     background: linear-gradient(
       135deg,
       hsl(var(--accent-indigo)),
-      hsl(248 100% 58%)
+      hsl(210 40% 45%)
     );
     color: #fff;
-    border: none;
+    border: 1px solid hsl(var(--accent-indigo) / 0.4);
     cursor: pointer;
     font-family: var(--font-display);
-    letter-spacing: 0.01em;
+    letter-spacing: 0.02em;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 15px hsl(var(--accent-indigo) / 0.35);
+    box-shadow: 0 4px 12px hsl(var(--accent-indigo) / 0.25);
     overflow: hidden;
   }
 
@@ -591,14 +605,14 @@
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, hsl(0 0% 100% / 0.15), transparent);
+    background: linear-gradient(135deg, hsl(0 0% 100% / 0.1), transparent);
     opacity: 0;
     transition: opacity 0.25s;
   }
 
   .btn-primary:hover {
     transform: translateY(-1px);
-    box-shadow: 0 8px 25px hsl(var(--accent-indigo) / 0.5);
+    box-shadow: 0 6px 20px hsl(var(--accent-indigo) / 0.3);
   }
 
   .btn-primary:hover::before {
@@ -606,37 +620,37 @@
   }
   .btn-primary:active {
     transform: translateY(0);
-    box-shadow: 0 2px 8px hsl(var(--accent-indigo) / 0.3);
+    box-shadow: 0 2px 6px hsl(var(--accent-indigo) / 0.2);
   }
 
-  /* Cyan variant */
+  /* Bronze accent variant */
   .btn-cyan {
     position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0.6875rem 1.5rem;
-    font-weight: 600;
+    padding: 0.75rem 1.75rem;
+    font-weight: 500;
     font-size: 0.9375rem;
-    border-radius: 0.625rem;
+    border-radius: var(--radius);
     background: linear-gradient(
       135deg,
       hsl(var(--accent-cyan)),
-      hsl(187 100% 40%)
+      hsl(28 85% 55%)
     );
     color: hsl(var(--bg-void));
-    border: none;
+    border: 1px solid hsl(var(--accent-cyan) / 0.3);
     cursor: pointer;
     font-family: var(--font-display);
-    letter-spacing: 0.01em;
+    letter-spacing: 0.02em;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 15px hsl(var(--accent-cyan) / 0.3);
+    box-shadow: 0 4px 12px hsl(var(--accent-cyan) / 0.2);
   }
 
   .btn-cyan:hover {
     transform: translateY(-1px);
-    box-shadow: 0 8px 30px hsl(var(--accent-cyan) / 0.45);
+    box-shadow: 0 6px 20px hsl(var(--accent-cyan) / 0.28);
   }
 
   .btn-cyan:active {
@@ -650,25 +664,25 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0.6875rem 1.5rem;
-    font-weight: 600;
+    padding: 0.75rem 1.75rem;
+    font-weight: 500;
     font-size: 0.9375rem;
-    border-radius: 0.625rem;
-    border: 1px solid hsl(var(--border-strong));
+    border-radius: var(--radius);
+    border: 1px solid hsl(var(--border-default));
     color: hsl(var(--text-primary));
-    background: hsl(var(--bg-tertiary) / 0.5);
+    background: hsl(var(--bg-tertiary) / 0.3);
     cursor: pointer;
     font-family: var(--font-display);
-    letter-spacing: 0.01em;
+    letter-spacing: 0.02em;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(6px);
   }
 
   .btn-outline:hover {
-    border-color: hsl(var(--accent-indigo) / 0.6);
-    background: hsl(var(--accent-indigo) / 0.08);
-    color: hsl(var(--accent-indigo-light));
-    box-shadow: 0 0 20px hsl(var(--accent-indigo) / 0.15);
+    border-color: hsl(var(--accent-indigo) / 0.5);
+    background: hsl(var(--accent-indigo) / 0.06);
+    color: hsl(var(--accent-indigo));
+    box-shadow: 0 0 16px hsl(var(--accent-indigo) / 0.1);
   }
 
   .btn-ghost {
@@ -677,9 +691,9 @@
     justify-content: center;
     gap: 0.5rem;
     padding: 0.5rem 1rem;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 0.875rem;
-    border-radius: 0.5rem;
+    border-radius: var(--radius);
     color: hsl(var(--text-secondary));
     background: transparent;
     border: 1px solid transparent;
@@ -699,43 +713,43 @@
     display: inline-flex;
     align-items: center;
     gap: 0.3rem;
-    padding: 0.25rem 0.625rem;
+    padding: 0.375rem 0.75rem;
     border-radius: 9999px;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
     text-transform: uppercase;
     font-family: var(--font-display);
   }
 
   .badge-indigo {
-    background: hsl(var(--accent-indigo) / 0.15);
-    border: 1px solid hsl(var(--accent-indigo) / 0.35);
-    color: hsl(var(--accent-indigo-light));
+    background: hsl(var(--accent-indigo) / 0.12);
+    border: 1px solid hsl(var(--accent-indigo) / 0.3);
+    color: hsl(var(--accent-indigo) / 0.9);
   }
 
   .badge-cyan {
     background: hsl(var(--accent-cyan) / 0.1);
     border: 1px solid hsl(var(--accent-cyan) / 0.3);
-    color: hsl(var(--accent-cyan-light));
+    color: hsl(var(--accent-cyan) / 0.9);
   }
 
   .badge-rose {
     background: hsl(var(--accent-rose) / 0.12);
     border: 1px solid hsl(var(--accent-rose) / 0.3);
-    color: hsl(var(--accent-rose-light));
+    color: hsl(var(--accent-rose) / 0.9);
   }
 
   .badge-gold {
     background: hsl(var(--accent-gold) / 0.12);
     border: 1px solid hsl(var(--accent-gold) / 0.3);
-    color: hsl(var(--accent-gold-light));
+    color: hsl(var(--accent-gold) / 0.9);
   }
 
   .badge-emerald {
     background: hsl(var(--accent-emerald) / 0.12);
     border: 1px solid hsl(var(--accent-emerald) / 0.3);
-    color: hsl(var(--accent-emerald-light));
+    color: hsl(var(--accent-emerald) / 0.9);
   }
 
   /* ── Text gradients ── */
