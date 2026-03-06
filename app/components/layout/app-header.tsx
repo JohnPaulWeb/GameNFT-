@@ -27,22 +27,18 @@ export function AppHeader() {
   const PageIcon = useMemo(() => iconMap[pathname] ?? null, [pathname]);
 
   return (
-    <header className="sticky top-0 z-40 flex h-16 shrink-0 items-center justify-between gap-6 border-b border-[hsl(var(--border-subtle))] bg-[hsl(var(--bg-primary))]/98 backdrop-blur-md px-6 md:px-8">
-      <div className="flex items-center gap-3 flex-1 min-w-0">
-        <SidebarTrigger className="text-[hsl(var(--text-secondary))] hover:text-white hover:bg-[hsl(var(--bg-elevated))] rounded-lg transition-colors p-2" />
+    <header className="sticky top-0 z-40 flex h-16 shrink-0 items-center justify-between border-b border-[hsl(var(--border-subtle))] bg-[hsl(var(--bg-primary))]/95 backdrop-blur-sm px-6 md:px-8">
+      <div className="flex items-center gap-4 flex-1 min-w-0">
+        <SidebarTrigger className="text-[hsl(var(--text-secondary))] hover:text-white hover:bg-[hsl(var(--bg-elevated))] rounded-lg transition-colors p-2 -ml-2" />
         
-        <div className="hidden md:flex items-center gap-3 px-4 py-2 rounded-lg border border-[hsl(var(--border-default))] bg-[hsl(var(--bg-secondary))]">
+        <div className="hidden md:flex items-center gap-2.5 px-3 py-2 rounded-lg border border-[hsl(var(--border-default))] bg-[hsl(var(--bg-secondary))]">
           {PageIcon && <PageIcon className="h-4 w-4 text-[hsl(var(--accent-indigo))]" />}
           <span className="text-sm font-medium text-white">{title}</span>
         </div>
       </div>
 
-      <div className="ml-auto">
-        <div className="rounded-lg p-px bg-[hsl(var(--border-default))]">
-          <div className="rounded-[7px] bg-[hsl(var(--bg-primary))] backdrop-blur-sm">
-            <ConnectButton />
-          </div>
-        </div>
+      <div className="flex items-center gap-2">
+        <ConnectButton />
       </div>
     </header>
   );
