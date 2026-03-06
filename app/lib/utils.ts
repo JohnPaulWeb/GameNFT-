@@ -5,6 +5,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+
+// ito naaman yung choice mo either mainnet or test or devnet
 export function getSuiExplorerLink(
   network: 'mainnet' | 'testnet' | 'devnet',
   type: 'transaction' | 'object' | 'address',

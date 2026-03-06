@@ -208,6 +208,7 @@ export default function ListPage() {
     }
   };
 
+  // dito magsisimula yung code mo 
   return (
     <div className="flex justify-center py-8">
       <Card className="w-full max-w-2xl border-2 border-blue-200 shadow-xl">
@@ -230,15 +231,20 @@ export default function ListPage() {
             </div>
           )}
         </CardHeader>
+
+        {/* ito naman yung CardContent */}
         <CardContent className="space-y-6">
           {!account && (
             <div className="rounded-lg border-2 border-yellow-500/50 bg-yellow-50 p-4 dark:bg-yellow-950/20">
               <div className="flex items-start gap-3">
                 <Wallet className="h-5 w-5 text-yellow-600 dark:text-yellow-500" />
                 <div>
+                  {/* ito yungd text for wallet kung di nakaconnect */}
                   <h3 className="font-semibold text-yellow-900 dark:text-yellow-100">
                     Wallet Not Connected
                   </h3>
+
+                  {/* ito naman yung wallet kung ito ay naka connect */}
                   <p className="mt-1 text-sm text-yellow-800 dark:text-yellow-200">
                     Please connect your wallet to list NFTs.
                   </p>
@@ -259,6 +265,7 @@ export default function ListPage() {
               </ul>
             </div>
 
+            {/* ito naman yung NFTObjectId */}
             <div className="space-y-2">
               <Label htmlFor="nftObjectId" className="text-sm font-semibold">
                 NFT Object ID
@@ -271,11 +278,13 @@ export default function ListPage() {
                 disabled={isListing}
                 className="h-11 font-mono text-sm"
               />
+
               <p className="text-xs text-muted-foreground">
                 The NFT Object ID from your wallet
               </p>
             </div>
 
+            {/* ito naman yung text  */}
             <div className="space-y-2">
               <Label htmlFor="price" className="text-sm font-semibold">
                 Price (SUI)
@@ -298,22 +307,30 @@ export default function ListPage() {
           </div>
         </CardContent>
 
+        {/* ito naman yung CardFooter */}
         <CardFooter className="border-t bg-muted/50 pt-6">
+        
+        {/* Ito naman yung Button */}
           <Button
             className="w-full font-semibold shadow-sm"
             size="lg"
             onClick={handleList}
             disabled={isListing || !nftObjectId.trim() || !price || !account}
           >
+            {/* ito naman yung listing  */}
             {isListing ? (
               'Listing NFT...'
             ) : !account ? (
               <>
+
+              {/* ito naman yung icon for wallet */}
                 <Wallet className="mr-2 h-4 w-4" />
                 Connect Wallet to List
               </>
             ) : (
               <>
+
+              {/* ito naman yung tag icon*/}
                 <Tag className="mr-2 h-4 w-4" />
                 List NFT for {price || '0'} SUI
               </>

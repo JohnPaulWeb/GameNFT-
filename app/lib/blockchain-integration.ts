@@ -104,7 +104,7 @@ export class BlockchainMarketplace {
 
     return tx;
   }
-
+   
   /**
    * Get listing information from blockchain
    * @param nftId NFT ID to check
@@ -127,6 +127,7 @@ export class BlockchainMarketplace {
           nftId,
         };
       }
+      // ito naman yung return
       return null;
     } catch (error) {
       console.error('Error fetching listing info:', error);
@@ -155,7 +156,7 @@ export class BlockchainMarketplace {
     }
   }
 
-  /**
+  /** 
    * Get all NFTs owned by a specific address
    * @param ownerAddress Wallet address
    * @returns Array of NFT objects
@@ -187,6 +188,8 @@ export class BlockchainMarketplace {
         },
       });
       return marketplace.data;
+
+      // We use fetch here to get additional stats from an API endpoint that aggregates marketplace data
     } catch (error) {
       console.error('Error fetching marketplace stats:', error);
       return null;

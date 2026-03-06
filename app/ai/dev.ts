@@ -1,3 +1,6 @@
+
+// ito naman yung flow ng AI
+
 import { config } from 'dotenv';
 config();
 

@@ -31,6 +31,7 @@ export function AppFooter() {
               </div>
               <span className="text-xl font-bold font-display text-white">SuiPlay</span>
             </div>
+            {/* ito naman yung text sa footer */}
             <p className="text-sm text-[hsl(var(--text-secondary))] leading-relaxed max-w-xs">
               Premium NFT marketplace powered by Sui blockchain. Creating the future of digital ownership.
             </p>
@@ -55,10 +56,12 @@ export function AppFooter() {
             </nav>
           </div>
 
-          {/* Connect */}
+          {/* ito naman yung mga Links sa footers  */}
           <div className="space-y-4">
             <h3 className="text-sm font-bold text-white font-display tracking-wide">CONNECT</h3>
             <div className="flex gap-3">
+
+              {/* Links sa github */}
               <a 
                 href="https://github.com" 
                 target="_blank" 
@@ -68,6 +71,8 @@ export function AppFooter() {
                 <Github className="h-5 w-5 text-white/70 group-hover:text-cyan-300 transition-colors" />
               </a>
               <a 
+
+              // Link sa twitter
                 href="https://twitter.com" 
                 target="_blank" 
                 rel="noopener noreferrer"
@@ -75,7 +80,7 @@ export function AppFooter() {
               >
                 <Twitter className="h-5 w-5 text-white/70 group-hover:text-cyan-300 transition-colors" />
               </a>
-              <a 
+              <a
                 href="mailto:hello@suiplay.io"
                 className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 border border-white/10 hover:border-cyan-400/50 hover:bg-cyan-400/10 transition-all duration-300 group"
               >
@@ -83,6 +88,8 @@ export function AppFooter() {
               </a>
             </div>
             <a 
+
+            // Link for SUI
               href="https://sui.io" 
               target="_blank" 
               rel="noopener noreferrer"
@@ -94,15 +101,17 @@ export function AppFooter() {
           </div>
         </div>
 
-        {/* Bottom Bar */}
+        {/* ito naman yung Bottom Bar  */}
         <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-xs text-[hsl(var(--text-muted))]">
             © {currentYear} SuiPlay. All rights reserved.
           </p>
+          {/* ito naman yung Privacy Policy  */}
           <div className="flex gap-6">
             <a href="#" className="text-xs text-[hsl(var(--text-muted))] hover:text-cyan-300 transition-colors">
               Privacy Policy
             </a>
+            {/* ito naman yung  Terms of Services */}
             <a href="#" className="text-xs text-[hsl(var(--text-muted))] hover:text-cyan-300 transition-colors">
               Terms of Service
             </a>

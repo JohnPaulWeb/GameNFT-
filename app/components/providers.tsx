@@ -184,6 +184,8 @@ const networks = {
   testnet: { url: getFullnodeUrl('testnet'), network: 'testnet' as const },
 };
 
+
+// dito naman yung provider para sa SuiClient at WalletProvider at MarketplaceProvider para ma access sa buong app
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>

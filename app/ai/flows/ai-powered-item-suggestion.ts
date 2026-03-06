@@ -47,11 +47,14 @@ const AIPoweredItemSuggestionOutputSchema = z.object({
 });
 export type AIPoweredItemSuggestionOutput = z.infer<typeof AIPoweredItemSuggestionOutputSchema>;
 
+// ito namann yung async 
 export async function aiPoweredItemSuggestion(
   input: AIPoweredItemSuggestionInput
 ): Promise<AIPoweredItemSuggestionOutput> {
   return aiPoweredItemSuggestionFlow(input);
 }
+
+// ito naman yung prompt ng AI 
 
 const prompt = ai.definePrompt({
   name: 'aiPoweredItemSuggestionPrompt',
@@ -71,6 +74,7 @@ const prompt = ai.definePrompt({
   `,
 });
 
+// ito naman yung AI-Powered Flow 
 const aiPoweredItemSuggestionFlow = ai.defineFlow(
   {
     name: 'aiPoweredItemSuggestionFlow',

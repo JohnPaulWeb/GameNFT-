@@ -34,6 +34,7 @@ export function HeroBanner({ onExplore, stats }: HeroBannerProps) {
           }}
         />
         
+        {/* ito naman yung div */}
         <div 
           className="absolute -bottom-32 left-1/3 w-80 h-80 rounded-full opacity-20 blur-3xl"
           style={{
@@ -64,7 +65,7 @@ export function HeroBanner({ onExplore, stats }: HeroBannerProps) {
             <span className="text-sm font-semibold text-cyan-300 uppercase tracking-wider">Premium NFT Marketplace</span>
           </div>
 
-          {/* Main Heading */}
+          {/* ito naman yung Main Head */}
           <div className="space-y-4 animate-fade-up" style={{ animationDelay: '0.1s' }}>
             <h1 className="text-5xl md:text-7xl font-bold font-display leading-tight tracking-tight text-white">
               <span className="block mb-2 text-2xl md:text-3xl font-normal text-[hsl(var(--text-secondary))]">
@@ -76,22 +77,23 @@ export function HeroBanner({ onExplore, stats }: HeroBannerProps) {
             </h1>
           </div>
 
-          {/* Description */}
+          {/* ito naman yung Description */}
           <p className="text-lg md:text-xl text-[hsl(var(--text-secondary))] max-w-xl leading-relaxed animate-fade-up" style={{ animationDelay: '0.2s' }}>
             Experience the future of digital collectibles. Trade rare NFTs, discover exclusive items, and join the most vibrant Web3 community powered by Sui blockchain.
           </p>
 
-          {/* CTA Buttons */}
+          {/* ito naman yung CTA buttons */}
           <div className="flex flex-col sm:flex-row gap-4 animate-fade-up" style={{ animationDelay: '0.3s' }}>
             <Button
               onClick={onExplore}
               className="group bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-400 hover:to-cyan-500 text-white font-semibold text-base px-8 py-6 rounded-xl shadow-xl shadow-cyan-500/30 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/50 hover:-translate-y-1"
             >
+              {/* ito naman yung icon  */}
               <Sparkles className="h-5 w-5 mr-2" />
               Explore Marketplace
               <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
-
+            {/* ito naman yung button */}
             <Button
               variant="outline"
               className="border-white/20 hover:border-cyan-400/50 text-white hover:text-cyan-300 font-semibold text-base px-8 py-6 rounded-xl hover:bg-cyan-400/10 transition-all duration-300"
@@ -101,7 +103,7 @@ export function HeroBanner({ onExplore, stats }: HeroBannerProps) {
           </div>
         </div>
 
-        {/* Stats Bar - Bottom */}
+        {/* ito naman yung stats bar botoom*/}
         <div className="grid grid-cols-3 gap-4 pt-8 border-t border-white/10 animate-fade-up" style={{ animationDelay: '0.4s' }}>
           {defaultStats.map((stat, index) => (
             <div key={index} className="group relative flex flex-col gap-1 p-4 rounded-xl bg-gradient-to-br from-white/5 to-white/2 border border-white/10 hover:border-cyan-400/50 hover:bg-gradient-to-br hover:from-white/8 hover:to-white/3 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/10">
@@ -116,7 +118,7 @@ export function HeroBanner({ onExplore, stats }: HeroBannerProps) {
         </div>
       </div>
 
-      {/* Decorative Elements */}
+      {/* ito naman yung Decorative Elements */}
       <div className="absolute top-8 left-8 w-20 h-20 rounded-full border border-cyan-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       <div className="absolute bottom-8 right-8 w-16 h-16 rounded-full border border-indigo-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
     </div>

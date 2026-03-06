@@ -6,10 +6,16 @@ export const mockUser: User = {
   suiBalance: 150.75,
 };
 
+// ito naman yung Image 
 const getImage = (index: number) => PlaceHolderImages[index] || PlaceHolderImages[0];
 
+
+
+// ito naman yung Address
 const otherUserAddress = '0xabcde6789012345678901234567890123456789012345678901234567890fghij';
 
+
+// ito naman yung mockNft
 export const mockNfts: NFT[] = [
   {
     id: 'nft-1',

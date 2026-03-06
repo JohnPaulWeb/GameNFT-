@@ -20,7 +20,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#0A0A0F" />
         
-        {/* Premium Typography Fonts */}
+        {/* ito yung Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
@@ -28,6 +28,8 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
+
+      {/* ito naman yung body of the website  */}
       <body className="h-full antialiased" style={{ fontFamily: 'var(--font-body)' }}>
         <Providers>
           <div className="flex h-full min-h-screen flex-col bg-[hsl(var(--background))] text-[hsl(var(--foreground))]">

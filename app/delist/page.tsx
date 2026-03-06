@@ -175,6 +175,7 @@ export default function DelistPage() {
             </div>
           )}
 
+          {/* ito naman yung Delist */}
           <div className="space-y-4">
             <div className="rounded-lg border-2 border-orange-500/50 bg-orange-50 p-4 dark:bg-orange-950/20">
               <p className="text-sm font-semibold text-orange-900 dark:text-orange-100">
@@ -188,6 +189,7 @@ export default function DelistPage() {
               </ul>
             </div>
 
+            {/* ito naman yung text */}
             <div className="rounded-lg border-2 border-blue-500/50 bg-blue-50 p-4 dark:bg-blue-950/20">
               <p className="text-sm font-semibold text-blue-900 dark:text-blue-100">
                 💡 How to find your NFT ID:
@@ -199,6 +201,8 @@ export default function DelistPage() {
               </ul>
             </div>
 
+
+            {/* ito naman yung NFT ID  */}
             <div className="space-y-2">
               <Label htmlFor="nftId" className="text-sm font-semibold">
                 NFT ID
@@ -218,6 +222,7 @@ export default function DelistPage() {
           </div>
         </CardContent>
 
+        {/* ito naman yung CardFooter */}
         <CardFooter className="border-t bg-muted/50 pt-6">
           <Button
             variant="outline"
@@ -230,11 +235,14 @@ export default function DelistPage() {
               'Delisting NFT...'
             ) : !account ? (
               <>
+              {/* ito naman yung icon ng wallet */}
                 <Wallet className="mr-2 h-4 w-4" />
                 Connect Wallet to Delist
               </>
             ) : (
               <>
+
+              {/* ito naman yung icon ng packageX */}
                 <PackageX className="mr-2 h-4 w-4" />
                 Delist NFT
               </>

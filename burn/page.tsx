@@ -200,6 +200,8 @@ export default function BurnPage() {
   };
 
   return (
+
+    // ito naman yung Card  
     <div className="flex justify-center py-8">
       <Card className="w-full max-w-2xl border-2 border-red-200 shadow-xl">
         <CardHeader className="space-y-2">
@@ -210,6 +212,8 @@ export default function BurnPage() {
             Permanently destroy your NFT. This action is irreversible on the blockchain.
           </CardDescription>
           {account && (
+
+            // ito naman yung Wallet design
             <div className="mt-4 flex items-center gap-3 rounded-lg border bg-muted/50 p-3">
               <Wallet className="h-5 w-5 text-primary" />
               <div className="flex flex-col">
@@ -221,7 +225,8 @@ export default function BurnPage() {
             </div>
           )}
         </CardHeader>
-        
+      
+      {/* ito naman yung CardContent */}
         <CardContent className="space-y-6">
           {!account && (
             <div className="rounded-lg border-2 border-yellow-500/50 bg-yellow-50 p-4 dark:bg-yellow-950/20">
@@ -239,11 +244,13 @@ export default function BurnPage() {
             </div>
           )}
 
+          {/* ito naman yung Burn Alert  */}
           <div className="space-y-4">
             <div className="rounded-lg border-2 border-red-500/50 bg-red-50 p-4 dark:bg-red-950/20">
               <p className="text-sm font-semibold text-red-900 dark:text-red-100">
                 ⚠️ WARNING: Burning is permanent and cannot be undone!
               </p>
+              {/* ito yung text if you want to delete from blockchain */}
               <p className="mt-1 text-sm text-red-800 dark:text-red-200">
                 The NFT will be deleted from the blockchain forever.
               </p>
@@ -290,6 +297,8 @@ export default function BurnPage() {
                 disabled={isBurning}
                 className="mt-1 h-4 w-4 cursor-pointer accent-red-600"
               />
+
+              {/* ito naman yung text */}
               <Label
                 htmlFor="confirm"
                 className="cursor-pointer text-sm text-red-900 dark:text-red-100"
@@ -302,6 +311,7 @@ export default function BurnPage() {
           </div>
         </CardContent>
 
+        {/* ito naman yung CardFooter */}
         <CardFooter className="border-t bg-muted/50 pt-6">
           <Button
             variant="destructive"
@@ -314,10 +324,12 @@ export default function BurnPage() {
               'Verifying & Burning...'
             ) : !account ? (
               <>
+              {/* ito naman yung wallet */}
                 <Wallet className="mr-2 h-4 w-4" />
                 Connect Wallet to Burn 
               </>
             ) : (
+              // ito naman yung Burn-NFT
               <>
                 <Flame className="mr-2 h-4 w-4" />
                 Burn NFT 
