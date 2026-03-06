@@ -252,75 +252,65 @@ export default function MarketplacePage() {
 
   return (
     <div className="w-full">
-      <section className="px-6 pb-8 pt-8 md:px-8 md:pb-10 md:pt-10 max-w-7xl mx-auto w-full">
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[hsl(var(--border-default))] bg-[hsl(var(--bg-secondary))] px-3 py-1.5">
-              <span className="h-2 w-2 rounded-full bg-[hsl(var(--accent-indigo))]" />
-              <span className="text-xs font-medium uppercase tracking-wider text-[hsl(var(--text-secondary))]">Collections</span>
-            </div>
-            <h1 className="font-display text-3xl font-semibold tracking-tight text-white md:text-4xl">
-              NFT Marketplace
-            </h1>
-            <p className="max-w-2xl text-sm text-[hsl(var(--text-secondary))]">
-              Explore curated digital assets with transparent pricing on Sui blockchain.
-            </p>
+      {/* Hero Section */}
+      <section className="px-6 py-12 md:px-8 md:py-16 max-w-7xl mx-auto w-full">
+        <div className="flex flex-col gap-3">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[hsl(var(--border-default))] bg-[hsl(var(--bg-secondary))] px-3 py-1.5 w-fit">
+            <span className="h-2 w-2 rounded-full bg-[hsl(var(--accent-indigo))]" />
+            <span className="text-xs font-medium uppercase tracking-wider text-[hsl(var(--text-secondary))]">Marketplace</span>
           </div>
-
-          <Button
-            className="btn-outline w-fit"
-            onClick={fetchListings}
-            disabled={isLoading}
-          >
-            <RefreshCw className={`mr-2 h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
-            {isLoading ? 'Refreshing' : 'Refresh'}
-          </Button>
+          <h1 className="font-display text-4xl md:text-5xl font-semibold tracking-tight text-white max-w-2xl">
+            Discover NFTs
+          </h1>
+          <p className="max-w-2xl text-base text-[hsl(var(--text-secondary))]">
+            Explore curated digital assets with transparent pricing and secure transactions on Sui blockchain.
+          </p>
         </div>
       </section>
 
-      <section className="px-6 pb-8 md:px-8 md:pb-10 max-w-7xl mx-auto w-full">
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-          <div className="rounded-lg border border-[hsl(var(--border-default))] bg-[hsl(var(--bg-secondary))] p-5">
+      <section className="px-6 pb-10 md:px-8 md:pb-12 max-w-7xl mx-auto w-full border-b border-[hsl(var(--border-subtle))]">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="rounded-lg border border-[hsl(var(--border-default))] bg-[hsl(var(--bg-secondary))]/50 p-6 backdrop-blur-sm">
             <div className="mb-3 flex items-center justify-between">
-              <p className="text-xs font-medium uppercase tracking-wider text-[hsl(var(--text-secondary))]">Listed</p>
-              <Package className="h-4 w-4 text-[hsl(var(--accent-indigo))]" />
+              <p className="text-xs font-medium uppercase tracking-wider text-[hsl(var(--text-secondary))]">Total Listed</p>
+              <Package className="h-5 w-5 text-[hsl(var(--accent-indigo))]" />
             </div>
-            <p className="font-display text-2xl font-semibold text-white">{listings.length}</p>
-            <p className="mt-1 text-xs text-[hsl(var(--text-muted))]">items available</p>
+            <p className="font-display text-3xl font-semibold text-white">{listings.length}</p>
+            <p className="mt-1 text-xs text-[hsl(var(--text-muted))]">NFTs available</p>
           </div>
 
-          <div className="rounded-lg border border-[hsl(var(--border-default))] bg-[hsl(var(--bg-secondary))] p-5">
+          <div className="rounded-lg border border-[hsl(var(--border-default))] bg-[hsl(var(--bg-secondary))]/50 p-6 backdrop-blur-sm">
             <div className="mb-3 flex items-center justify-between">
-              <p className="text-xs font-medium uppercase tracking-wider text-[hsl(var(--text-secondary))]">Volume</p>
-              <TrendingUp className="h-4 w-4 text-[hsl(var(--accent-cyan))]" />
+              <p className="text-xs font-medium uppercase tracking-wider text-[hsl(var(--text-secondary))]">Total Volume</p>
+              <TrendingUp className="h-5 w-5 text-[hsl(var(--accent-cyan))]" />
             </div>
-            <p className="font-display text-2xl font-semibold text-white">{totalVolume.toFixed(1)}</p>
-            <p className="mt-1 text-xs text-[hsl(var(--text-muted))]">SUI total</p>
+            <p className="font-display text-3xl font-semibold text-white">{totalVolume.toFixed(1)}</p>
+            <p className="mt-1 text-xs text-[hsl(var(--text-muted))]">SUI</p>
           </div>
 
-          <div className="rounded-lg border border-[hsl(var(--border-default))] bg-[hsl(var(--bg-secondary))] p-5">
+          <div className="rounded-lg border border-[hsl(var(--border-default))] bg-[hsl(var(--bg-secondary))]/50 p-6 backdrop-blur-sm">
             <div className="mb-3 flex items-center justify-between">
-              <p className="text-xs font-medium uppercase tracking-wider text-[hsl(var(--text-secondary))]">Status</p>
-              <Wallet className="h-4 w-4 text-[hsl(var(--accent-emerald))]" />
+              <p className="text-xs font-medium uppercase tracking-wider text-[hsl(var(--text-secondary))]">Wallet</p>
+              <Wallet className="h-5 w-5 text-[hsl(var(--accent-emerald))]" />
             </div>
             {account ? (
               <>
-                <p className="font-mono text-sm font-medium text-white">
-                  {account.address.slice(0, 8)}...
+                <p className="font-mono text-base font-semibold text-white">
+                  {account.address.slice(0, 10)}...
                 </p>
-                <p className="mt-1 text-xs text-[hsl(var(--accent-emerald))]">connected</p>
+                <p className="mt-1 text-xs text-[hsl(var(--accent-emerald))]">Connected</p>
               </>
             ) : (
               <>
-                <p className="text-sm font-medium text-white">Disconnected</p>
-                <p className="mt-1 text-xs text-[hsl(var(--text-muted))]">connect wallet</p>
+                <p className="text-base font-semibold text-white">Not Connected</p>
+                <p className="mt-1 text-xs text-[hsl(var(--text-muted))]">Connect wallet to trade</p>
               </>
             )}
           </div>
         </div>
       </section>
 
-      <section className="px-6 pb-12 md:px-8 md:pb-16 max-w-7xl mx-auto w-full">
+      <section className="px-6 py-8 md:px-8 md:py-12 max-w-7xl mx-auto w-full">
         <div>
           {isLoading ? (
             // ito naman yung skeleton loader kapag naglo-load pa ng listings
@@ -333,35 +323,35 @@ export default function MarketplacePage() {
             </div>
           ) : listings.length > 0 ? (
             <div className="space-y-6 animate-fade-in">
-              <div className="rounded-lg border border-[hsl(var(--border-default))] bg-[hsl(var(--bg-secondary))] p-4 md:p-5">
-                <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                  <div className="relative flex-1 md:max-w-md">
+              <div className="rounded-lg border border-[hsl(var(--border-default))] bg-[hsl(var(--bg-secondary))]/50 backdrop-blur-sm p-4 md:p-5">
+                <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                  <div className="relative flex-1 md:max-w-sm">
                     <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[hsl(var(--text-muted))]" />
                     <input
                       type="text"
-                      placeholder="Search by name..."
+                      placeholder="Search collections..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full rounded-lg border border-[hsl(var(--border-default))] bg-[hsl(var(--bg-tertiary))] py-2 pl-10 pr-3 text-sm text-white placeholder:text-[hsl(var(--text-muted))] focus:border-[hsl(var(--accent-indigo)_/_0.5)] focus:outline-none transition-colors"
+                      className="w-full rounded-lg border border-[hsl(var(--border-default))] bg-[hsl(var(--bg-tertiary))] py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-[hsl(var(--text-muted))] focus:border-[hsl(var(--accent-indigo)_/_0.5)] focus:outline-none transition-colors"
                     />
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2.5">
                     <select
                       value={sortBy}
                       onChange={(e) => setSortBy(e.target.value as 'newest' | 'price-low' | 'price-high')}
-                      className="rounded-lg border border-[hsl(var(--border-default))] bg-[hsl(var(--bg-tertiary))] px-3 py-2 text-sm text-white focus:border-[hsl(var(--accent-indigo)_/_0.5)] focus:outline-none transition-colors"
+                      className="rounded-lg border border-[hsl(var(--border-default))] bg-[hsl(var(--bg-tertiary))] px-4 py-2.5 text-sm text-white focus:border-[hsl(var(--accent-indigo)_/_0.5)] focus:outline-none transition-colors cursor-pointer"
                     >
                       <option value="newest" className="bg-[hsl(var(--bg-tertiary))]">Newest</option>
                       <option value="price-low" className="bg-[hsl(var(--bg-tertiary))]">Price: Low to High</option>
                       <option value="price-high" className="bg-[hsl(var(--bg-tertiary))]">Price: High to Low</option>
                     </select>
 
-                    <div className="flex items-center gap-1 rounded-lg border border-[hsl(var(--border-default))] bg-[hsl(var(--bg-tertiary))] p-1">
+                    <div className="flex items-center gap-1.5 rounded-lg border border-[hsl(var(--border-default))] bg-[hsl(var(--bg-tertiary))] p-1.5">
                       <button
                         onClick={() => setGridView('comfortable')}
-                        className={`rounded-md p-2 transition-colors ${
-                          gridView === 'comfortable' ? 'bg-[hsl(var(--accent-indigo)_/_0.15)] text-[hsl(var(--accent-indigo))]' : 'text-[hsl(var(--text-secondary))] hover:text-white'
+                        className={`rounded-md p-1.5 transition-colors ${
+                          gridView === 'comfortable' ? 'bg-[hsl(var(--accent-indigo)_/_0.2)] text-[hsl(var(--accent-indigo))]' : 'text-[hsl(var(--text-secondary))] hover:text-white'
                         }`}
                         aria-label="Comfortable grid"
                       >
@@ -369,8 +359,8 @@ export default function MarketplacePage() {
                       </button>
                       <button
                         onClick={() => setGridView('compact')}
-                        className={`rounded-md p-2 transition-colors ${
-                          gridView === 'compact' ? 'bg-[hsl(var(--accent-indigo)_/_0.15)] text-[hsl(var(--accent-indigo))]' : 'text-[hsl(var(--text-secondary))] hover:text-white'
+                        className={`rounded-md p-1.5 transition-colors ${
+                          gridView === 'compact' ? 'bg-[hsl(var(--accent-indigo)_/_0.2)] text-[hsl(var(--accent-indigo))]' : 'text-[hsl(var(--text-secondary))] hover:text-white'
                         }`}
                         aria-label="Compact grid"
                       >
