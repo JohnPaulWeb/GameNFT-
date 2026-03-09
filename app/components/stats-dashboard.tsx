@@ -11,12 +11,13 @@ interface StatItem {
   color: 'cyan' | 'indigo' | 'gold' | 'rose' | 'emerald';
 }
 
+// ito yung stats-dashboard Props 
 interface StatsDashboardProps {
   stats: StatItem[];
   title?: string;
   description?: string;
 }
-
+// ito yung Color Classes
 const colorClasses = {
   cyan: {
     bg: 'from-cyan-500/20 to-cyan-500/5',
@@ -55,6 +56,7 @@ const colorClasses = {
   },
 };
 
+// ito yung stats-dashboard component
 export function StatsDashboard({
   stats,
   title,
@@ -62,7 +64,7 @@ export function StatsDashboard({
 }: StatsDashboardProps) {
   return (
     <div className="w-full space-y-6">
-      {/* Header */}
+      {/*ito yung Header */}
       {(title || description) && (
         <div className="space-y-2 animate-fade-up">
           {title && (
@@ -78,7 +80,7 @@ export function StatsDashboard({
         </div>
       )}
 
-      {/* Stats Grid */}
+      {/* ito yung Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat, index) => {
           const colors = colorClasses[stat.color];
@@ -90,7 +92,7 @@ export function StatsDashboard({
               className={`group relative overflow-hidden rounded-2xl border animate-fade-up ${colors.border} bg-gradient-to-br ${colors.bg} backdrop-blur-xl p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer`}
               style={{ animationDelay: `${index * 50}ms` }}
             >
-              {/* Glow Effect */}
+              {/*ito yung Glow Effect */}
               <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 rounded-2xl blur-xl"
                 style={{
                   background: `radial-gradient(circle at center, rgba(${stat.color === 'cyan' ? '0, 240, 252' : stat.color === 'indigo' ? '99, 102, 241' : stat.color === 'gold' ? '245, 158, 11' : stat.color === 'rose' ? '236, 72, 153' : '16, 185, 129'}, 0.25), transparent)`,
@@ -98,9 +100,9 @@ export function StatsDashboard({
                 }}
               />
 
-              {/* Content */}
+              {/*ito yung  Content */}
               <div className="relative z-10 space-y-4">
-                {/* Header */}
+                {/*ito yung Header */}
                 <div className="flex items-start justify-between">
                   <div className={`p-3 rounded-lg ${colors.icon}`}>
                     <div className={`${colors.text} text-xl`}>
@@ -126,7 +128,7 @@ export function StatsDashboard({
                 </div>
               </div>
 
-              {/* Bottom Border Gradient */}
+              {/* ito yung Bottom Border Gradient */}
               <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
           );
@@ -136,7 +138,7 @@ export function StatsDashboard({
   );
 }
 
-// Export preset stat configurations
+// ito yung Export preset stat configurations
 export const statPresets = {
   portfolio: {
     title: 'Your Portfolio',

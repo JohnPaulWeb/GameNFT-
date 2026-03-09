@@ -29,7 +29,7 @@ export function EmptyState({ title, description, icon, action }: EmptyStateProps
         </div>
       </div>
 
-      {/* Text Content */}
+      {/*ito yung Text Content */}
       <div className="text-center max-w-md mb-8 space-y-3 animate-fade-up" style={{ animationDelay: '0.1s' }}>
         <h3 className="text-2xl md:text-3xl font-bold font-display text-white">
           {title}
@@ -39,7 +39,7 @@ export function EmptyState({ title, description, icon, action }: EmptyStateProps
         </p>
       </div>
 
-      {/* Action Button */}
+      {/*ito yung Action Button */}
       {action && (
         <Button
           onClick={action.onClick}
@@ -74,6 +74,7 @@ interface CollectionStatsProps {
 
 export function CollectionStats({ stats }: CollectionStatsProps) {
   return (
+    // ito yung key index map
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
       {stats.map((stat, index) => (
         <div
@@ -85,6 +86,7 @@ export function CollectionStats({ stats }: CollectionStatsProps) {
           }`}
           style={{ animationDelay: `${index * 50}ms` }}
         >
+          {/* ito yung stat and label and icon */}
           <div className="relative z-10 space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-[hsl(var(--text-secondary))] uppercase tracking-wider">

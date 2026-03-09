@@ -3,16 +3,20 @@
 import * as React from "react"
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
-} from "embla-carousel-react"
+} from "@/app/embla-carousel-react"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/app/components/ui/button"
+
+// ito yung Carousel API 
 
 type CarouselApi = UseEmblaCarouselType[1]
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
 type CarouselOptions = UseCarouselParameters[0]
 type CarouselPlugin = UseCarouselParameters[1]
+
+
 
 type CarouselProps = {
   opts?: CarouselOptions
@@ -42,6 +46,8 @@ function useCarousel() {
   return context
 }
 
+
+// ito yung Carousel div Element 
 const Carousel = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & CarouselProps
@@ -65,9 +71,12 @@ const Carousel = React.forwardRef<
       },
       plugins
     )
+
+    // ito yung State para sa Previous at Next buttons
     const [canScrollPrev, setCanScrollPrev] = React.useState(false)
     const [canScrollNext, setCanScrollNext] = React.useState(false)
 
+    
     const onSelect = React.useCallback((api: CarouselApi) => {
       if (!api) {
         return
@@ -85,6 +94,7 @@ const Carousel = React.forwardRef<
       api?.scrollNext()
     }, [api])
 
+    // ito yung handleKeyDown
     const handleKeyDown = React.useCallback(
       (event: React.KeyboardEvent<HTMLDivElement>) => {
         if (event.key === "ArrowLeft") {
@@ -98,6 +108,7 @@ const Carousel = React.forwardRef<
       [scrollPrev, scrollNext]
     )
 
+    // ito yung React effect 
     React.useEffect(() => {
       if (!api || !setApi) {
         return
@@ -120,6 +131,7 @@ const Carousel = React.forwardRef<
       }
     }, [api, onSelect])
 
+    // ito y ung Carousel - Context Provider
     return (
       <CarouselContext.Provider
         value={{

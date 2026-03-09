@@ -77,7 +77,7 @@ const FormItem = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
   const id = React.useId()
-
+  // ito yung Form Item Context Provider 
   return (
     <FormItemContext.Provider value={{ id }}>
       <div ref={ref} className={cn("space-y-2", className)} {...props} />
@@ -102,7 +102,7 @@ const FormLabel = React.forwardRef<
   )
 })
 FormLabel.displayName = "FormLabel"
-
+// ito yung FormControl 
 const FormControl = React.forwardRef<
   React.ElementRef<typeof Slot>,
   React.ComponentPropsWithoutRef<typeof Slot>
@@ -125,6 +125,7 @@ const FormControl = React.forwardRef<
 })
 FormControl.displayName = "FormControl"
 
+// ito yung Form Description
 const FormDescription = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>

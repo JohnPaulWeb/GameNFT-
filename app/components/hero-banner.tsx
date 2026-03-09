@@ -55,11 +55,11 @@ export function HeroBanner({ onExplore, stats }: HeroBannerProps) {
         />
       </div>
 
-      {/* Content */}
+      {/*ito yung Content */}
       <div className="relative h-full min-h-[500px] md:min-h-[600px] flex flex-col justify-between p-8 md:p-12">
-        {/* Main Content */}
+        {/*ito yung  Main Content */}
         <div className="flex-1 flex flex-col justify-center max-w-2xl space-y-8">
-          {/* Badge */}
+          {/*ito yung Badge */}
           <div className="inline-flex items-center gap-2 w-fit px-3 py-1.5 rounded-full bg-cyan-400/10 border border-cyan-400/30 animate-fade-up">
             <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
             <span className="text-sm font-semibold text-cyan-300 uppercase tracking-wider">Premium NFT Marketplace</span>

@@ -165,11 +165,13 @@ export function MarketplaceProvider({ children }: { children: ReactNode }) {
     });
   }, [toast]);
 
+  // ito naman yung Value   
   const value = useMemo(
     () => ({ nfts, isLoading, refetchNfts: fetchNfts, addNft, listNft, delistNft, buyNft, burnNft }),
     [nfts, isLoading, fetchNfts, addNft, listNft, delistNft, buyNft, burnNft]
   );
 
+  // ito naman yyung MarketplaceProvider
   return (
     <MarketplaceContext.Provider value={value}>
       {children}
@@ -177,9 +179,9 @@ export function MarketplaceProvider({ children }: { children: ReactNode }) {
   );
 }
 
-// Providers
+// ito naman QueryClient 
 const queryClient = new QueryClient();
-
+// ito naman yung networks
 const networks = {
   testnet: { url: getFullnodeUrl('testnet'), network: 'testnet' as const },
 };
@@ -188,6 +190,8 @@ const networks = {
 // dito naman yung provider para sa SuiClient at WalletProvider at MarketplaceProvider para ma access sa buong app
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
+
+    // ito naman yung QueryClientProvider
     <QueryClientProvider client={queryClient}>
       <SuiClientProvider networks={networks} defaultNetwork="testnet">
         <WalletProvider autoConnect>

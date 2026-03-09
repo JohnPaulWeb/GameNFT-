@@ -7,9 +7,11 @@
 export const CONTRACTS = {
   // Your deployed package ID from `sui client publish` output
   // Example: "0x1a2b3c4d5e6f..."
+  // ito yung Package ID ng contract mo
   PACKAGE_ID: '0x204187be671e09b8f8af560bfc0b0ba59aef48386c9b03f1f38824de6ca535d5',
 
   // The Move module name (matches: module nft::nft_marketplace)
+  // ito yung name ng Blockchain mo 
   MODULE_NAME: 'nft_marketplace',
 
   // The shared Marketplace object ID created during init()
@@ -17,6 +19,8 @@ export const CONTRACTS = {
   MARKETPLACE_ID: '0x355bf731f370143cc9fd3f269d75c1ba3bb63584def437fe801486eefa5819f5',
 
   // The network you deployed to
+
+  // ito yung network sa Blockchain mo SUI 
   NETWORK: 'testnet', // change to 'mainnet' if on mainnet
 } as const;
 

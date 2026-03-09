@@ -11,6 +11,7 @@ import type {
 const TOAST_LIMIT = 1
 const TOAST_REMOVE_DELAY = 1000000
 
+// ito yung Toaster Toast
 type ToasterToast = ToastProps & {
   id: string
   title?: React.ReactNode
@@ -18,6 +19,7 @@ type ToasterToast = ToastProps & {
   action?: ToastActionElement
 }
 
+// ito yung actionTypes 
 const actionTypes = {
   ADD_TOAST: "ADD_TOAST",
   UPDATE_TOAST: "UPDATE_TOAST",

@@ -20,6 +20,8 @@ const RadioGroup = React.forwardRef<
 })
 RadioGroup.displayName = RadioGroupPrimitive.Root.displayName
 
+
+// ito yung Radio - Group Item 
 const RadioGroupItem = React.forwardRef<
   React.ElementRef<typeof RadioGroupPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item>
@@ -33,12 +35,17 @@ const RadioGroupItem = React.forwardRef<
       )}
       {...props}
     >
+
+      {/* ito yung Radio Group Primitive Indicator */}
       <RadioGroupPrimitive.Indicator className="flex items-center justify-center">
+        {/* ito yung icon */}
         <Circle className="h-2.5 w-2.5 fill-current text-current" />
       </RadioGroupPrimitive.Indicator>
     </RadioGroupPrimitive.Item>
   )
 })
+
+// ito yung RadioGroupItem
 RadioGroupItem.displayName = RadioGroupPrimitive.Item.displayName
 
 export { RadioGroup, RadioGroupItem }

@@ -5,6 +5,7 @@ interface LoadingSpinnerProps {
   className?: string;
 }
 
+// ito yung LoadingSpinner component 
 export function LoadingSpinner({ size = 'md', className }: LoadingSpinnerProps) {
   const sizeClasses = {
     sm: 'h-8 w-8',
@@ -15,22 +16,22 @@ export function LoadingSpinner({ size = 'md', className }: LoadingSpinnerProps) 
 
   return (
     <div className={cn('relative', sizeClasses[size], className)}>
-      {/* Outer ring */}
+      {/*ito yung Outer ring */}
       <div className="absolute inset-0 rounded-full border-2 border-white/10" />
       
-      {/* Spinning gradient ring */}
+      {/*ito yung Spinning gradient ring */}
       <div className="absolute inset-0 rounded-full border-t-2 border-r-2 border-cyan-400 animate-spin" 
         style={{
           animationDuration: '1s',
         }}
       />
       
-      {/* Inner pulsing dot */}
+      {/*ito yung Inner pulsing dot */}
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
       </div>
       
-      {/* Glow effect */}
+      {/*ito yung Glow effect */}
       <div className="absolute inset-0 rounded-full opacity-50 blur-md"
         style={{
           background: 'radial-gradient(circle, rgba(0, 240, 255, 0.3), transparent 70%)',
@@ -40,6 +41,8 @@ export function LoadingSpinner({ size = 'md', className }: LoadingSpinnerProps) 
   );
 }
 
+
+// ito yung LoadingProps
 interface LoadingStateProps {
   message?: string;
   submessage?: string;

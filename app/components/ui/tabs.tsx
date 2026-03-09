@@ -50,6 +50,8 @@ const TabsContent = React.forwardRef<
     {...props}
   />
 ))
+// ito yung Tabs Content 
 TabsContent.displayName = TabsPrimitive.Content.displayName
 
+// ito yung export  
 export { Tabs, TabsList, TabsTrigger, TabsContent }

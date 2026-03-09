@@ -12,6 +12,8 @@ import { useToast } from '@/app/hooks/use-toast';
 import { CONTRACTS } from '@/app/components/contracts';
 import { NftGridSkeleton } from '@/app/components/ui/nft-skeleton';
 
+
+// ito yung interface ListedNft
 interface ListedNFT {
   listingId: string;
   nftId: string;
@@ -22,7 +24,7 @@ interface ListedNFT {
   priceInMist: bigint;
   seller: string;
 }
-
+// ito yung ListEventFields
 type ListEventFields = {
   nft_id?: string | { id?: string; bytes?: string };
   seller?: string;
@@ -40,6 +42,8 @@ type NftFields = {
   url?: string;
 };
 
+
+// dito magsisimula yung website mo
 export default function MarketplacePage() {
   const [listings, setListings] = useState<ListedNFT[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -60,6 +64,8 @@ export default function MarketplacePage() {
       }),
   });
 
+
+  // ito yung fetchListings
   const fetchListings = useCallback(async () => {
     setIsLoading(true);
     try {
@@ -76,13 +82,14 @@ export default function MarketplacePage() {
         return;
       }
 
+      // ito yung listedItems
       const listedItems = result.data
         .map((event) => {
           const fields = event.parsedJson as ListEventFields | undefined;
           const rawNftId = fields?.nft_id;
           const nftId = typeof rawNftId === 'string' ? rawNftId : rawNftId?.id ?? rawNftId?.bytes ?? '';
           const normalizedId = nftId.startsWith('0x') ? nftId : `0x${nftId}`;
-
+          // ito yuung  pag return mo 
           return {
             nftId: normalizedId,
             seller: fields?.seller ?? '',
@@ -93,6 +100,7 @@ export default function MarketplacePage() {
 
       const activeListings: ListedNFT[] = [];
 
+      // ito yung listedItems
       for (const item of listedItems) {
         try {
           const nftObject = await client.getObject({
@@ -139,7 +147,8 @@ export default function MarketplacePage() {
           console.warn('Error processing NFT', item.nftId, err);
         }
       }
-    
+
+      // ito yung catch
       setListings(activeListings);
     } catch (error) {
       console.error('Failed to fetch listings:', error);
@@ -177,7 +186,7 @@ export default function MarketplacePage() {
       const [paymentCoin] = tx.splitCoins(tx.gas, [
         tx.pure(bcs.u64().serialize(listing.priceInMist)),
       ]);
-
+      //dito magsisimula yung contract mo 
       tx.moveCall({
         target: `${CONTRACTS.PACKAGE_ID}::${CONTRACTS.MODULE_NAME}::buy_and_take`,
         typeArguments: [
@@ -190,7 +199,7 @@ export default function MarketplacePage() {
           paymentCoin,
         ],
       });
-
+      // ito yung Sign and Execute Transaction
       signAndExecuteTransaction(
         { transaction: tx },
         {
@@ -251,87 +260,79 @@ export default function MarketplacePage() {
   // dito magsisimula yung code mo here
 
   return (
-
-
-<div className="relative min-h-screen w-full">
-      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute -top-28 left-[-18%] h-96 w-96 rounded-full bg-cyan-400/12 blur-3xl" />
-        <div className="absolute top-24 right-[-12%] h-[28rem] w-[28rem] rounded-full bg-indigo-500/12 blur-3xl" />
-      </div>
-
-      <section className="px-4 pb-8 pt-10 md:px-8 md:pb-10 md:pt-14">
-        <div className="mx-auto flex max-w-7xl flex-col gap-6 rounded-3xl border border-white/10 bg-black/20 p-6 backdrop-blur-xl md:flex-row md:items-end md:justify-between md:p-8">
-          <div className="space-y-4">
-            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1.5">
-              <span className="h-2 w-2 rounded-full bg-cyan-300" />
-              <span className="text-xs font-semibold uppercase tracking-wider text-cyan-200">Live Marketplace</span>
-            </div>
-            <h1 className="font-display text-4xl font-bold tracking-tight text-white md:text-6xl">
-              Curated NFT Marketplace
-            </h1>
-            <p className="max-w-2xl text-base text-[hsl(var(--text-secondary))] md:text-lg">
-              Discover cleanly presented collections, transparent pricing, and fast checkout on Sui.
-            </p>
+    <div className="min-h-screen w-full">
+      {/* ═══════════════════════════════════════
+          HERO — section label + bold heading + inline stats
+      ═══════════════════════════════════════ */}
+      <section className="border-b border-white/[0.06] px-4 pb-12 pt-12 md:px-8 md:pb-16 md:pt-16">
+        <div className="mx-auto max-w-7xl">
+          {/* Section label */}
+          <div className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-cyan-400/30 bg-cyan-400/[0.08] px-4 py-1.5">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-50" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-400" />
+            </span>
+            <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-cyan-300">Live Marketplace</span>
           </div>
 
-          <Button
-            variant="outline"
-            size="lg"
-            onClick={fetchListings}
-            disabled={isLoading}
-            className="w-fit"
-          >
-            {/* ito naman yung icon */}
-            <RefreshCw className={`mr-2 h-5 w-5 ${isLoading ? 'animate-spin' : ''}`} />
-            {isLoading ? 'Refreshing' : 'Refresh Listings'}
-          </Button>
+          {/* Heading row */}
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+            <div className="space-y-4">
+              <h1 className="font-display text-5xl font-bold leading-[1.05] tracking-tight text-white md:text-7xl">
+                NFT
+                <br />
+                <span className="text-cyan-300">Marketplace</span>
+              </h1>
+              <p className="max-w-xl text-base leading-relaxed text-white/50 md:text-lg">
+                Discover, collect, and trade premium gaming NFTs with transparent pricing and instant settlement on Sui.
+              </p>
+            </div>
+
+            {/* Inline stat chips + refresh */}
+            <div className="flex flex-wrap items-stretch gap-3">
+              <div className="rounded-2xl border border-white/[0.09] bg-white/[0.03] px-6 py-5">
+                <p className="font-display text-4xl font-bold text-white">{listings.length}</p>
+                <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-white/35">Listed</p>
+              </div>
+              <div className="rounded-2xl border border-cyan-400/25 bg-cyan-400/[0.06] px-6 py-5">
+                <p className="font-display text-4xl font-bold text-cyan-300">{totalVolume.toFixed(1)}</p>
+                <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-cyan-400/60">SUI Volume</p>
+              </div>
+              <div className="flex flex-col items-center justify-center rounded-2xl border border-white/[0.09] bg-white/[0.03] px-5 py-5">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={fetchListings}
+                  disabled={isLoading}
+                  className="h-auto flex-col gap-1.5 p-0 text-white/50 hover:bg-transparent hover:text-white"
+                >
+                  <RefreshCw className={`h-5 w-5 ${isLoading ? 'animate-spin text-cyan-300' : ''}`} />
+                  <span className="text-[11px] font-semibold uppercase tracking-wider">{isLoading ? 'Loading' : 'Refresh'}</span>
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          {/* Wallet status bar */}
+          {account ? (
+            <div className="mt-8 flex items-center gap-2.5 rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-2.5">
+              <span className="h-2 w-2 rounded-full bg-emerald-400" />
+              <span className="font-mono text-xs font-medium text-white/60">{account.address.slice(0, 10)}...{account.address.slice(-6)}</span>
+              <span className="ml-auto text-xs font-semibold text-emerald-300">Wallet Connected</span>
+            </div>
+          ) : (
+            <div className="mt-8 flex items-center gap-2.5 rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-2.5">
+              <Wallet className="h-4 w-4 text-white/30" />
+              <span className="text-xs font-medium text-white/40">Connect wallet to purchase items</span>
+            </div>
+          )}
         </div>
       </section>
 
-      <section className="px-4 pb-6 md:px-8 md:pb-8">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-xl">
-            <div className="mb-4 flex items-center justify-between">
-              <p className="text-xs font-semibold uppercase tracking-wider text-[hsl(var(--text-secondary))]">Listed Items</p>
-              <Package className="h-5 w-5 text-cyan-300" />
-            </div>
-            <p className="font-display text-3xl font-bold text-white">{listings.length}</p>
-            <p className="mt-1 text-xs text-[hsl(var(--text-muted))]">currently available</p>
-          </div>
-
-          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-xl">
-            <div className="mb-4 flex items-center justify-between">
-              <p className="text-xs font-semibold uppercase tracking-wider text-[hsl(var(--text-secondary))]">Total Volume</p>
-              <TrendingUp className="h-5 w-5 text-cyan-300" />
-            </div>
-            <p className="font-display text-3xl font-bold text-white">{totalVolume.toFixed(1)}</p>
-            <p className="mt-1 text-xs text-[hsl(var(--text-muted))]">SUI across all listings</p>
-          </div>
-
-          {/* ito naman yung wallet design */}
-          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-xl">
-            <div className="mb-4 flex items-center justify-between">
-              <p className="text-xs font-semibold uppercase tracking-wider text-[hsl(var(--text-secondary))]">Wallet</p>
-              <Wallet className="h-5 w-5 text-cyan-300" />
-            </div>
-            {account ? (
-              <>
-                <p className="font-mono text-base font-semibold text-white">
-                  {account.address.slice(0, 10)}...{account.address.slice(-6)}
-                </p>
-                <p className="mt-1 text-xs text-emerald-300">connected</p>
-              </>
-            ) : (
-              <>
-                <p className="text-base font-semibold text-white">No wallet connected</p>
-                <p className="mt-1 text-xs text-[hsl(var(--text-muted))]">connect to purchase items</p>
-              </>
-            )}
-          </div>
-        </div>
-      </section>
-
-      <section className="px-4 pb-12 md:px-8 md:pb-16">
+      {/* ═══════════════════════════════════════
+          NFT GRID — toolbar + cards
+      ═══════════════════════════════════════ */}
+      <section className="px-4 py-10 md:px-8 md:py-14">
         <div className="mx-auto max-w-7xl">
           {isLoading ? (
             // ito naman yung skeleton loader kapag naglo-load pa ng listings
@@ -344,38 +345,38 @@ export default function MarketplacePage() {
             </div>
           ) : listings.length > 0 ? (
             <div className="space-y-6 animate-fade-in">
-              <div className="rounded-2xl border border-white/10 bg-black/20 p-4 backdrop-blur-xl md:p-5">
+              <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4 md:p-5">
                 <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                   <div className="relative flex-1">
-                    <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[hsl(var(--text-muted))]" />
+                    <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30" />
                     <input
                     // ito naman yung
                       type="text"
                       placeholder="Search by NFT name"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full rounded-xl border border-white/10 bg-white/5 py-3 pl-11 pr-4 text-sm text-white placeholder:text-[hsl(var(--text-muted))] focus:border-cyan-400/50 focus:outline-none"
+                      className="w-full rounded-xl border border-white/[0.08] bg-white/[0.04] py-2.5 pl-11 pr-4 text-sm text-white placeholder:text-white/25 focus:border-cyan-400/40 focus:bg-white/[0.06] focus:outline-none transition-colors"
                     />
                   </div>
 
-                  <div className="flex gap-3">
+                  <div className="flex gap-2">
                     <select
                     // ito naman yung div
                       value={sortBy}
                       onChange={(e) => setSortBy(e.target.value as 'newest' | 'price-low' | 'price-high')}
-                      className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white focus:border-cyan-400/50 focus:outline-none"
+                      className="rounded-xl border border-white/[0.08] bg-white/[0.04] px-4 py-2.5 text-sm text-white/80 focus:border-cyan-400/40 focus:outline-none transition-colors"
                     >
                       <option value="newest" className="bg-[hsl(var(--bg-tertiary))]">Newest</option>
-                      <option value="price-low" className="bg-[hsl(var(--bg-tertiary))]">Price Low to High</option>
-                      <option value="price-high" className="bg-[hsl(var(--bg-tertiary))]">Price High to Low</option>
+                      <option value="price-low" className="bg-[hsl(var(--bg-tertiary))]">Price: Low to High</option>
+                      <option value="price-high" className="bg-[hsl(var(--bg-tertiary))]">Price: High to Low</option>
                     </select>
 
-                    <div className="flex items-center gap-1 rounded-xl border border-white/10 bg-white/5 p-1">
+                    <div className="flex items-center gap-1 rounded-xl border border-white/[0.08] bg-white/[0.04] p-1">
                       {/* ito naman yung button */}
                       <button
                         onClick={() => setGridView('comfortable')}
                         className={`rounded-lg p-2 transition-colors ${
-                          gridView === 'comfortable' ? 'bg-cyan-400/20 text-cyan-300' : 'text-[hsl(var(--text-secondary))] hover:text-white'
+                          gridView === 'comfortable' ? 'bg-cyan-400/15 text-cyan-300' : 'text-white/35 hover:text-white/70'
                         }`}
                         aria-label="Comfortable grid"
                       >
@@ -386,7 +387,7 @@ export default function MarketplacePage() {
                       <button
                         onClick={() => setGridView('compact')}
                         className={`rounded-lg p-2 transition-colors ${
-                          gridView === 'compact' ? 'bg-cyan-400/20 text-cyan-300' : 'text-[hsl(var(--text-secondary))] hover:text-white'
+                          gridView === 'compact' ? 'bg-cyan-400/15 text-cyan-300' : 'text-white/35 hover:text-white/70'
                         }`}
                         aria-label="Compact grid"
                       >
@@ -400,7 +401,7 @@ export default function MarketplacePage() {
               <div className="flex items-end justify-between">
                 <div>
                   <h2 className="font-display text-2xl font-bold text-white md:text-3xl">Available NFTs</h2>
-                  <p className="mt-1 text-sm text-[hsl(var(--text-secondary))]">
+                  <p className="mt-1 text-sm text-white/40">
                     {filteredAndSortedListings.length} {filteredAndSortedListings.length === 1 ? 'item' : 'items'} {searchQuery ? 'matched' : 'available'}
                   </p>
                 </div>
@@ -448,31 +449,38 @@ export default function MarketplacePage() {
                 </div>
               ) : (
                 // ito naman yung  div content 
-                <div className="flex min-h-[280px] flex-col items-center justify-center rounded-2xl border border-dashed border-white/15 bg-white/[0.02] p-8 text-center">
-                  <p className="text-lg font-semibold text-white">No matching NFTs</p>
-                  <p className="mt-1 text-sm text-[hsl(var(--text-secondary))]">
+                <div className="flex min-h-[280px] flex-col items-center justify-center rounded-2xl border border-dashed border-white/[0.09] bg-white/[0.01] p-8 text-center">
+                  <p className="text-lg font-semibold text-white/80">No matching NFTs</p>
+                  <p className="mt-1 text-sm text-white/35">
                     Try another search or clear your filter to see more listings.
                   </p>
                 </div>
               )}
             </div>
           ) : (
-            <div className="flex min-h-[460px] flex-col items-center justify-center rounded-3xl border-2 border-dashed border-white/10 bg-white/[0.02] p-12 text-center animate-fade-in">
-              <div className="mb-5 flex h-20 w-20 items-center justify-center rounded-full border border-cyan-400/20 bg-cyan-400/10">
-                <ShoppingCart className="h-10 w-10 text-cyan-300/60" />
+            <div className="flex min-h-[520px] flex-col items-center justify-center p-12 text-center">
+              <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl border border-cyan-400/20 bg-cyan-400/[0.06]">
+                <ShoppingCart className="h-9 w-9 text-cyan-300/60" />
               </div>
-              <h2 className="font-display text-3xl font-bold text-white md:text-4xl">No Listings Yet</h2>
-              <p className="mt-3 max-w-md text-base text-[hsl(var(--text-secondary))]">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-white/40">Marketplace</span>
+              </div>
+              <h2 className="font-display text-4xl font-bold text-white md:text-5xl">No Listings Yet</h2>
+              <p className="mt-4 max-w-sm text-base text-white/40">
                 Once creators publish items, they will appear here with live prices and purchase actions.
               </p>
               {account ? (
-                <Button size="lg" className="mt-8" onClick={() => { window.location.href = '/mint'; }}>
+                <Button
+                  size="lg"
+                  className="mt-8 rounded-full bg-cyan-500 px-7 font-bold text-[hsl(var(--bg-void))] hover:bg-cyan-400 transition-colors"
+                  onClick={() => { window.location.href = '/mint'; }}
+                >
                   <Package className="mr-2 h-5 w-5" />
                   Mint Your First NFT
                 </Button>
               ) : (
                 // ito naman yung text
-                <p className="mt-8 text-sm text-[hsl(var(--text-secondary))]">
+                <p className="mt-8 text-sm text-white/35">
                   Connect your wallet to start trading.
                 </p>
               )}

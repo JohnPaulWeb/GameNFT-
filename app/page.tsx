@@ -3,6 +3,8 @@
 
 import { redirect } from 'next/navigation';
 
+
+// ito yung redirect URL 
 export default function HomePage() {
   redirect('/marketplace');
 }

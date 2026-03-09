@@ -204,6 +204,7 @@ export default function DelistPage() {
 
             {/* ito naman yung NFT ID  */}
             <div className="space-y-2">
+              {/* ito yung Label */}
               <Label htmlFor="nftId" className="text-sm font-semibold">
                 NFT ID
               </Label>
@@ -216,13 +217,13 @@ export default function DelistPage() {
                 className="h-11 font-mono text-sm"
               />
               <p className="text-xs text-muted-foreground">
-                The original NFT ID (UID) - the same ID used when listing
+                The original NFT ID UID - the same ID used when listing
               </p>
             </div>
           </div>
         </CardContent>
 
-        {/* ito naman yung CardFooter */}
+        {/* ito yung CardFooter */}
         <CardFooter className="border-t bg-muted/50 pt-6">
           <Button
             variant="outline"

@@ -22,12 +22,13 @@ type NftCardProps = {
 export function NftCard({ nft, children, className }: NftCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
 
+  // dito magsisimula yung code mo for the NftCard component
   return (
     <Card
       className={cn(
         'group relative flex h-full w-full flex-col overflow-hidden rounded-2xl',
-        'border border-white/10 bg-black/25 backdrop-blur-xl',
-        'transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-cyan-400/45',
+        'border border-white/[0.09] bg-white/[0.03]',
+        'transition-all duration-300 ease-out hover:-translate-y-1 hover:border-cyan-400/40 hover:bg-white/[0.05]',
         'animate-fade-up',
         className
       )}
@@ -46,6 +47,7 @@ export function NftCard({ nft, children, className }: NftCardProps) {
           </div>
         )}
 
+        {/* ito yung NFT rarity badge */}
         {nft.rarity && (
           <div className="absolute left-3 top-3 z-20">
             <div className={cn(
@@ -61,6 +63,7 @@ export function NftCard({ nft, children, className }: NftCardProps) {
           </div>
         )}
         
+        {/* ito yung Image */}
         <Image
           src={nft.imageUrl}
           alt={nft.name}
@@ -79,6 +82,7 @@ export function NftCard({ nft, children, className }: NftCardProps) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
       </div>
 
+      {/* ito yung CardHeader */}
       <CardHeader className="space-y-3 pb-3">
         <CardTitle className="line-clamp-2 font-display text-lg font-bold leading-snug tracking-tight text-white">
           {nft.name}
@@ -90,30 +94,30 @@ export function NftCard({ nft, children, className }: NftCardProps) {
         )}
       </CardHeader>
 
+      {/* ito yung CardContent  */}
       <CardContent className="flex-grow pb-4">
         {nft.isListed && nft.price ? (
-          <div className="rounded-xl border border-cyan-400/25 bg-cyan-500/10 p-4 transition-colors duration-300 group-hover:border-cyan-400/50">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold uppercase tracking-wider text-white/65">Sale Price</span>
-              <div className="flex items-baseline gap-2">
-                <span className="font-display text-3xl font-bold text-cyan-300">
-                  {nft.price}
-                </span>
-                <span className="text-sm font-bold text-cyan-200/80">SUI</span>
-              </div>
+          <div className="rounded-xl border border-cyan-400/20 bg-cyan-400/[0.07] px-5 py-4 transition-colors duration-300 group-hover:border-cyan-400/40 group-hover:bg-cyan-400/[0.10]">
+            <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-cyan-400/70">Sale Price</p>
+            <div className="flex items-baseline gap-2">
+              <span className="font-display text-4xl font-bold leading-none tracking-tight text-cyan-300">
+                {nft.price}
+              </span>
+              <span className="text-sm font-bold text-cyan-200/70">SUI</span>
             </div>
           </div>
         ) : (
-          <div className="rounded-xl border border-white/15 bg-white/5 px-4 py-3 backdrop-blur-sm">
-            <span className="text-xs font-semibold uppercase tracking-wider text-white/70">
+          <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3">
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-white/35">
               Not Listed
             </span>
           </div>
         )}
       </CardContent>
 
+      {/* ito yung Card Footer */}
       {children && (
-        <CardFooter className="flex-col items-stretch gap-3 border-t border-white/10 bg-white/[0.02] p-4">
+        <CardFooter className="flex-col items-stretch gap-3 border-t border-white/[0.07] bg-transparent p-4">
           {children}
         </CardFooter>
       )}

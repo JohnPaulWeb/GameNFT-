@@ -14,6 +14,7 @@ export function Toaster() {
   const { toasts } = useToast()
 
   return (
+    // ito yung Toast Provider
     <ToastProvider>
       {toasts.map(function ({ id, title, description, action, ...props }) {
         return (

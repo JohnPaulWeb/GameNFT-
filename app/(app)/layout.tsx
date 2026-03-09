@@ -10,9 +10,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     <Providers>
       <SidebarProvider defaultOpen={true}>
         <div className="flex h-screen w-screen overflow-hidden bg-[hsl(var(--bg-void))] relative">
-          {/* Enhanced Animated Background Layers */}
+          {/*ito yung Enhanced Animated Background Layers */}
           <div className="fixed inset-0 pointer-events-none overflow-hidden">
-            {/* Primary aurora effect - top left */}
+            {/* ito yung Primary aurora effect - top left */}
             <div
               className="absolute -top-1/2 -left-1/2 w-[140%] h-[140%] rounded-full opacity-[0.15] blur-[120px]"
               style={{
@@ -21,7 +21,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               }}
             />
 
-            {/* Cyan glow - top right */}
+            {/*ito yung Cyan glow - top right */}
             <div
               className="absolute -top-1/3 -right-1/3 w-[100%] h-[100%] rounded-full opacity-[0.12] blur-[100px]"
               style={{
@@ -31,7 +31,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               }}
             />
 
-            {/* Bottom accent glow - warmer tones */}
+            {/* ito yung Bottom accent glow - warmer tones */}
             <div
               className="absolute -bottom-1/2 left-1/4 w-[90%] h-[90%] rounded-full opacity-[0.08] blur-[100px]"
               style={{
@@ -41,7 +41,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               }}
             />
 
-            {/* Center accent - subtle emerald */}
+            {/* ito yung Center accent - subtle emerald */}
             <div
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] rounded-full opacity-[0.06] blur-[80px]"
               style={{
@@ -51,7 +51,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               }}
             />
 
-            {/* Enhanced grid overlay for depth */}
+            {/* ito yung Enhanced grid overlay for depth */}
             <div 
               className="absolute inset-0 opacity-[0.015]"
               style={{
@@ -63,7 +63,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               }}
             />
 
-            {/* Floating particles - improved */}
+            {/*ito yung  Floating particles - improved */}
             {[...Array(8)].map((_, i) => (
               <div
                 key={i}
@@ -85,7 +85,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               />
             ))}
 
-            {/* Subtle scan line effect */}
+            {/*ito yung Subtle scan line effect */}
             <div
               className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent"
               style={{
@@ -98,7 +98,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <SidebarInset className="flex min-w-0 flex-1 flex-col overflow-hidden bg-transparent relative">
             <AppHeader />
             <main className="min-h-0 flex-1 overflow-y-auto relative">
-              {/* Content wrapper with subtle vignette */}
+              {/*ito yung Content wrapper with subtle vignette */}
               <div className="relative min-h-full">
                 <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-transparent to-[hsl(var(--bg-void))]/40" />
                 <div className="relative z-10">

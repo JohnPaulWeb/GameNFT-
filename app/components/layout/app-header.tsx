@@ -44,11 +44,10 @@ export function AppHeader() {
         </div>
       </div>
 
+      {/* ito naman yung button */}
       <div className="ml-auto">
-        <div className="rounded-xl p-[1px] bg-gradient-to-br from-cyan-500/35 via-indigo-500/25 to-purple-500/15">
-          <div className="rounded-[11px] bg-[hsl(var(--bg-void))]/90 backdrop-blur-sm">
-            <ConnectButton />
-          </div>
+        <div className="[&_button]:rounded-xl [&_button]:bg-cyan-500 [&_button]:text-[hsl(var(--bg-void))] [&_button]:font-bold [&_button]:text-sm [&_button]:px-4 [&_button]:py-2 [&_button]:border-0 [&_button]:hover:bg-cyan-400 [&_button]:transition-colors [&_button]:shadow-[0_0_20px_rgba(34,211,238,0.20)]">
+          <ConnectButton />
         </div>
       </div>
     </header>

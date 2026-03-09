@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   description: 'Mint and trade game item NFTs on the SUI blockchain. A world-class Web3 marketplace experience.',
 };
 
+// ito yung RootLayout component
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -20,7 +21,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#0A0A0F" />
         
-        {/* ito yung Fonts */}
+        {/* ito yung mga Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
@@ -31,11 +32,12 @@ export default function RootLayout({
 
       {/* ito naman yung body of the website  */}
       <body className="h-full antialiased" style={{ fontFamily: 'var(--font-body)' }}>
-        <Providers>
+        <Providers>  
           <div className="flex h-full min-h-screen flex-col bg-[hsl(var(--background))] text-[hsl(var(--foreground))]">
             {children}
           </div>
         </Providers>
+        {/* ito yung toasters */}
         <Toaster />
       </body>
     </html>

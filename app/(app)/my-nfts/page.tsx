@@ -243,148 +243,75 @@ export default function MyNftsPage() {
 
   if (!account) {
     return (
-      <div className="w-full min-h-screen flex flex-col relative">
-        <div className="flex-1 flex items-center justify-center px-4">
-          <div className="text-center space-y-6 max-w-md">
-            <div className="flex justify-center">
-              <div className="flex h-24 w-24 items-center justify-center rounded-full bg-cyan-400/10 border border-cyan-400/20">
-                <Wallet className="h-12 w-12 text-cyan-300/50" />
-              </div>
-            </div>
-            <div className="space-y-3">
-              <h1 className="text-4xl font-bold font-display text-white leading-tight">Authentication Required</h1>
-              <p className="text-[hsl(var(--text-secondary))] text-lg">
-                Connect your wallet to access and manage your NFT collection.
-              </p>
-            </div>
-            <div className="pt-2">
-              <p className="text-sm text-[hsl(var(--text-secondary))]">
-                Use the connect button in the header to authenticate your wallet.
-              </p>
+      <div className="flex min-h-screen items-center justify-center px-4">
+        <div className="text-center space-y-4 max-w-sm">
+          <div className="flex justify-center">
+            <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-white/[0.04] border border-white/[0.09]">
+              <Wallet className="h-7 w-7 text-white/30" />
             </div>
           </div>
+          <h1 className="text-2xl font-bold font-display text-white">Wallet Required</h1>
+          <p className="text-sm text-white/40">
+            Connect your wallet to access and manage your NFT collection.
+          </p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="w-full min-h-screen flex flex-col relative">
-      {/* Hero Section */}
-      <div className="relative overflow-hidden px-4 md:px-8 py-12 md:py-20">
-        {/* Animated gradient overlay */}
-        <div className="absolute inset-0 -z-10 overflow-hidden">
-          <div 
-            className="absolute top-0 right-1/4 w-[450px] h-[450px] rounded-full opacity-20 blur-3xl"
-            style={{
-              background: 'radial-gradient(circle, rgba(99, 102, 241, 0.5), rgba(16, 240, 252, 0.3), transparent)',
-              animation: 'glow-pulse 12s ease-in-out infinite',
-            }} 
-          />
-          <div 
-            className="absolute top-1/3 left-1/4 w-80 h-80 rounded-full opacity-15 blur-3xl"
-            style={{
-              background: 'radial-gradient(circle, rgba(16, 185, 129, 0.4), transparent)',
-              animation: 'aurora 16s ease-in-out infinite',
-              animationDelay: '4s',
-            }} 
-          />
-        </div>
-
-        <div className="max-w-7xl mx-auto space-y-6">
-          {/* Header */}
-          <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-400/10 border border-cyan-400/30">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-              <span className="text-xs font-semibold text-cyan-300">Your Collection</span>
-            </div>
-            <h1 className="text-4xl md:text-6xl font-bold font-display leading-tight tracking-tight text-white">
-              My NFTs
-              <span className="block text-2xl md:text-3xl font-normal text-[hsl(var(--text-secondary))] mt-2">
-                Manage your exclusive Digital assets 
-              </span>
-            </h1>
+    <div className="w-full min-h-screen flex flex-col">
+      {/* Page header */}
+      <div className="px-4 md:px-8 pt-8 pb-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-400/10 border border-cyan-400/25 mb-4">
+            <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
+            <span className="text-xs font-semibold text-cyan-300 tracking-wide uppercase">Your Collection</span>
           </div>
+          <h1 className="text-3xl md:text-4xl font-bold font-display text-white tracking-tight">My NFTs</h1>
+          <p className="mt-1 text-sm text-white/40">Manage your exclusive digital assets</p>
         </div>
       </div>
       
-      {/* ito yung Stats Section */}
-      <div className="px-4 md:px-8 py-8">
+      {/* Stats Section */}
+      <div className="px-4 md:px-8 pb-4">
         <div className="max-w-7xl mx-auto">
-          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {/* Total NFTs */}
-            <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-6 transition-all duration-300 hover:border-cyan-400/50 hover:shadow-lg hover:shadow-cyan-500/20">
-              <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-2xl blur-xl"
-                style={{
-                  background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.2) 0%, transparent 70%)',
-                  pointerEvents: 'none',
-                }}
-              />
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="text-xs font-semibold text-cyan-300 uppercase tracking-wider mb-2">Total NFTs</p>
-                  <p className="text-3xl md:text-4xl font-bold font-display text-white">{myNfts.length}</p>
-                </div>
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400/30 to-cyan-500/10 border border-cyan-400/30">
-                  <Package className="h-6 w-6 text-cyan-300" />
-                </div>
+          <div className="grid gap-3 grid-cols-1 sm:grid-cols-3">
+            <div className="flex items-center justify-between rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
+              <div>
+                <p className="text-[10px] font-semibold text-white/40 uppercase tracking-wider mb-0.5">Total NFTs</p>
+                <p className="text-2xl font-bold font-display text-white">{myNfts.length}</p>
               </div>
+              <Package className="h-5 w-5 text-white/20" />
             </div>
-
-            {/* ito yung  Listed Items */}
-            <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-6 transition-all duration-300 hover:border-indigo-400/50 hover:shadow-lg hover:shadow-indigo-500/20">
-              <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-2xl blur-xl"
-                style={{
-                  background: 'radial-gradient(circle at center, rgba(99, 102, 241, 0.2) 0%, transparent 70%)',
-                  pointerEvents: 'none',
-                }}
-              />
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="text-xs font-semibold text-indigo-300 uppercase tracking-wider mb-2">Listed</p>
-                  <p className="text-3xl md:text-4xl font-bold font-display text-white">{myNfts.filter(n => n.isListed).length}</p>
-                </div>
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-400/30 to-indigo-500/10 border border-indigo-400/30">
-                  <Tag className="h-6 w-6 text-indigo-300" />
-                </div>
+            <div className="flex items-center justify-between rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
+              <div>
+                <p className="text-[10px] font-semibold text-white/40 uppercase tracking-wider mb-0.5">Listed</p>
+                <p className="text-2xl font-bold font-display text-white">{myNfts.filter(n => n.isListed).length}</p>
               </div>
+              <Tag className="h-5 w-5 text-white/20" />
             </div>
-
-            {/* ito yungc Connected Wallet */}
-            <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl p-6 transition-all duration-300 hover:border-emerald-400/50 hover:shadow-lg hover:shadow-emerald-500/20 col-span-1 sm:col-span-2 lg:col-span-1">
-              <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-2xl blur-xl"
-                style={{
-                  background: 'radial-gradient(circle at center, rgba(16, 185, 129, 0.2) 0%, transparent 70%)',
-                  pointerEvents: 'none',
-                }}
-              />
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <p className="text-xs font-semibold text-emerald-300 uppercase tracking-wider mb-1">Connected Wallet</p>
-                  <p suppressHydrationWarning className="truncate font-mono text-sm font-semibold text-white">
-                    {account.address.slice(0, 8)}...{account.address.slice(-6)}
-                  </p>
-                </div>
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-400/30 to-emerald-500/10 border border-emerald-400/30 flex-shrink-0">
-                  <Wallet className="h-6 w-6 text-emerald-300" />
-                </div>
+            <div className="flex items-center justify-between rounded-lg border border-white/[0.08] bg-white/[0.03] p-4 col-span-1 sm:col-span-1">
+              <div className="flex-1 min-w-0">
+                <p className="text-[10px] font-semibold text-white/40 uppercase tracking-wider mb-0.5">Wallet</p>
+                <p suppressHydrationWarning className="truncate font-mono text-xs font-semibold text-white/70">
+                  {account.address.slice(0, 8)}...{account.address.slice(-6)}
+                </p>
               </div>
+              <Wallet className="h-5 w-5 text-white/20 shrink-0 ml-2" />
             </div>
           </div>
         </div>
       </div>
 
-      {/*ito yung Content Section */}
-      <div className="flex-1 px-4 md:px-8 py-8">
+      {/* Content Section */}
+      <div className="flex-1 px-4 md:px-8 py-4">
         <div className="max-w-7xl mx-auto">
           {myNfts.length > 0 ? (
-            <div className="space-y-6 animate-fade-in">
-              {/*ito yung  Section Header */}
+            <div className="space-y-4">
               <div>
-                <h2 className="text-2xl md:text-3xl font-bold font-display text-white">Your Collection</h2>
-                <p className="text-sm text-[hsl(var(--text-secondary))] mt-1">
-                  {myNfts.length} {myNfts.length === 1 ? 'item' : 'items'} in your wallet
-                </p>
+                <h2 className="text-lg font-bold font-display text-white">Your Collection</h2>
+                <p className="text-xs text-white/40 mt-0.5">{myNfts.length} {myNfts.length === 1 ? 'item' : 'items'} in your wallet</p>
               </div>
 
               {/* NFT Grid */}
@@ -433,23 +360,17 @@ export default function MyNftsPage() {
               </div>
             </div>
           ) : (
-            <div className="flex min-h-[500px] flex-col items-center justify-center rounded-3xl border-2 border-dashed border-white/10 bg-gradient-to-br from-white/3 to-transparent p-12 text-center animate-fade-in">
-              <div className="flex h-24 w-24 items-center justify-center rounded-full bg-cyan-400/10 border border-cyan-400/20 mb-6">
-                <Package className="h-12 w-12 text-cyan-300/50" />
+            <div className="flex min-h-[400px] flex-col items-center justify-center rounded-2xl border border-dashed border-white/[0.09] p-10 text-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-white/[0.04] border border-white/[0.08] mb-5">
+                <Package className="h-7 w-7 text-white/25" />
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold font-display text-white">Your Collection is Empty</h2>
-              <p className="mt-3 max-w-md text-[hsl(var(--text-secondary))] text-lg">
+              <h2 className="text-xl font-bold font-display text-white">Your Collection is Empty</h2>
+              <p className="mt-2 max-w-sm text-sm text-white/40">
                 Start building your NFT portfolio by minting your first exclusive digital asset.
               </p>
-              <Button 
-                size="lg" 
-                className="mt-8"
-                onClick={() => window.location.href = '/mint'}
-              >
-                <Sparkles className="mr-2 h-5 w-5" />
+              <Button size="sm" className="mt-6" onClick={() => window.location.href = '/mint'}>
+                <Sparkles className="mr-2 h-4 w-4" />
                 Mint Your First NFT
-
-                
               </Button>
             </div>
           )}

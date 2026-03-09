@@ -9,13 +9,13 @@
 @layer base {
   :root {
     /* =============================================
-       BACKGROUND SYSTEM — Deep obsidian with depth
+       BACKGROUND SYSTEM — Deep navy-void with depth
     ============================================= */
-    --bg-void: 220 20% 3%; /* #060810 - true deep black-blue */
-    --bg-primary: 222 18% 6%; /* #0C0E18 - main background */
-    --bg-secondary: 224 16% 10%; /* #161922 - elevated surface */
-    --bg-tertiary: 226 14% 14%; /* #1E2130 - card/panel surface */
-    --bg-elevated: 228 12% 18%; /* #272B3C - hover/active surface */
+    --bg-void: 230 45% 3%; /* #04071A - deepest navy-black */
+    --bg-primary: 228 38% 6%; /* #090D20 - main background */
+    --bg-secondary: 226 28% 10%; /* #111626 - elevated surface */
+    --bg-tertiary: 224 22% 14%; /* #191F31 - card/panel surface */
+    --bg-elevated: 222 18% 19%; /* #222A3D - hover/active surface */
 
     /* =============================================
        MULTI-ACCENT COLOR SYSTEM
@@ -27,10 +27,10 @@
     --accent-indigo-light: 248 100% 80%; /* #A5B4FC */
     --accent-indigo-dim: 248 80% 20%; /* subtle bg tint */
 
-    /* — Accent 2: Luminous Cyan (interactive/links) */
-    --accent-cyan: 187 100% 53%; /* #10F0FC */
-    --accent-cyan-light: 187 100% 75%; /* #7FF8FD */
-    --accent-cyan-dim: 187 80% 12%; /* subtle bg tint */
+    /* — Accent 2: Mint Teal (interactive/links) */
+    --accent-cyan: 178 90% 46%; /* #0DDBD0 - mint-teal from image */
+    --accent-cyan-light: 178 90% 70%; /* #72F0EA */
+    --accent-cyan-dim: 178 70% 11%; /* subtle bg tint */
 
     /* — Accent 3: Violet-Rose (rare/premium badge) */
     --accent-rose: 320 90% 65%; /* #EC4899 */

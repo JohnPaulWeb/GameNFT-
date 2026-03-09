@@ -143,31 +143,35 @@ export function AppSidebar() {
       <SidebarContent className="gap-0 px-0">
         <SidebarMenu className="gap-1 px-3 py-4">
           {menuItems.map((item) => (
+            // ito yung SideBar Menu
             <SidebarMenuItem key={item.href}>
               <SidebarMenuButton
                 asChild
                 isActive={pathname === item.href}
                 tooltip={item.label}
                 className={cn(
-                  "rounded-lg transition-colors duration-150 font-medium text-white/50 hover:text-white hover:bg-white/[0.07]",
-                  pathname === item.href && "bg-cyan-400/10 border border-cyan-400/25 text-cyan-200 hover:text-cyan-100 hover:bg-cyan-400/15"
+                  "rounded-lg transition-colors duration-150 font-medium text-white/50 hover:text-white hover:bg-white/[0.07] overflow-hidden",
+                  pathname === item.href && "rounded-l-none border-l-2 border-cyan-400 bg-cyan-400/[0.08] text-cyan-200 hover:text-cyan-100 hover:bg-cyan-400/[0.12]"
                 )}
               >
-                <Link href={item.href} className="flex items-center gap-3 px-3 py-2.5 w-full">
+                <Link href={item.href} className={cn(
+                  "flex items-center gap-3 py-2.5 w-full",
+                  pathname === item.href ? "pl-3 pr-3" : "px-3"
+                )}>
                   <div className={cn(
-                    "flex h-8 w-8 items-center justify-center rounded-md transition-colors duration-150",
+                    "flex h-8 w-8 shrink-0 items-center justify-center rounded-md transition-colors duration-150",
                     pathname === item.href
-                      ? "bg-cyan-400/15 border border-cyan-400/30"
-                      : "bg-white/[0.05] border border-white/[0.08]"
+                      ? "bg-cyan-400/15 border border-cyan-400/25"
+                      : "bg-white/[0.05] border border-white/[0.07]"
                   )}>
                     <item.icon className={cn(
                       "h-4 w-4",
-                      pathname === item.href ? "text-cyan-300" : "text-white/50"
+                      pathname === item.href ? "text-cyan-300" : "text-white/45"
                     )} />
                   </div>
                   <span className="flex-1 text-sm font-medium">{item.label}</span>
                   {pathname === item.href && (
-                    <div className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
+                    <div className="h-1.5 w-1.5 rounded-full bg-cyan-400/80" />
                   )}
                 </Link>
               </SidebarMenuButton>

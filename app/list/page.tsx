@@ -140,7 +140,7 @@ export default function ListPage() {
           onSuccess: (result: any) => {
             console.log('✅ Listing successful!', result);
 
-            // Get NFT data for local state
+            //ito yung Get NFT data for local state
             const nftContent = objectData.data?.content;
             if (nftContent && 'fields' in nftContent) {
               const fields = nftContent.fields as any;
@@ -156,6 +156,7 @@ export default function ListPage() {
               );
             }
 
+            // ito yung toast 
             toast({
               title: 'NFT Listed! 🏷️',
               description: `Your NFT is now listed for ${priceNum} SUI.`,
@@ -197,6 +198,7 @@ export default function ListPage() {
           },
         }
       );
+      // ito yung transaction Error 
     } catch (error) {
       console.error('Error in list:', error);
       toast({
@@ -210,6 +212,8 @@ export default function ListPage() {
 
   // dito magsisimula yung code mo 
   return (
+
+    // ito yung Card Header
     <div className="flex justify-center py-8">
       <Card className="w-full max-w-2xl border-2 border-blue-200 shadow-xl">
         <CardHeader className="space-y-2">
@@ -253,6 +257,7 @@ export default function ListPage() {
             </div>
           )}
 
+          {/* ito yung listing requiremen */}
           <div className="space-y-4">
             <div className="rounded-lg border-2 border-blue-500/50 bg-blue-50 p-4 dark:bg-blue-950/20">
               <p className="text-sm font-semibold text-blue-900 dark:text-blue-100">
@@ -278,7 +283,7 @@ export default function ListPage() {
                 disabled={isListing}
                 className="h-11 font-mono text-sm"
               />
-
+              {/* ito yung nft object  */}
               <p className="text-xs text-muted-foreground">
                 The NFT Object ID from your wallet
               </p>

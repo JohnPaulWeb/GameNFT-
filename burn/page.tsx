@@ -256,6 +256,7 @@ export default function BurnPage() {
               </p>
             </div>
 
+            {/* ito yung text  */}
             <div className="rounded-lg border-2 border-yellow-500/50 bg-yellow-50 p-4 dark:bg-yellow-950/20">
               <p className="text-sm font-semibold text-yellow-900 dark:text-yellow-100">
                 📋 Before burning:
@@ -271,6 +272,7 @@ export default function BurnPage() {
               </ul>
             </div>
 
+            {/* ito yung label */}
             <div className="space-y-2">
               <Label htmlFor="nftObjectId" className="text-sm font-semibold">
                 NFT Object ID
@@ -320,6 +322,7 @@ export default function BurnPage() {
             onClick={handleBurn}
             disabled={isBurning || !nftObjectId.trim() || !confirmed || !account}
           >
+            {/* ito yung burning   */}
             {isBurning ? (
               'Verifying & Burning...'
             ) : !account ? (

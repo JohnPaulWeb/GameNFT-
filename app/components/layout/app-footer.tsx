@@ -89,7 +89,7 @@ export function AppFooter() {
             </div>
             <a 
 
-            // Link for SUI
+            // ito yung Link ng SUI
               href="https://sui.io" 
               target="_blank" 
               rel="noopener noreferrer"

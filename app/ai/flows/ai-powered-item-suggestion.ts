@@ -54,7 +54,7 @@ export async function aiPoweredItemSuggestion(
   return aiPoweredItemSuggestionFlow(input);
 }
 
-// ito naman yung prompt ng AI 
+// ito naman yung prompt AI 
 
 const prompt = ai.definePrompt({
   name: 'aiPoweredItemSuggestionPrompt',
