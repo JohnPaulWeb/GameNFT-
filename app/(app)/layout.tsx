@@ -101,7 +101,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               {/*ito yung Content wrapper with subtle vignette */}
               <div className="relative min-h-full">
                 <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-transparent to-[hsl(var(--bg-void))]/40" />
-                <div className="relative z-10">
+                <div className="relative z-10 max-w-7xl mx-auto px-6 py-4">
                   {children}
                 </div>
               </div>
