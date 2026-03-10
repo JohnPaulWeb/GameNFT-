@@ -17,7 +17,6 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  SidebarSeparator,
 } from '@/app/components/ui/sidebar';
 import { Logo } from '@/app/components/icons';
 import { Skeleton } from '../ui/skeleton';
@@ -126,7 +125,7 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="none" className="border-r border-white/[0.08] bg-[hsl(var(--bg-void))]">
       {/* ito naman yung sidebarHeader */}
-      <SidebarHeader className="border-b border-white/[0.07]">
+      <SidebarHeader className="relative border-b border-white/[0.07] p-0">
         <div className="flex items-center gap-3 px-4 py-4">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-cyan-400/10 border border-cyan-400/25">
             <span className="text-base font-bold text-cyan-300">◆</span>
@@ -150,7 +149,7 @@ export function AppSidebar() {
                 isActive={pathname === item.href}
                 tooltip={item.label}
                 className={cn(
-                  "rounded-lg transition-colors duration-150 font-medium text-white/50 hover:text-white hover:bg-white/[0.07] overflow-hidden",
+                  "h-auto rounded-lg transition-colors duration-150 font-medium text-white/50 hover:text-white hover:bg-white/[0.07] overflow-hidden",
                   pathname === item.href && "rounded-l-none border-l-2 border-cyan-400 bg-cyan-400/[0.08] text-cyan-200 hover:text-cyan-100 hover:bg-cyan-400/[0.12]"
                 )}
               >
