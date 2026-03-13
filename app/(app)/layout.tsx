@@ -85,7 +85,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               />
             ))}
 
-            {/*ito yung Subtle scan line effect */}
+            {/*ito yung Subtitle scan line effect */}
             <div
               className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent"
               style={{

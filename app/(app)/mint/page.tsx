@@ -264,7 +264,10 @@ export default function MintPage() {
                       />
                     </div>
 
-                    {/* Description Input */}
+                    {/* Description Input
+                    
+                        Label and Text Area for the description of the NFT
+                    */}
 
                     
                     <div className="space-y-2">

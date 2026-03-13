@@ -260,156 +260,175 @@ export default function MarketplacePage() {
   // dito magsisimula yung code mo here
 
   return (
-    <div className="min-h-screen w-full">
+    <div className="min-h-screen w-full bg-[hsl(var(--bg-void))]">
       {/* ═══════════════════════════════════════
-          HERO — section label + bold heading + inline stats
+          PREMIUM HERO — Modern Web3 Aesthetic
       ═══════════════════════════════════════ */}
-      <section className="border-b border-white/[0.06] px-4 pb-12 pt-12 md:px-8 md:pb-16 md:pt-16">
-        <div className="mx-auto max-w-7xl">
-          {/* Section label */}
-          <div className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-cyan-400/30 bg-cyan-400/[0.08] px-4 py-1.5">
+      <section className="relative overflow-hidden border-b border-cyan-500/20 px-4 pb-20 pt-24 md:px-8 md:pb-28 md:pt-32">
+        {/* Animated background glows */}
+        <div className="absolute -right-60 -top-60 h-96 w-96 rounded-full bg-gradient-to-br from-cyan-500/15 via-purple-500/10 to-transparent blur-3xl animate-pulse" />
+        <div className="absolute -bottom-40 -left-60 h-80 w-80 rounded-full bg-gradient-to-tr from-indigo-600/12 via-transparent to-transparent blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+
+        {/* Grid background accent */}
+        <div className="absolute inset-0 bg-[linear-gradient(0deg,transparent_24%,rgba(34,211,238,.05)_25%,rgba(34,211,238,.05)_26%,transparent_27%,transparent_74%,rgba(34,211,238,.05)_75%,rgba(34,211,238,.05)_76%,transparent_77%,transparent),linear-gradient(90deg,transparent_24%,rgba(34,211,238,.05)_25%,rgba(34,211,238,.05)_26%,transparent_27%,transparent_74%,rgba(34,211,238,.05)_75%,rgba(34,211,238,.05)_76%,transparent_77%,transparent)] bg-[50px_50px] opacity-40" />
+
+        <div className="relative mx-auto max-w-7xl">
+          {/* Premium badge with neon glow */}
+          <div className="mb-10 inline-flex items-center gap-2.5 rounded-full border border-cyan-400/40 bg-cyan-400/5 px-4 py-2 backdrop-blur-xl hover:border-cyan-400/60 hover:bg-cyan-400/10 transition-all duration-300 shadow-[0_0_20px_rgba(34,211,238,0.2)]">
             <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-50" />
+              <span className="absolute inline-flex h-full w-full animate-pulse rounded-full bg-cyan-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-400" />
             </span>
-            <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-cyan-300">Live Marketplace</span>
+            <span className="text-xs font-bold uppercase tracking-[0.16em] text-cyan-300">🔴 Live on Sui Network</span>
           </div>
 
-          {/* Heading row */}
-          <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-            <div className="space-y-4">
-              <h1 className="font-display text-5xl font-bold leading-[1.05] tracking-tight text-white md:text-7xl">
-                NFT
-                <br />
-                <span className="text-cyan-300">Marketplace</span>
-              </h1>
-              <p className="max-w-xl text-base leading-relaxed text-white/50 md:text-lg">
-                Discover, collect, and trade premium gaming NFTs with transparent pricing and instant settlement on Sui.
+          {/* Main hero content */}
+          <div className="flex flex-col gap-12 lg:flex-row lg:items-center lg:justify-between">
+            <div className="flex-1 space-y-8">
+              {/* Main heading with gradient */}
+              <div className="space-y-4">
+                <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-black leading-[1.1] tracking-tighter text-white">
+                  NFT
+                  <br />
+                  <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-200 bg-clip-text text-transparent">Marketplace</span>
+                </h1>
+              </div>
+
+              {/* Description */}
+              <p className="max-w-lg text-base md:text-lg leading-relaxed text-white/70 font-light">
+                Trade premium gaming NFTs on the lightning-fast Sui blockchain. Zero-fee listing, instant settlement, and world-class security.
               </p>
+
+              {/* Stats section */}
+              <div className="grid grid-cols-3 gap-4 md:gap-6 pt-4">
+                <div className="group border border-cyan-500/20 rounded-xl bg-gradient-to-br from-cyan-500/5 to-transparent p-4 backdrop-blur-sm hover:border-cyan-400/40 hover:bg-cyan-500/10 transition-all duration-300">
+                  <p className="text-xs uppercase tracking-wider text-cyan-400/70 font-semibold mb-2">Active</p>
+                  <p className="text-2xl md:text-3xl font-bold text-cyan-300">{listings.length}</p>
+                </div>
+                <div className="group border border-purple-500/20 rounded-xl bg-gradient-to-br from-purple-500/5 to-transparent p-4 backdrop-blur-sm hover:border-purple-400/40 hover:bg-purple-500/10 transition-all duration-300">
+                  <p className="text-xs uppercase tracking-wider text-purple-400/70 font-semibold mb-2">Volume</p>
+                  <p className="text-2xl md:text-3xl font-bold text-purple-300">{totalVolume.toFixed(0)}</p>
+                </div>
+                <div className="group border border-white/20 rounded-xl bg-gradient-to-br from-white/5 to-transparent p-4 backdrop-blur-sm hover:border-white/40 hover:bg-white/10 transition-all duration-300">
+                  <p className="text-xs uppercase tracking-wider text-white/50 font-semibold mb-2">Network</p>
+                  <p className="text-xl md:text-2xl font-bold text-white">Sui</p>
+                </div>
+              </div>
             </div>
 
-            {/* Inline stat chips + refresh */}
-            <div className="flex flex-wrap items-stretch gap-3">
-              <div className="rounded-2xl border border-white/[0.09] bg-white/[0.03] px-6 py-5">
-                <p className="font-display text-4xl font-bold text-white">{listings.length}</p>
-                <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-white/35">Listed</p>
-              </div>
-              <div className="rounded-2xl border border-cyan-400/25 bg-cyan-400/[0.06] px-6 py-5">
-                <p className="font-display text-4xl font-bold text-cyan-300">{totalVolume.toFixed(1)}</p>
-                <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-cyan-400/60">SUI Volume</p>
-              </div>
-              <div className="flex flex-col items-center justify-center rounded-2xl border border-white/[0.09] bg-white/[0.03] px-5 py-5">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={fetchListings}
-                  disabled={isLoading}
-                  className="h-auto flex-col gap-1.5 p-0 text-white/50 hover:bg-transparent hover:text-white"
-                >
-                  <RefreshCw className={`h-5 w-5 ${isLoading ? 'animate-spin text-cyan-300' : ''}`} />
-                  <span className="text-[11px] font-semibold uppercase tracking-wider">{isLoading ? 'Loading' : 'Refresh'}</span>
-                </Button>
-              </div>
+            {/* Right side: Enhanced wallet status */}
+            <div className="lg:flex-1 flex flex-col gap-6">
+              {account ? (
+                <div className="relative group">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-300" />
+                  <div className="relative flex items-center gap-4 rounded-xl border border-cyan-500/30 bg-gradient-to-br from-white/[0.08] via-white/[0.04] to-transparent p-5 backdrop-blur-xl">
+                    <div className="flex h-3 w-3 items-center justify-center rounded-full bg-gradient-to-r from-emerald-400 to-cyan-300 shadow-lg shadow-emerald-400/50">
+                      <div className="h-1.5 w-1.5 rounded-full bg-white" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="font-mono text-xs font-medium text-emerald-400">{account.address.slice(0, 12)}...{account.address.slice(-6)}</p>
+                      <p className="text-[11px] text-white/40 mt-0.5">Wallet Connected</p>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-center gap-3 rounded-xl border border-white/20 bg-gradient-to-br from-white/[0.05] to-transparent p-5 backdrop-blur-xl">
+                  <Wallet className="h-5 w-5 text-white/30" />
+                  <span className="text-sm text-white/50">Connect wallet to trade</span>
+                </div>
+              )}
             </div>
           </div>
-
-          {/* Wallet status bar */}
-          {account ? (
-            <div className="mt-8 flex items-center gap-2.5 rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-2.5">
-              <span className="h-2 w-2 rounded-full bg-emerald-400" />
-              <span className="font-mono text-xs font-medium text-white/60">{account.address.slice(0, 10)}...{account.address.slice(-6)}</span>
-              <span className="ml-auto text-xs font-semibold text-emerald-300">Wallet Connected</span>
-            </div>
-          ) : (
-            <div className="mt-8 flex items-center gap-2.5 rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-2.5">
-              <Wallet className="h-4 w-4 text-white/30" />
-              <span className="text-xs font-medium text-white/40">Connect wallet to purchase items</span>
-            </div>
-          )}
         </div>
       </section>
 
       {/* ═══════════════════════════════════════
-          NFT GRID — toolbar + cards
+          MARKETPLACE GRID — Modern Layout
       ═══════════════════════════════════════ */}
-      <section className="px-4 py-10 md:px-8 md:py-14">
+      <section className="relative px-4 py-16 md:px-8 md:py-20">
         <div className="mx-auto max-w-7xl">
           {isLoading ? (
-            // ito naman yung skeleton loader kapag naglo-load pa ng listings
-            <div className="space-y-6">
-              <div className="space-y-2">
-                <div className="h-8 w-56 rounded-lg bg-white/10 shimmer" />
-                <div className="h-4 w-72 rounded-lg bg-white/5 shimmer" />
+            <div className="space-y-8">
+              <div className="space-y-4">
+                <div className="h-12 w-72 rounded-lg bg-gradient-to-r from-white/10 to-white/5 shimmer" />
+                <div className="h-6 w-96 rounded-lg bg-gradient-to-r from-white/5 to-white/[0.01] shimmer" />
               </div>
               <NftGridSkeleton count={8} />
             </div>
           ) : listings.length > 0 ? (
-            <div className="space-y-6 animate-fade-in">
-              <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4 md:p-5">
-                <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                  <div className="relative flex-1">
-                    <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30" />
-                    <input
-                    // ito naman yung
-                      type="text"
-                      placeholder="Search by NFT name"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full rounded-xl border border-white/[0.08] bg-white/[0.04] py-2.5 pl-11 pr-4 text-sm text-white placeholder:text-white/25 focus:border-cyan-400/40 focus:bg-white/[0.06] focus:outline-none transition-colors"
-                    />
-                  </div>
+            <div className="space-y-10 animate-fade-in">
+              {/* Header section */}
+              <div className="space-y-6">
+                <div>
+                  <h2 className="font-display text-4xl md:text-5xl font-black text-white mb-3">Collections</h2>
+                  <p className="text-white/60">Browse {filteredAndSortedListings.length} {filteredAndSortedListings.length === 1 ? 'item' : 'items'} {searchQuery ? 'matched' : 'available'}</p>
+                </div>
 
-                  <div className="flex gap-2">
-                    <select
-                    // ito naman yung div
-                      value={sortBy}
-                      onChange={(e) => setSortBy(e.target.value as 'newest' | 'price-low' | 'price-high')}
-                      className="rounded-xl border border-white/[0.08] bg-white/[0.04] px-4 py-2.5 text-sm text-white/80 focus:border-cyan-400/40 focus:outline-none transition-colors"
-                    >
-                      <option value="newest" className="bg-[hsl(var(--bg-tertiary))]">Newest</option>
-                      <option value="price-low" className="bg-[hsl(var(--bg-tertiary))]">Price: Low to High</option>
-                      <option value="price-high" className="bg-[hsl(var(--bg-tertiary))]">Price: High to Low</option>
-                    </select>
+                {/* Toolbar with neon styling */}
+                <div className="relative border border-cyan-500/30 rounded-xl bg-gradient-to-r from-white/[0.05] via-white/[0.02] to-transparent p-5 backdrop-blur-xl hover:border-cyan-500/50 transition-all duration-300 group">
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500/20 to-purple-500/10 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-300" />
 
-                    <div className="flex items-center gap-1 rounded-xl border border-white/[0.08] bg-white/[0.04] p-1">
-                      {/* ito naman yung button */}
-                      <button
-                        onClick={() => setGridView('comfortable')}
-                        className={`rounded-lg p-2 transition-colors ${
-                          gridView === 'comfortable' ? 'bg-cyan-400/15 text-cyan-300' : 'text-white/35 hover:text-white/70'
-                        }`}
-                        aria-label="Comfortable grid"
+                  <div className="relative flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
+                    {/* Search */}
+                    <div className="relative flex-1">
+                      <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-cyan-400/40" />
+                      <input
+                        type="text"
+                        placeholder="Search collections..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full rounded-lg border border-white/15 bg-white/[0.05] py-3 pl-11 pr-4 text-sm text-white placeholder:text-white/30 focus:border-cyan-400/60 focus:ring-1 focus:ring-cyan-400/20 focus:bg-white/[0.08] focus:outline-none transition-all duration-200 backdrop-blur-sm"
+                      />
+                    </div>
+
+                    {/* Controls */}
+                    <div className="flex gap-3 items-center">
+                      <select
+                        value={sortBy}
+                        onChange={(e) => setSortBy(e.target.value as 'newest' | 'price-low' | 'price-high')}
+                        className="rounded-lg border border-white/15 bg-white/[0.05] px-4 py-3 text-sm text-white/80 focus:border-cyan-400/60 focus:outline-none transition-all duration-200 appearance-none cursor-pointer pr-8 bg-no-repeat bg-right backdrop-blur-sm"
+                        style={{
+                          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2322d3ee' opacity='0.5' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
+                          backgroundPosition: 'right 10px center'
+                        }}
                       >
-                        {/* ito naman yung Layout */}
-                        <LayoutGrid className="h-4 w-4" />
-                      </button>
-                      {/* ito yung button */}
-                      <button
-                        onClick={() => setGridView('compact')}
-                        className={`rounded-lg p-2 transition-colors ${
-                          gridView === 'compact' ? 'bg-cyan-400/15 text-cyan-300' : 'text-white/35 hover:text-white/70'
-                        }`}
-                        aria-label="Compact grid"
-                      >
-                        <Grid3x3 className="h-4 w-4" />
-                      </button>
+                        <option value="newest">Newest</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                      </select>
+
+                      {/* View toggle */}
+                      <div className="flex items-center gap-1 rounded-lg border border-white/15 bg-white/[0.05] p-1 backdrop-blur-sm">
+                        <button
+                          onClick={() => setGridView('comfortable')}
+                          className={`rounded-md p-2 transition-all duration-200 ${
+                            gridView === 'comfortable'
+                              ? 'bg-cyan-500/30 text-cyan-200 border border-cyan-400/50 shadow-[0_0_10px_rgba(34,211,238,0.3)]'
+                              : 'text-white/40 hover:text-white/60'
+                          }`}
+                        >
+                          <LayoutGrid className="h-4 w-4" />
+                        </button>
+                        <button
+                          onClick={() => setGridView('compact')}
+                          className={`rounded-md p-2 transition-all duration-200 ${
+                            gridView === 'compact'
+                              ? 'bg-cyan-500/30 text-cyan-200 border border-cyan-400/50 shadow-[0_0_10px_rgba(34,211,238,0.3)]'
+                              : 'text-white/40 hover:text-white/60'
+                          }`}
+                        >
+                          <Grid3x3 className="h-4 w-4" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-              
-              <div className="flex items-end justify-between">
-                <div>
-                  <h2 className="font-display text-2xl font-bold text-white md:text-3xl">Available NFTs</h2>
-                  <p className="mt-1 text-sm text-white/40">
-                    {filteredAndSortedListings.length} {filteredAndSortedListings.length === 1 ? 'item' : 'items'} {searchQuery ? 'matched' : 'available'}
-                  </p>
-                </div>
-              </div>
 
+              {/* Grid */}
               {filteredAndSortedListings.length > 0 ? (
                 <div
-                  className={`grid gap-5 ${
+                  className={`grid gap-6 ${
                     gridView === 'comfortable'
                       ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
                       : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
@@ -430,7 +449,7 @@ export default function MarketplacePage() {
                         }}
                       >
                         <Button
-                          className="w-full font-semibold text-base"
+                          className="w-full font-semibold text-sm md:text-base bg-gradient-to-r from-cyan-500 to-cyan-400 hover:from-cyan-400 hover:to-cyan-300 text-black border-0 shadow-[0_0_15px_rgba(34,211,238,0.3)] hover:shadow-[0_0_25px_rgba(34,211,238,0.5)] transition-all duration-300"
                           onClick={() => handleBuy(listing)}
                           disabled={!account || listing.seller === account?.address || buyingId === listing.nftId}
                         >
@@ -438,50 +457,50 @@ export default function MarketplacePage() {
                           {!account
                             ? 'Connect Wallet'
                             : listing.seller === account?.address
-                            ? 'Your Listing'
+                            ? 'Your Item'
                             : buyingId === listing.nftId
-                            ? 'Purchasing...'
-                            : `Buy for ${listing.price} SUI`}
+                            ? 'Processing...'
+                            : `Buy ${listing.price} SUI`}
                         </Button>
                       </NftCard>
                     </div>
                   ))}
                 </div>
               ) : (
-                // ito naman yung  div content 
-                <div className="flex min-h-[280px] flex-col items-center justify-center rounded-2xl border border-dashed border-white/[0.09] bg-white/[0.01] p-8 text-center">
-                  <p className="text-lg font-semibold text-white/80">No matching NFTs</p>
-                  <p className="mt-1 text-sm text-white/35">
-                    Try another search or clear your filter to see more listings.
-                  </p>
+                <div className="flex min-h-80 flex-col items-center justify-center rounded-2xl border border-dashed border-white/15 bg-gradient-to-br from-white/[0.03] to-transparent p-12 text-center">
+                  <Search className="h-12 w-12 text-white/20 mb-4" />
+                  <p className="text-lg font-semibold text-white/70">No matches</p>
+                  <p className="mt-2 text-sm text-white/40">Try adjusting your search filters</p>
                 </div>
               )}
             </div>
           ) : (
-            <div className="flex min-h-[520px] flex-col items-center justify-center p-12 text-center">
-              <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl border border-cyan-400/20 bg-cyan-400/[0.06]">
-                <ShoppingCart className="h-9 w-9 text-cyan-300/60" />
+            <div className="flex min-h-[600px] flex-col items-center justify-center p-12 text-center">
+              <div className="mb-8 relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-2xl blur-lg" />
+                <div className="relative flex h-28 w-28 items-center justify-center rounded-2xl border border-cyan-500/40 bg-gradient-to-br from-cyan-500/10 to-transparent">
+                  <ShoppingCart className="h-14 w-14 text-cyan-300/40" />
+                </div>
               </div>
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1">
-                <span className="text-[11px] font-semibold uppercase tracking-wider text-white/40">Marketplace</span>
-              </div>
-              <h2 className="font-display text-4xl font-bold text-white md:text-5xl">No Listings Yet</h2>
-              <p className="mt-4 max-w-sm text-base text-white/40">
-                Once creators publish items, they will appear here with live prices and purchase actions.
+
+              <p className="text-sm uppercase tracking-wider text-cyan-400/70 font-semibold mb-3">No listings yet</p>
+              <h2 className="font-display text-5xl md:text-6xl font-black text-white mb-6">Marketplace Ready</h2>
+              <p className="mt-4 max-w-md text-base text-white/60 leading-relaxed">
+                Start building your NFT collection. Mint your first item or explore the ecosystem.
               </p>
+
               {account ? (
                 <Button
                   size="lg"
-                  className="mt-8 rounded-full bg-cyan-500 px-7 font-bold text-[hsl(var(--bg-void))] hover:bg-cyan-400 transition-colors"
+                  className="mt-10 rounded-xl bg-gradient-to-r from-cyan-500 to-cyan-400 px-8 py-4 font-bold text-black hover:from-cyan-400 hover:to-cyan-300 border-0 shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:shadow-[0_0_30px_rgba(34,211,238,0.6)] transition-all duration-300"
                   onClick={() => { window.location.href = '/mint'; }}
                 >
                   <Package className="mr-2 h-5 w-5" />
                   Mint Your First NFT
                 </Button>
               ) : (
-                // ito naman yung text
-                <p className="mt-8 text-sm text-white/35">
-                  Connect your wallet to start trading.
+                <p className="mt-10 text-sm text-white/40 font-medium">
+                  Connect your wallet to get started
                 </p>
               )}
             </div>
@@ -491,3 +510,4 @@ export default function MarketplacePage() {
     </div>
   );
 }
+

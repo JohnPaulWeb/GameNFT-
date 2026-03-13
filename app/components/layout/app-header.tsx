@@ -27,26 +27,32 @@ export function AppHeader() {
   const PageIcon = useMemo(() => iconMap[pathname] ?? null, [pathname]);
 
   return (
-    <header className="sticky top-0 z-40 flex h-14 shrink-0 items-center gap-4 border-b border-white/[0.07] bg-[hsl(var(--bg-void))]/95 backdrop-blur-xl px-4 md:px-6 lg:px-8">
-      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-cyan-400/35 to-transparent" />
+    <header className="sticky top-0 z-40 flex h-16 shrink-0 items-center justify-between border-b border-white/[0.06] bg-[hsl(var(--bg-void))]/95 backdrop-blur-xl px-4 md:px-6 lg:px-8">
+      {/* Gradient border accent */}
+      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent" />
 
-      <SidebarTrigger className="text-white/50 hover:text-white hover:bg-white/[0.06] rounded-lg transition-colors p-2" />
+      {/* Left section */}
+      <div className="flex items-center gap-3 md:gap-4">
+        <SidebarTrigger className="text-white/50 hover:text-white hover:bg-white/[0.08] rounded-lg transition-all p-2 border border-transparent hover:border-white/[0.1]" />
 
-      <div className="flex md:hidden items-center gap-2">
-        <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-cyan-400/30 to-indigo-500/20 border border-cyan-400/30 flex items-center justify-center text-cyan-300 text-sm font-bold">◆</div>
-        <span className="text-sm font-bold font-display text-white">SuiPlay</span>
-      </div>
-
-      <div className="flex-1 flex items-center justify-center">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/[0.09] bg-white/[0.04]">
-          {PageIcon && <PageIcon className="h-3.5 w-3.5 text-cyan-300/80" />}
-          <span className="text-sm font-semibold font-display text-white/90 tracking-tight">{title}</span>
+        {/* Mobile logo */}
+        <div className="md:hidden flex items-center gap-2 shrink-0">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400/40 to-indigo-500/30 border border-cyan-400/40 flex items-center justify-center text-cyan-300 text-sm font-bold">◆</div>
+          <span className="text-sm font-bold font-display text-white tracking-tight">SuiPlay</span>
         </div>
       </div>
 
-      {/* ito naman yung button */}
+      {/* Center section - Page indicator */}
+      <div className="hidden md:flex items-center justify-center flex-1">
+        <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-white/[0.08] bg-white/[0.04] backdrop-blur-sm hover:border-white/[0.15] hover:bg-white/[0.06] transition-all duration-200">
+          {PageIcon && <PageIcon className="h-4 w-4 text-cyan-300/90" />}
+          <span className="text-sm font-semibold font-display text-white/95 tracking-tight">{title}</span>
+        </div>
+      </div>
+
+      {/* Right section - Connect button */}
       <div className="ml-auto">
-        <div className="[&_button]:rounded-xl [&_button]:bg-cyan-500 [&_button]:text-[hsl(var(--bg-void))] [&_button]:font-bold [&_button]:text-sm [&_button]:px-4 [&_button]:py-2 [&_button]:border-0 [&_button]:hover:bg-cyan-400 [&_button]:transition-colors [&_button]:shadow-[0_0_20px_rgba(34,211,238,0.20)]">
+        <div className="[&_button]:rounded-xl [&_button]:bg-gradient-to-r [&_button]:from-cyan-500 [&_button]:to-cyan-400 [&_button]:text-[hsl(var(--bg-void))] [&_button]:font-bold [&_button]:text-sm [&_button]:px-5 [&_button]:py-2.5 [&_button]:border-0 [&_button]:hover:from-cyan-400 [&_button]:hover:to-cyan-300 [&_button]:transition-all [&_button]:duration-200 [&_button]:shadow-[0_0_20px_rgba(34,211,238,0.25)] [&_button]:hover:shadow-[0_0_30px_rgba(34,211,238,0.4)]">
           <ConnectButton />
         </div>
       </div>

@@ -71,7 +71,8 @@ export function FeaturedNFTs({ items = [], onItemClick }: FeaturedNFTsProps) {
               className="group relative overflow-hidden rounded-2xl animate-fade-up"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              {/* Premium Card Background */}
+              {/* Premium Card Background */} 
+              
               <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-white/5 to-white/2 border border-white/10 backdrop-blur-xl transition-all duration-500 group-hover:border-cyan-400/50 group-hover:shadow-2xl group-hover:shadow-cyan-500/30 group-hover:-translate-y-2" />
 
               {/* Glow Effect */}
@@ -99,7 +100,7 @@ export function FeaturedNFTs({ items = [], onItemClick }: FeaturedNFTsProps) {
                   <span className="text-xs font-bold text-white uppercase tracking-wider">Trending</span>
                 </div>
               </div>
-
+              
               {/* Image Container */}
               <div className="relative aspect-square w-full overflow-hidden bg-gradient-to-br from-white/8 to-white/[0.01] rounded-t-2xl">
                 <Image
