@@ -53,6 +53,8 @@ const DialogContent = React.forwardRef<
 ))
 DialogContent.displayName = DialogPrimitive.Content.displayName
 
+
+// ito yung DialogHeader
 const DialogHeader = ({
   className,
   ...props
@@ -80,7 +82,7 @@ const DialogFooter = ({
   />
 )
 DialogFooter.displayName = "DialogFooter"
-
+// ito yung DialogTitle with forward Ref
 const DialogTitle = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
@@ -96,6 +98,8 @@ const DialogTitle = React.forwardRef<
 ))
 DialogTitle.displayName = DialogPrimitive.Title.displayName
 
+
+// ito yung DialogDescription with forward Ref
 const DialogDescription = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>

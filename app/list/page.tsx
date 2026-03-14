@@ -156,7 +156,7 @@ export default function ListPage() {
               );
             }
 
-            // ito yung toast 
+            // ito yung toast sa Listing  
             toast({
               title: 'NFT Listed! 🏷️',
               description: `Your NFT is now listed for ${priceNum} SUI.`,

@@ -1,5 +1,5 @@
 
-
+// ito yung placeholder ng Images 
 import data from './placeholder-images.json';
 // ito naman yung  Placeholder 
 export type ImagePlaceholder = {

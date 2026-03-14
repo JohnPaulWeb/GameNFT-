@@ -63,7 +63,7 @@ export function AppFooter() {
             </nav>
           </div>
 
-          {/* Resources */}
+          {/* ito yung mga links sa Resources */}
           <div className="space-y-4">
             <h3 className="text-xs font-bold text-white font-display tracking-[0.15em] uppercase">Resources</h3>
             <div className="flex flex-col gap-2.5">
@@ -130,10 +130,10 @@ export function AppFooter() {
           </div>
         </div>
 
-        {/* Divider */}
+        {/* ito yung Divider */}
         <div className="border-t border-white/[0.06] mb-8" />
 
-        {/* Bottom info bar */}
+        {/* ito yung Bottom info bar */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-6">
           <p className="text-xs text-white/40 font-medium">
             © {currentYear} SuiPlay Marketplace. All rights reserved.

@@ -3,8 +3,8 @@
 import * as React from "react"
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog"
 
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
+import { cn } from "@/app/lib/utils"
+import { buttonVariants } from "@/app/components/ui/button"
 
 const AlertDialog = AlertDialogPrimitive.Root
 
@@ -25,7 +25,10 @@ const AlertDialogOverlay = React.forwardRef<
     ref={ref}
   />
 ))
+
+// ito yung AlertDialogOverlay DisplayNname
 AlertDialogOverlay.displayName = AlertDialogPrimitive.Overlay.displayName
+
 
 const AlertDialogContent = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Content>,
@@ -45,6 +48,7 @@ const AlertDialogContent = React.forwardRef<
 ))
 AlertDialogContent.displayName = AlertDialogPrimitive.Content.displayName
 
+// ito yung AlertDialogHeader
 const AlertDialogHeader = ({
   className,
   ...props
@@ -57,8 +61,11 @@ const AlertDialogHeader = ({
     {...props}
   />
 )
+
+// ito yung AlertDialogHeader with displayName
 AlertDialogHeader.displayName = "AlertDialogHeader"
 
+// ito yung AlertDialogFooter
 const AlertDialogFooter = ({
   className,
   ...props
@@ -85,6 +92,7 @@ const AlertDialogTitle = React.forwardRef<
 ))
 AlertDialogTitle.displayName = AlertDialogPrimitive.Title.displayName
 
+// ito yung AlertDialogDescription
 const AlertDialogDescription = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Description>
@@ -98,6 +106,7 @@ const AlertDialogDescription = React.forwardRef<
 AlertDialogDescription.displayName =
   AlertDialogPrimitive.Description.displayName
 
+  // ito yung AlertDialogAction
 const AlertDialogAction = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Action>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Action>
@@ -108,6 +117,8 @@ const AlertDialogAction = React.forwardRef<
     {...props}
   />
 ))
+
+// ito yung AlertDialogAction DisplayName
 AlertDialogAction.displayName = AlertDialogPrimitive.Action.displayName
 
 const AlertDialogCancel = React.forwardRef<
@@ -124,6 +135,8 @@ const AlertDialogCancel = React.forwardRef<
     {...props}
   />
 ))
+
+// ito yung AlertDialogCancel displayName
 AlertDialogCancel.displayName = AlertDialogPrimitive.Cancel.displayName
 
 export {

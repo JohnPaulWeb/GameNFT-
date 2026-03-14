@@ -13,7 +13,7 @@ export type NFT = {
 };
 
 
-// ito naman yung wallet adddress
+// ito naman yung wallet user  adddress
 export type User = {
   walletAddress: string;
   suiBalance: number;

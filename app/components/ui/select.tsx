@@ -30,8 +30,12 @@ const SelectTrigger = React.forwardRef<
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ))
+
+// ito yung SelectTrigger displayName
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName
 
+
+// ito yung SelectScrollButton 
 const SelectScrollUpButton = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.ScrollUpButton>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>
@@ -64,9 +68,12 @@ const SelectScrollDownButton = React.forwardRef<
     <ChevronDown className="h-4 w-4" />
   </SelectPrimitive.ScrollDownButton>
 ))
+// ito yung SelectScrollDownButton with DisplayName
 SelectScrollDownButton.displayName =
   SelectPrimitive.ScrollDownButton.displayName
 
+
+  // ito yung SelectContent
 const SelectContent = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
@@ -97,8 +104,12 @@ const SelectContent = React.forwardRef<
     </SelectPrimitive.Content>
   </SelectPrimitive.Portal>
 ))
+// ito yung SelectContent with DisplayName
 SelectContent.displayName = SelectPrimitive.Content.displayName
 
+
+
+// ito yung SelectLabel with React ForwardRef
 const SelectLabel = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Label>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>
@@ -132,8 +143,11 @@ const SelectItem = React.forwardRef<
     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
   </SelectPrimitive.Item>
 ))
+
+// ito yung SelectItem with displayname
 SelectItem.displayName = SelectPrimitive.Item.displayName
 
+// ito yung SelectSeparator
 const SelectSeparator = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Separator>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
@@ -144,6 +158,8 @@ const SelectSeparator = React.forwardRef<
     {...props}
   />
 ))
+
+// ito yung SelectSeparator with displayname
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName
 
 export {

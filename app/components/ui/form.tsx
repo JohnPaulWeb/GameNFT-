@@ -141,6 +141,8 @@ const FormDescription = React.forwardRef<
     />
   )
 })
+
+// ito yung FormDescription
 FormDescription.displayName = "FormDescription"
 
 const FormMessage = React.forwardRef<
@@ -165,6 +167,8 @@ const FormMessage = React.forwardRef<
     </p>
   )
 })
+
+// ito yung FormMessage
 FormMessage.displayName = "FormMessage"
 
 export {

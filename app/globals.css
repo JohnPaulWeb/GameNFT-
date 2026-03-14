@@ -847,6 +847,7 @@
       transparent
     );
   }
+  /* Subtle divider */
   .divider-subtle {
     height: 1px;
     background: linear-gradient(

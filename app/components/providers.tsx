@@ -86,12 +86,24 @@ export function MarketplaceProvider({ children }: { children: ReactNode }) {
 
           const fields = content.fields as any;
 
+          // 🔍 DEBUG — see exact raw data in browser console
+          console.log('RAW fields:', JSON.stringify(fields, null, 2));
+          console.log('fields.url:', fields.url, '| type:', typeof fields.url);
+
+          // sui::url::Url serializes as { url: "https://..." } object
+          const rawUrl = fields.url;
+          const imageUrl =
+            typeof rawUrl === 'string' ? rawUrl :
+            typeof rawUrl === 'object' && rawUrl !== null ? (rawUrl.url ?? rawUrl.bytes ?? '') :
+            '';
+
+          console.log('✅ Resolved imageUrl:', imageUrl);
+
           return {
             id: obj.data?.objectId ?? '',
             name: fields.name ?? 'Unknown NFT',
             description: fields.description ?? '',
-            // your Move struct uses "url" not "imageUrl"
-            imageUrl: fields.url ?? '',
+            imageUrl,
             imageHint: fields.name ?? '',
             owner: account.address,
             isListed: false,   // owned objects are never listed (listed = wrapped)
@@ -200,4 +212,4 @@ export function Providers({ children }: { children: React.ReactNode }) {
       </SuiClientProvider>
     </QueryClientProvider>
   );
-}
+} 

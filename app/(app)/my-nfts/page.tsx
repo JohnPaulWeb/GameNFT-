@@ -181,7 +181,7 @@ export default function MyNftsPage() {
         description: error instanceof Error ? error.message : 'Failed.' 
       });
       setIsListing(false);
-    }
+    } 
   };
 
   // ===== DELIST =====
@@ -210,6 +210,7 @@ export default function MyNftsPage() {
         ],
       });
 
+      // ito yung Sign and Execute Transaction
       signAndExecuteTransaction(
         { transaction: tx },
         {
@@ -230,6 +231,7 @@ export default function MyNftsPage() {
           },
         }
       );
+      // ito yung try and catch para sa delist trancaction
     } catch (error) {
       console.error('Delist tx error:', error);
       toast({ 
@@ -242,6 +244,8 @@ export default function MyNftsPage() {
   };
 
   if (!account) {
+
+    // ito yung UI dito magsisimula yung code mo 
     return (
       <div className="flex min-h-screen items-center justify-center px-4">
         <div className="text-center space-y-4 max-w-sm">
@@ -332,6 +336,8 @@ export default function MyNftsPage() {
                             {delistingId === nft.id ? 'Delisting...' : 'Delist'}
                           </Button>
                         ) : (
+
+                          // ito yung button 
                           <Button
                             className="w-full font-semibold"
                             size="lg"
@@ -341,7 +347,7 @@ export default function MyNftsPage() {
                             List for Sale
                           </Button>
                         )}
-
+                        {/* ito yung NFT Listed */}
                         {!nft.isListed && (
                           <Button
                             variant="destructive"
@@ -360,6 +366,7 @@ export default function MyNftsPage() {
               </div>
             </div>
           ) : (
+            // ito yung My-Nfts
             <div className="flex min-h-[400px] flex-col items-center justify-center rounded-2xl border border-dashed border-white/[0.09] p-10 text-center">
               <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-white/[0.04] border border-white/[0.08] mb-5">
                 <Package className="h-7 w-7 text-white/25" />
@@ -402,6 +409,8 @@ export default function MyNftsPage() {
               <p className="text-xs text-[hsl(var(--text-secondary))]">💡 A 2% marketplace fee applies on sale.</p>
             </div>
           </div>
+
+          {/* ito yung Footer  */}
           <DialogFooter className="gap-2 sm:gap-0">
             <Button variant="ghost" size="lg" onClick={() => { setSelectedNft(null); setPrice(''); }} disabled={isListing}>
               Cancel
@@ -417,7 +426,7 @@ export default function MyNftsPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-
+      
       {/*ito yung  BURN CONFIRMATION DIALOG */}
       <Dialog open={!!burnNftId} onOpenChange={() => setBurnNftId(null)}>
         <DialogContent className="sm:max-w-md rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl">
@@ -432,7 +441,10 @@ export default function MyNftsPage() {
               ⚠️ The NFT will be deleted forever. Ensure it is NOT currently listed in the marketplace.
             </p>
           </div>
+
+          {/* ito yung Dialog Footer */}
           <DialogFooter className="gap-2 sm:gap-0">
+            {/* ito yung Button  */}
             <Button variant="ghost" size="lg" onClick={() => setBurnNftId(null)} disabled={isBurning}>
               Cancel   
             </Button>

@@ -18,6 +18,7 @@ export const CONTRACTS = {
   // Find it in the publish output under "Created Objects" → type contains "Marketplace"
   MARKETPLACE_ID: '0x355bf731f370143cc9fd3f269d75c1ba3bb63584def437fe801486eefa5819f5',
 
+  // this is where your contract is deployed
   // The network you deployed to
 
   // ito yung network sa Blockchain mo SUI 

@@ -76,6 +76,8 @@ export default function DelistPage() {
         ],
       });
 
+      // ito yung SignAndExecuteTransaction
+
       signAndExecuteTransaction(
         { transaction: tx },
         {
@@ -96,6 +98,8 @@ export default function DelistPage() {
               router.push('/my-nfts');
             }, 2000);
           },
+
+          // ito yung Error Message
           onError: (error: any) => {
             console.error('❌ Delist failed:', error);
 
@@ -158,6 +162,7 @@ export default function DelistPage() {
           )}
         </CardHeader>
 
+        {/* ito yung Card Content */}
         <CardContent className="space-y-6">
           {!account && (
             <div className="rounded-lg border-2 border-yellow-500/50 bg-yellow-50 p-4 dark:bg-yellow-950/20">

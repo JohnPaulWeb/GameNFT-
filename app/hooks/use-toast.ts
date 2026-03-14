@@ -29,6 +29,7 @@ const actionTypes = {
 
 let count = 0
 
+// ito yung Gen ID function para sa toasts
 function genId() {
   count = (count + 1) % Number.MAX_SAFE_INTEGER
   return count.toString()

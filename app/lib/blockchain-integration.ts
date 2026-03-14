@@ -5,12 +5,16 @@ import { CONTRACTS } from '@/app/components/contracts';
 /**
  * Helper class to interact with the NFT Marketplace smart contract on Sui blockchain
  */
+
+// ito yung export class BlockchainMarketPlace
 export class BlockchainMarketplace {
   private client: SuiClient;
   private packageId: string;
   private marketplaceId: string;
   private moduleName: string;
 
+
+  // ito yung SUI Client
   constructor(suiClient: SuiClient) {
     this.client = suiClient;
     this.packageId = CONTRACTS.PACKAGE_ID;
@@ -25,6 +29,8 @@ export class BlockchainMarketplace {
    * @param imageUrl URL to the NFT image
    * @returns Transaction block to be signed and executed
    */
+
+  // ito yung CreateMintTransaction
   createMintTransaction(name: string, description: string, imageUrl: string): TransactionBlock {
     const tx = new TransactionBlock();
 
@@ -46,6 +52,8 @@ export class BlockchainMarketplace {
    * @param price Price in MIST (1 SUI = 1,000,000,000 MIST)
    * @returns Transaction block
    */
+
+  // ito yung createListTransaction
   createListTransaction(nftId: string, price: string): TransactionBlock {
     const tx = new TransactionBlock();
     const priceInMist = BigInt(Math.floor(parseFloat(price) * 1_000_000_000));
@@ -89,9 +97,11 @@ export class BlockchainMarketplace {
    * @param coinId ID of the SUI coin to use for payment
    * @returns Transaction block
    */
+  // ito yung CreateBuyTransaction 
   createBuyTransaction(nftId: string, coinId: string): TransactionBlock {
     const tx = new TransactionBlock();
 
+    // ito yung movecall 
     tx.moveCall({
       target: `${this.packageId}::${this.moduleName}::buy_and_take`,
       typeArguments: ['0x2::sui::SUI'],
@@ -110,6 +120,8 @@ export class BlockchainMarketplace {
    * @param nftId NFT ID to check
    * @returns Listing data or null if not listed
    */
+
+  // ito yung getListingInfo
   async getListingInfo(nftId: string) {
     try {
       const marketplace = await this.client.getObject({
@@ -140,6 +152,8 @@ export class BlockchainMarketplace {
    * @param nftId NFT ID to fetch
    * @returns NFT data
    */
+
+  // ito yung getNftData
   async getNFTData(nftId: string) {
     try {
       const nftObject = await this.client.getObject({
@@ -161,8 +175,11 @@ export class BlockchainMarketplace {
    * @param ownerAddress Wallet address
    * @returns Array of NFT objects
    */
+
+  // ito yung getNftsByOwner 
   async getNFTsByOwner(ownerAddress: string) {
     try {
+
       const nfts = await this.client.getOwnedObjects({
         owner: ownerAddress,
         filter: {
@@ -179,6 +196,8 @@ export class BlockchainMarketplace {
   /**
    * Get marketplace statistics
    */
+
+  // ito yung getMarketplaceStats
   async getMarketplaceStats() {
     try {
       const marketplace = await this.client.getObject({

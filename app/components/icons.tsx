@@ -1,6 +1,6 @@
 import type { SVGProps } from 'react';
 
-// ito yung components
+// ito yung Logo 
 export const Logo = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"

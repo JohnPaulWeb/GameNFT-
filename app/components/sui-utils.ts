@@ -3,7 +3,7 @@ import { CONTRACTS } from '@/app/components/contracts';
 
 export class NFTMarketplaceTransactions {
   
-  // Mint NFT
+  // ito yung Mint NFT
   static mintNFT(name: string, description: string, imageUrl: string) {
     const tx = new TransactionBlock();
     
@@ -20,7 +20,7 @@ export class NFTMarketplaceTransactions {
     return tx;
   }
   
-  // List NFT
+  // ito yung List NFT
   static listNFT(nftId: string, price: string) {
     const tx = new TransactionBlock();
     
@@ -40,7 +40,7 @@ export class NFTMarketplaceTransactions {
     return tx;
   }
   
-  // Delist NFT
+  // ito yung Delist NFT
   static delistNFT(nftId: string) {
     const tx = new TransactionBlock();
     
@@ -96,7 +96,7 @@ export class NFTMarketplaceTransactions {
   }
 
   
-  // Burn NFT
+  //ito yung Burn NFT
   static burnNFT(nftId: string) {
     const tx = new TransactionBlock();
     
@@ -108,7 +108,7 @@ export class NFTMarketplaceTransactions {
     return tx;
   }
   
-  // Take Profits
+  // ito yung Take Profits
   static takeProfits() {
     const tx = new TransactionBlock();
     

@@ -27,6 +27,7 @@ const CardHeader = React.forwardRef<
     {...props}
   />
 ))
+// ito yung Card Header
 CardHeader.displayName = "CardHeader"
 
 const CardTitle = React.forwardRef<
@@ -54,8 +55,10 @@ const CardDescription = React.forwardRef<
     {...props}
   />
 ))
+// ito yung Card Desciption
 CardDescription.displayName = "CardDescription"
 
+// ito yung Card Content
 const CardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -64,6 +67,7 @@ const CardContent = React.forwardRef<
 ))
 CardContent.displayName = "CardContent"
 
+// ito yung CardFooter
 const CardFooter = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -74,6 +78,8 @@ const CardFooter = React.forwardRef<
     {...props}
   />
 ))
+
+// ito yung Card Footer
 CardFooter.displayName = "CardFooter"
 
 export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }

@@ -102,7 +102,7 @@ export function CollectionStats({ stats }: CollectionStatsProps) {
               {stat.value}
             </div>
           </div>
-
+          {/* ito yung stat-highlight */}
           {stat.highlight && (
             <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-20 rounded-2xl blur-xl"
               style={{

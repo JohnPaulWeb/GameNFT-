@@ -6,7 +6,7 @@ import useEmblaCarousel, {
 } from "@/app/embla-carousel-react"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/app/lib/utils"
 import { Button } from "@/app/components/ui/button"
 
 // ito yung Carousel API 
@@ -64,6 +64,7 @@ const Carousel = React.forwardRef<
     },
     ref
   ) => {
+    // ito yung carouselRef
     const [carouselRef, api] = useEmblaCarousel(
       {
         ...opts,
@@ -82,10 +83,12 @@ const Carousel = React.forwardRef<
         return
       }
 
+      // ito yung ScrollPrev
       setCanScrollPrev(api.canScrollPrev())
       setCanScrollNext(api.canScrollNext())
     }, [])
 
+    // ito yung ScrollPrev
     const scrollPrev = React.useCallback(() => {
       api?.scrollPrev()
     }, [api])
@@ -162,6 +165,8 @@ const Carousel = React.forwardRef<
 )
 Carousel.displayName = "Carousel"
 
+
+// ito yung CarouselContent with React ForwardRef
 const CarouselContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>

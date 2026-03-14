@@ -6,10 +6,12 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/app/lib/utils"
 
+// ito yung label Variants
 const labelVariants = cva(
   "text-sm font-medium leading-none text-white peer-disabled:cursor-not-allowed peer-disabled:opacity-50 transition-colors"
 )
 
+// ito yung Label Component
 const Label = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root> &

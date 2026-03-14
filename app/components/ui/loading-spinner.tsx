@@ -48,6 +48,7 @@ interface LoadingStateProps {
   submessage?: string;
 }
 
+// ito yung  LoadingState component
 export function LoadingState({ message = 'Loading', submessage }: LoadingStateProps) {
   return (
     <div className="flex min-h-[500px] items-center justify-center">

@@ -1,3 +1,5 @@
+
+// ito yung Client Side Component
 "use client"
 
 import * as React from "react"
@@ -9,8 +11,12 @@ import { cn } from "@/app/lib/utils"
 // ito naman yung ToolTipProvider 
 const TooltipProvider = TooltipPrimitive.Provider
 
+
+// ito yung ToolTip Primitive
 const Tooltip = TooltipPrimitive.Root
 
+
+// ito yung TooltipTrigger
 const TooltipTrigger = TooltipPrimitive.Trigger
 
 
@@ -29,6 +35,8 @@ const TooltipContent = React.forwardRef<
     {...props}
   />
 ))
+
+// ito yung ToolTipContent with displayName
 TooltipContent.displayName = TooltipPrimitive.Content.displayName
 
 

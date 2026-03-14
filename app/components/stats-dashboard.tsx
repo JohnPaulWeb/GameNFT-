@@ -1,8 +1,12 @@
+
+// ito yung Client Side Components\
 'use client';
 
 import React from 'react';
 import { TrendingUp, BarChart3, PieChart, Activity } from 'lucide-react';
 
+
+// ito yung StatItem Interface
 interface StatItem {
   label: string;
   value: string | number;
@@ -17,7 +21,7 @@ interface StatsDashboardProps {
   title?: string;
   description?: string;
 }
-// ito yung Color Classes
+// ito yung Color Classes for different stat types
 const colorClasses = {
   cyan: {
     bg: 'from-cyan-500/20 to-cyan-500/5',
@@ -117,7 +121,7 @@ export function StatsDashboard({
                   )}
                 </div>
 
-                {/* Stats */}
+                {/*ito yung Stats */}
                 <div className="space-y-1">
                   <p className="text-sm font-medium text-[hsl(var(--text-secondary))] uppercase tracking-wider">
                     {stat.label}

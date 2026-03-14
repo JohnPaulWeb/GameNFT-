@@ -71,6 +71,7 @@ export function HeroBanner({ onExplore, stats }: HeroBannerProps) {
               <span className="block mb-2 text-2xl md:text-3xl font-normal text-[hsl(var(--text-secondary))]">
                 Welcome to
               </span>
+              {/* ito yung SUI Play */}
               <span className="bg-gradient-to-r from-cyan-300 via-cyan-400 to-indigo-500 bg-clip-text text-transparent">
                 SuiPlay NFT
               </span>
@@ -110,6 +111,7 @@ export function HeroBanner({ onExplore, stats }: HeroBannerProps) {
               <span className="text-xs font-semibold text-[hsl(var(--text-secondary))] uppercase tracking-wider">
                 {stat.label}
               </span>
+              {/* ito yung span */}
               <span className="text-lg md:text-2xl font-bold font-display text-white">
                 {stat.value}
               </span>

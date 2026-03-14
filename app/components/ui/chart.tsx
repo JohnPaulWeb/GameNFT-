@@ -3,11 +3,12 @@
 import * as React from "react"
 import * as RechartsPrimitive from "recharts"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/app/lib/utils"
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: "", dark: ".dark" } as const
 
+// ito yung ChartConfig
 export type ChartConfig = {
   [k in string]: {
     label?: React.ReactNode
@@ -22,8 +23,12 @@ type ChartContextProps = {
   config: ChartConfig
 }
 
+
+// ito yung ChartContext
 const ChartContext = React.createContext<ChartContextProps | null>(null)
 
+
+// ito yung UseChart
 function useChart() {
   const context = React.useContext(ChartContext)
 
@@ -34,6 +39,7 @@ function useChart() {
   return context
 }
 
+// ito yung ChartContainer
 const ChartContainer = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div"> & {
@@ -46,6 +52,7 @@ const ChartContainer = React.forwardRef<
   const uniqueId = React.useId()
   const chartId = `chart-${id || uniqueId.replace(/:/g, "")}`
 
+  // ito yung ChartContext
   return (
     <ChartContext.Provider value={{ config }}>
       <div
@@ -57,6 +64,7 @@ const ChartContainer = React.forwardRef<
         )}
         {...props}
       >
+        {/* ChartStyle */}
         <ChartStyle id={chartId} config={config} />
         <RechartsPrimitive.ResponsiveContainer>
           {children}
@@ -99,6 +107,8 @@ ${colorConfig
     />
   )
 }
+
+// ito yung CharToolTip
 
 const ChartTooltip = RechartsPrimitive.Tooltip
 

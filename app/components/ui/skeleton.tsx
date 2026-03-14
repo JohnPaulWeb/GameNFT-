@@ -1,5 +1,7 @@
 import { cn } from "@/app/lib/utils"
 
+
+// ito yung Skeleton component
 function Skeleton({
   className,
   ...props

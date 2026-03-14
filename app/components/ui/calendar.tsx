@@ -4,17 +4,20 @@ import * as React from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { DayPicker } from "react-day-picker"
 
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
+import { cn } from "@/app/lib/utils"
+import { buttonVariants } from "@/app/components/ui/button"
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>
 
+// iito yung Calendar
 function Calendar({
   className,
   classNames,
   showOutsideDays = true,
   ...props
 }: CalendarProps) {
+
+  // ito yung DayPicker
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
@@ -65,6 +68,7 @@ function Calendar({
     />
   )
 }
+// ito yung Calendar displayname
 Calendar.displayName = "Calendar"
 
 export { Calendar }
