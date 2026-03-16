@@ -1,5 +1,6 @@
 'use client';
 
+import { AppFooter } from '@/app/components/layout/app-footer';
 import { AppSidebar } from '@/app/components/layout/app-sidebar';
 import { AppHeader } from '@/app/components/layout/app-header';
 import { SidebarProvider, SidebarInset } from '@/app/components/ui/sidebar';
@@ -95,17 +96,26 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           </div>
 
           <AppSidebar />
-          <SidebarInset className="flex min-w-0 flex-1 flex-col overflow-hidden bg-transparent relative">
-            <AppHeader />
-            <main className="min-h-0 flex-1 overflow-y-auto relative">
-              {/*ito yung Content wrapper with subtle vignette */}
-              <div className="relative min-h-full">
-                <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-transparent to-[hsl(var(--bg-void))]/40" />
-                <div className="relative z-10">
-                  {children}
-                </div>
+          <SidebarInset className="relative flex min-w-0 flex-1 flex-col overflow-hidden bg-transparent md:p-3">
+            <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden border border-white/[0.08] bg-[linear-gradient(180deg,rgba(7,11,24,0.7),rgba(5,8,20,0.88))] shadow-[0_20px_80px_rgba(0,0,0,0.35)] backdrop-blur-2xl md:rounded-[30px]">
+              <div className="pointer-events-none absolute inset-0 overflow-hidden">
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300/45 to-transparent" />
+                <div className="absolute left-[12%] top-[-10%] h-56 w-56 rounded-full bg-cyan-400/10 blur-3xl" />
+                <div className="absolute bottom-[-12%] right-[10%] h-64 w-64 rounded-full bg-indigo-500/10 blur-3xl" />
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.018)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.018)_1px,transparent_1px)] bg-[size:32px_32px] opacity-25" />
               </div>
-            </main>
+
+              <AppHeader />
+              <main className="relative min-h-0 flex-1 overflow-y-auto">
+                <div className="relative flex min-h-full flex-col">
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-[hsl(var(--bg-void))]/35" />
+                  <div className="relative z-10 flex min-h-full flex-col">
+                    <div className="flex-1">{children}</div>
+                    <AppFooter />
+                  </div>
+                </div>
+              </main>
+            </div>
           </SidebarInset>
         </div>
       </SidebarProvider>
