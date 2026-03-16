@@ -401,21 +401,19 @@ export default function MarketplacePage() {
                       <div className="flex items-center gap-1 rounded-lg border border-white/15 bg-white/[0.05] p-1 backdrop-blur-sm">
                         <button
                           onClick={() => setGridView('comfortable')}
-                          className={`rounded-md p-2 transition-all duration-200 ${
-                            gridView === 'comfortable'
+                          className={`rounded-md p-2 transition-all duration-200 ${gridView === 'comfortable'
                               ? 'bg-cyan-500/30 text-cyan-200 border border-cyan-400/50 shadow-[0_0_10px_rgba(34,211,238,0.3)]'
                               : 'text-white/40 hover:text-white/60'
-                          }`}
+                            }`}
                         >
                           <LayoutGrid className="h-4 w-4" />
                         </button>
                         <button
                           onClick={() => setGridView('compact')}
-                          className={`rounded-md p-2 transition-all duration-200 ${
-                            gridView === 'compact'
+                          className={`rounded-md p-2 transition-all duration-200 ${gridView === 'compact'
                               ? 'bg-cyan-500/30 text-cyan-200 border border-cyan-400/50 shadow-[0_0_10px_rgba(34,211,238,0.3)]'
                               : 'text-white/40 hover:text-white/60'
-                          }`}
+                            }`}
                         >
                           <Grid3x3 className="h-4 w-4" />
                         </button>
@@ -428,11 +426,10 @@ export default function MarketplacePage() {
               {/* Grid */}
               {filteredAndSortedListings.length > 0 ? (
                 <div
-                  className={`grid gap-6 ${
-                    gridView === 'comfortable'
+                  className={`grid gap-6 ${gridView === 'comfortable'
                       ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
                       : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
-                  }`}
+                    }`}
                 >
                   {filteredAndSortedListings.map((listing, index) => (
                     <div key={listing.nftId} style={{ animationDelay: `${index * 50}ms` }} className="animate-fade-up">
@@ -457,10 +454,10 @@ export default function MarketplacePage() {
                           {!account
                             ? 'Connect Wallet'
                             : listing.seller === account?.address
-                            ? 'Your Item'
-                            : buyingId === listing.nftId
-                            ? 'Processing...'
-                            : `Buy ${listing.price} SUI`}
+                              ? 'Your Item'
+                              : buyingId === listing.nftId
+                                ? 'Processing...'
+                                : `Buy ${listing.price} SUI`}
                         </Button>
                       </NftCard>
                     </div>
