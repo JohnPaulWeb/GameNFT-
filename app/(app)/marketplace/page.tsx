@@ -356,64 +356,77 @@ export default function MarketplacePage() {
               <NftGridSkeleton count={8} />
             </div>
           ) : listings.length > 0 ? (
-            <div className="space-y-10 animate-fade-in">
-              {/* Header section */}
+            <div className="space-y-12 animate-fade-in">
+              {/* Collections Header */}
               <div className="space-y-6">
                 <div>
-                  <h2 className="font-display text-4xl md:text-5xl font-black text-white mb-3">Collections</h2>
-                  <p className="text-white/60">Browse {filteredAndSortedListings.length} {filteredAndSortedListings.length === 1 ? 'item' : 'items'} {searchQuery ? 'matched' : 'available'}</p>
+                  <h2 className="font-display text-4xl md:text-5xl font-black text-white mb-3">
+                    {filteredAndSortedListings.length === listings.length 
+                      ? 'Collections' 
+                      : `Search Results`}
+                  </h2>
+                  <p className="text-white/60 text-lg">
+                    {filteredAndSortedListings.length} {filteredAndSortedListings.length === 1 ? 'item' : 'items'} 
+                    {searchQuery ? ` matching "${searchQuery}"` : ' available'}
+                  </p>
                 </div>
 
-                {/* Toolbar with neon styling */}
-                <div className="relative border border-cyan-500/30 rounded-xl bg-gradient-to-r from-white/[0.05] via-white/[0.02] to-transparent p-5 backdrop-blur-xl hover:border-cyan-500/50 transition-all duration-300 group">
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500/20 to-purple-500/10 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-300" />
+                {/* Premium Toolbar */}
+                <div className="relative group border border-white/15 rounded-xl bg-gradient-to-r from-white/[0.06] via-white/[0.03] to-white/[0.01] p-5 backdrop-blur-xl hover:border-white/25 hover:from-white/[0.08] transition-all duration-300">
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500/15 to-purple-500/8 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-300 -z-10" />
 
                   <div className="relative flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
-                    {/* Search */}
-                    <div className="relative flex-1">
-                      <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-cyan-400/40" />
+                    {/* Search Input */}
+                    <div className="relative flex-1 group/search">
+                      <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-cyan-400/50 transition-colors group-hover/search:text-cyan-300" />
                       <input
                         type="text"
-                        placeholder="Search collections..."
+                        placeholder="Search NFTs by name..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full rounded-lg border border-white/15 bg-white/[0.05] py-3 pl-11 pr-4 text-sm text-white placeholder:text-white/30 focus:border-cyan-400/60 focus:ring-1 focus:ring-cyan-400/20 focus:bg-white/[0.08] focus:outline-none transition-all duration-200 backdrop-blur-sm"
+                        className="w-full rounded-lg border border-white/20 bg-white/[0.05] py-3 pl-12 pr-4 text-sm text-white placeholder:text-white/40 focus:border-cyan-300/60 focus:ring-1 focus:ring-cyan-300/30 focus:bg-white/[0.08] focus:outline-none transition-all duration-200 backdrop-blur-sm hover:border-white/30"
                       />
                     </div>
 
-                    {/* Controls */}
-                    <div className="flex gap-3 items-center">
+                    {/* Controls - Sort & View Toggle */}
+                    <div className="flex gap-3 items-center flex-wrap md:flex-nowrap">
+                      {/* Sort Dropdown */}
                       <select
                         value={sortBy}
                         onChange={(e) => setSortBy(e.target.value as 'newest' | 'price-low' | 'price-high')}
-                        className="rounded-lg border border-white/15 bg-white/[0.05] px-4 py-3 text-sm text-white/80 focus:border-cyan-400/60 focus:outline-none transition-all duration-200 appearance-none cursor-pointer pr-8 bg-no-repeat bg-right backdrop-blur-sm"
+                        className="rounded-lg border border-white/20 bg-white/[0.05] px-4 py-3 text-sm text-white/80 hover:bg-white/[0.08] hover:border-white/30 focus:border-cyan-300/60 focus:ring-1 focus:ring-cyan-300/30 focus:bg-white/[0.08] focus:outline-none transition-all duration-200 appearance-none cursor-pointer pr-10 backdrop-blur-sm"
                         style={{
-                          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2322d3ee' opacity='0.5' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
-                          backgroundPosition: 'right 10px center'
+                          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 12 12'%3E%3Cpath fill='%2322d3ee' opacity='0.6' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
+                          backgroundPosition: 'right 10px center',
+                          backgroundRepeat: 'no-repeat'
                         }}
                       >
-                        <option value="newest">Newest</option>
+                        <option value="newest">Newest First</option>
                         <option value="price-low">Price: Low to High</option>
                         <option value="price-high">Price: High to Low</option>
                       </select>
 
-                      {/* View toggle */}
-                      <div className="flex items-center gap-1 rounded-lg border border-white/15 bg-white/[0.05] p-1 backdrop-blur-sm">
+                      {/* View Layout Toggle */}
+                      <div className="flex items-center gap-1 rounded-lg border border-white/20 bg-white/[0.05] p-1 backdrop-blur-sm hover:border-white/30 transition-all">
                         <button
                           onClick={() => setGridView('comfortable')}
-                          className={`rounded-md p-2 transition-all duration-200 ${gridView === 'comfortable'
-                              ? 'bg-cyan-500/30 text-cyan-200 border border-cyan-400/50 shadow-[0_0_10px_rgba(34,211,238,0.3)]'
-                              : 'text-white/40 hover:text-white/60'
-                            }`}
+                          className={`rounded-md p-2.5 transition-all duration-200 ${
+                            gridView === 'comfortable'
+                              ? 'bg-cyan-500/25 text-cyan-200 border border-cyan-400/50 shadow-[0_0_12px_rgba(34,211,238,0.25)]'
+                              : 'text-white/40 hover:text-white/70'
+                          }`}
+                          title="Comfortable view"
                         >
                           <LayoutGrid className="h-4 w-4" />
                         </button>
                         <button
                           onClick={() => setGridView('compact')}
-                          className={`rounded-md p-2 transition-all duration-200 ${gridView === 'compact'
-                              ? 'bg-cyan-500/30 text-cyan-200 border border-cyan-400/50 shadow-[0_0_10px_rgba(34,211,238,0.3)]'
-                              : 'text-white/40 hover:text-white/60'
-                            }`}
+                          className={`rounded-md p-2.5 transition-all duration-200 ${
+                            gridView === 'compact'
+                              ? 'bg-cyan-500/25 text-cyan-200 border border-cyan-400/50 shadow-[0_0_12px_rgba(34,211,238,0.25)]'
+                              : 'text-white/40 hover:text-white/70'
+                          }`}
+                          title="Compact view"
                         >
                           <Grid3x3 className="h-4 w-4" />
                         </button>
@@ -423,7 +436,7 @@ export default function MarketplacePage() {
                 </div>
               </div>
 
-              {/* Grid */}
+              {/* NFT Grid */}
               {filteredAndSortedListings.length > 0 ? (
                 <div
                   className={`grid gap-6 ${gridView === 'comfortable'
@@ -464,10 +477,16 @@ export default function MarketplacePage() {
                   ))}
                 </div>
               ) : (
-                <div className="flex min-h-80 flex-col items-center justify-center rounded-2xl border border-dashed border-white/15 bg-gradient-to-br from-white/[0.03] to-transparent p-12 text-center">
-                  <Search className="h-12 w-12 text-white/20 mb-4" />
-                  <p className="text-lg font-semibold text-white/70">No matches</p>
-                  <p className="mt-2 text-sm text-white/40">Try adjusting your search filters</p>
+                <div className="flex min-h-80 flex-col items-center justify-center rounded-3xl border border-dashed border-white/15 bg-gradient-to-br from-white/[0.05] to-transparent p-12 text-center">
+                  <div className="relative mb-6">
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-2xl blur-lg" />
+                    <div className="relative flex h-20 w-20 items-center justify-center rounded-2xl border border-cyan-500/40 bg-gradient-to-br from-cyan-500/10 to-transparent">
+                      <Search className="h-10 w-10 text-cyan-300/50" />
+                    </div>
+                  </div>
+                  <p className="text-xs uppercase tracking-wider text-cyan-400/70 font-semibold mb-2">No Results</p>
+                  <p className="text-lg font-semibold text-white/80 mb-1">Nothing matches your search</p>
+                  <p className="text-sm text-white/50 max-w-sm">Try adjusting your filters or search for a different NFT name</p>
                 </div>
               )}
             </div>

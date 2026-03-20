@@ -244,8 +244,6 @@ export default function MyNftsPage() {
   };
 
   if (!account) {
-
-    // ito yung UI dito magsisimula yung code mo 
     return (
       <div className="flex min-h-screen items-center justify-center px-4">
         <div className="text-center space-y-4 max-w-sm">
@@ -264,58 +262,93 @@ export default function MyNftsPage() {
   }
 
   return (
-    <div className="w-full min-h-screen flex flex-col">
-      {/* Page header */}
-      <div className="px-4 md:px-8 pt-8 pb-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-400/10 border border-cyan-400/25 mb-4">
-            <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
-            <span className="text-xs font-semibold text-cyan-300 tracking-wide uppercase">Your Collection</span>
-          </div>
-          <h1 className="text-3xl md:text-4xl font-bold font-display text-white tracking-tight">My NFTs</h1>
-          <p className="mt-1 text-sm text-white/40">Manage your exclusive digital assets</p>
-        </div>
-      </div>
-      
-      {/* Stats Section */}
-      <div className="px-4 md:px-8 pb-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid gap-3 grid-cols-1 sm:grid-cols-3">
-            <div className="flex items-center justify-between rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
-              <div>
-                <p className="text-[10px] font-semibold text-white/40 uppercase tracking-wider mb-0.5">Total NFTs</p>
-                <p className="text-2xl font-bold font-display text-white">{myNfts.length}</p>
-              </div>
-              <Package className="h-5 w-5 text-white/20" />
-            </div>
-            <div className="flex items-center justify-between rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
-              <div>
-                <p className="text-[10px] font-semibold text-white/40 uppercase tracking-wider mb-0.5">Listed</p>
-                <p className="text-2xl font-bold font-display text-white">{myNfts.filter(n => n.isListed).length}</p>
-              </div>
-              <Tag className="h-5 w-5 text-white/20" />
-            </div>
-            <div className="flex items-center justify-between rounded-lg border border-white/[0.08] bg-white/[0.03] p-4 col-span-1 sm:col-span-1">
-              <div className="flex-1 min-w-0">
-                <p className="text-[10px] font-semibold text-white/40 uppercase tracking-wider mb-0.5">Wallet</p>
-                <p suppressHydrationWarning className="truncate font-mono text-xs font-semibold text-white/70">
-                  {account.address.slice(0, 8)}...{account.address.slice(-6)}
-                </p>
-              </div>
-              <Wallet className="h-5 w-5 text-white/20 shrink-0 ml-2" />
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="w-full min-h-screen flex flex-col bg-[hsl(var(--bg-void))]">
+      {/* ═══════════════════════════════════════
+          PREMIUM HERO SECTION
+      ═══════════════════════════════════════ */}
+      <section className="relative overflow-hidden border-b border-white/10 px-4 pb-16 pt-20 md:px-8 md:pb-24 md:pt-28">
+        {/* Animated background glows */}
+        <div className="absolute -right-40 -top-40 h-80 w-80 rounded-full bg-gradient-to-br from-cyan-500/12 via-purple-500/8 to-transparent blur-3xl animate-pulse" />
+        <div className="absolute -bottom-32 -left-40 h-72 w-72 rounded-full bg-gradient-to-tr from-indigo-600/10 via-transparent to-transparent blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
 
-      {/* Content Section */}
-      <div className="flex-1 px-4 md:px-8 py-4">
-        <div className="max-w-7xl mx-auto">
+        <div className="relative mx-auto max-w-7xl">
+          {/* Premium badge */}
+          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-400/8 px-3.5 py-2 backdrop-blur-sm">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-pulse rounded-full bg-cyan-400 opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-400" />
+            </span>
+            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-cyan-300">Your Collection</span>
+          </div>
+
+          {/* Main content */}
+          <div className="flex flex-col justify-between gap-12 lg:flex-row lg:items-end">
+            <div className="space-y-6 flex-1">
+              <div className="space-y-3">
+                <h1 className="font-display text-5xl md:text-6xl font-black leading-[1.1] tracking-tighter text-white">
+                  My
+                  <br />
+                  <span className="bg-gradient-to-r from-cyan-300 to-purple-300 bg-clip-text text-transparent">NFTs</span>
+                </h1>
+              </div>
+              <p className="max-w-lg text-base text-white/70 leading-relaxed font-light">
+                Manage your exclusive digital assets. List for sale, burn, or hold for future opportunities.
+              </p>
+            </div>
+
+            {/* Stats grid */}
+            <div className="grid grid-cols-3 gap-3 md:gap-4 w-full lg:w-auto">
+              <div className="group border border-cyan-500/20 rounded-xl bg-gradient-to-br from-cyan-500/5 to-transparent p-4 backdrop-blur-sm hover:border-cyan-400/40 hover:bg-cyan-500/10 transition-all duration-300">
+                <p className="text-xs uppercase tracking-wider text-cyan-400/70 font-semibold mb-2">Total</p>
+                <p className="text-3xl md:text-4xl font-bold text-cyan-300">{myNfts.length}</p>
+              </div>
+              <div className="group border border-purple-500/20 rounded-xl bg-gradient-to-br from-purple-500/5 to-transparent p-4 backdrop-blur-sm hover:border-purple-400/40 hover:bg-purple-500/10 transition-all duration-300">
+                <p className="text-xs uppercase tracking-wider text-purple-400/70 font-semibold mb-2">Listed</p>
+                <p className="text-3xl md:text-4xl font-bold text-purple-300">{myNfts.filter(n => n.isListed).length}</p>
+              </div>
+              <div className="group border border-white/20 rounded-xl bg-gradient-to-br from-white/5 to-transparent p-4 backdrop-blur-sm hover:border-white/40 hover:bg-white/10 transition-all duration-300">
+                <p className="text-xs uppercase tracking-wider text-white/50 font-semibold mb-2">Unlisted</p>
+                <p className="text-3xl md:text-4xl font-bold text-white">{myNfts.filter(n => !n.isListed).length}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Wallet info pill */}
+          <div className="mt-10 inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/[0.05] px-4 py-2 backdrop-blur-sm">
+            <div className="flex h-2.5 w-2.5 items-center justify-center rounded-full bg-gradient-to-r from-emerald-400 to-cyan-300">
+              <div className="h-1 w-1 rounded-full bg-white" />
+            </div>
+            <p suppressHydrationWarning className="font-mono text-xs font-medium text-white/80">
+              {account.address.slice(0, 10)}...{account.address.slice(-6)}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════
+          COLLECTION CONTENT
+      ═══════════════════════════════════════ */}
+      <section className="relative flex-1 px-4 py-12 md:px-8 md:py-16">
+        <div className="mx-auto max-w-7xl">
           {myNfts.length > 0 ? (
-            <div className="space-y-4">
-              <div>
-                <h2 className="text-lg font-bold font-display text-white">Your Collection</h2>
-                <p className="text-xs text-white/40 mt-0.5">{myNfts.length} {myNfts.length === 1 ? 'item' : 'items'} in your wallet</p>
+            <div className="space-y-8 animate-fade-in">
+              {/* Header with description */}
+              <div className="space-y-2">
+                <h2 className="font-display text-3xl md:text-4xl font-black text-white">Your Collection</h2>
+                <p className="text-white/60">Manage {myNfts.length} {myNfts.length === 1 ? 'item' : 'items'} in your wallet</p>
+              </div>
+
+              {/* Filter pills - Status */}
+              <div className="flex flex-wrap gap-2">
+                <div className="px-3 py-1.5 rounded-full border border-cyan-400/30 bg-cyan-400/10 backdrop-blur-sm">
+                  <span className="text-xs font-semibold uppercase tracking-[0.12em] text-cyan-300">All Items</span>
+                </div>
+                <div className="px-3 py-1.5 rounded-full border border-white/20 bg-white/[0.04] hover:bg-white/[0.08] transition-all cursor-pointer backdrop-blur-sm">
+                  <span className="text-xs font-semibold uppercase tracking-[0.12em] text-white/70">Listed ({myNfts.filter(n => n.isListed).length})</span>
+                </div>
+                <div className="px-3 py-1.5 rounded-full border border-white/20 bg-white/[0.04] hover:bg-white/[0.08] transition-all cursor-pointer backdrop-blur-sm">
+                  <span className="text-xs font-semibold uppercase tracking-[0.12em] text-white/70">Unlisted ({myNfts.filter(n => !n.isListed).length})</span>
+                </div>
               </div>
 
               {/* NFT Grid */}
@@ -366,25 +399,30 @@ export default function MyNftsPage() {
               </div>
             </div>
           ) : (
-            // ito yung My-Nfts
-            <div className="flex min-h-[400px] flex-col items-center justify-center rounded-2xl border border-dashed border-white/[0.09] p-10 text-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-white/[0.04] border border-white/[0.08] mb-5">
-                <Package className="h-7 w-7 text-white/25" />
+            <div className="flex min-h-[500px] flex-col items-center justify-center rounded-2xl border border-dashed border-white/15 bg-gradient-to-br from-white/[0.05] to-transparent p-12 text-center">
+              <div className="mb-6 relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-2xl blur-lg" />
+                <div className="relative flex h-24 w-24 items-center justify-center rounded-2xl border border-cyan-500/40 bg-gradient-to-br from-cyan-500/10 to-transparent">
+                  <Package className="h-12 w-12 text-cyan-300/40" />
+                </div>
               </div>
-              <h2 className="text-xl font-bold font-display text-white">Your Collection is Empty</h2>
-              <p className="mt-2 max-w-sm text-sm text-white/40">
+              <p className="text-xs uppercase tracking-wider text-cyan-400/70 font-semibold mb-2">Empty Collection</p>
+              <h2 className="font-display text-4xl md:text-5xl font-black text-white mb-4">No NFTs Yet</h2>
+              <p className="max-w-md text-base text-white/60 leading-relaxed mb-8">
                 Start building your NFT portfolio by minting your first exclusive digital asset.
               </p>
-              <Button size="sm" className="mt-6" onClick={() => window.location.href = '/mint'}>
-                <Sparkles className="mr-2 h-4 w-4" />
+              <Button 
+                size="lg" 
+                className="rounded-lg bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-400 hover:to-cyan-500 text-white border-0 shadow-[0_0_20px_rgba(13,219,208,0.3)] hover:shadow-[0_0_30px_rgba(13,219,208,0.5)] transition-all duration-300"
+                onClick={() => window.location.href = '/mint'}
+              >
+                <Sparkles className="mr-2 h-5 w-5" />
                 Mint Your First NFT
               </Button>
             </div>
           )}
         </div>
-      </div>
-
-      {/* ito yung LIST DIALOG */}
+      </section>
       <Dialog open={!!selectedNft} onOpenChange={() => { setSelectedNft(null); setPrice(''); }}>
         <DialogContent className="sm:max-w-md rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-xl">
           <DialogHeader className="space-y-3">

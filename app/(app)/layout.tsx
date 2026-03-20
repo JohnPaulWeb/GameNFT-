@@ -94,7 +94,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               }}
             />
           </div>
-
+          
           <AppSidebar />
           <SidebarInset className="relative flex min-w-0 flex-1 flex-col overflow-hidden bg-transparent md:p-3">
             <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden border border-white/[0.08] bg-[linear-gradient(180deg,rgba(7,11,24,0.7),rgba(5,8,20,0.88))] shadow-[0_20px_80px_rgba(0,0,0,0.35)] backdrop-blur-2xl md:rounded-[30px]">
