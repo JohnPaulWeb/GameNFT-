@@ -50,7 +50,7 @@ export function EmptyState({ title, description, icon, action }: EmptyStateProps
         </Button>
       )}
 
-      {/* Decorative Elements */}
+      {/* ito yung div  */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div 
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full opacity-5 blur-3xl"
@@ -63,6 +63,7 @@ export function EmptyState({ title, description, icon, action }: EmptyStateProps
   );
 }
 
+// ito yung CollectionStatsProps 
 interface CollectionStatsProps {
   stats: {
     label: string;

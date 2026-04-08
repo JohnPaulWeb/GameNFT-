@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { TrendingUp, Flame, Sparkles } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 
+
+// ito yung interface
 interface FeaturedNFT {
   id: string;
   name: string;
@@ -14,11 +16,13 @@ interface FeaturedNFT {
   isHot?: boolean;
 }
 
+// ito yung FeaturedNFTs Props
 interface FeaturedNFTsProps {
   items?: FeaturedNFT[];
   onItemClick?: (id: string) => void;
 }
 
+// ito yunng FeaturedNFTs
 export function FeaturedNFTs({ items = [], onItemClick }: FeaturedNFTsProps) {
   // Sample featured items if none provided
   const featuredItems =  items.length > 0 ? items : [
@@ -48,7 +52,7 @@ export function FeaturedNFTs({ items = [], onItemClick }: FeaturedNFTsProps) {
 
   return (
     <div className="relative w-full py-12 md:py-16 px-4 md:px-8">
-      {/* Section Header */}
+      {/* ito yung Section Header */}
       <div className="max-w-7xl mx-auto mb-8 space-y-4">
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-400/30">
           <Flame className="h-4 w-4 text-amber-400 animate-pulse" />
@@ -62,7 +66,7 @@ export function FeaturedNFTs({ items = [], onItemClick }: FeaturedNFTsProps) {
         </div>
       </div>
 
-      {/* Featured Items Grid */}
+      {/* ito yung Featured Items Grid */}
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {featuredItems.map((item, index) => (
@@ -71,11 +75,11 @@ export function FeaturedNFTs({ items = [], onItemClick }: FeaturedNFTsProps) {
               className="group relative overflow-hidden rounded-2xl animate-fade-up"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              {/* Premium Card Background */} 
+              {/* ito yung Premium Card Background */} 
               
               <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-white/5 to-white/2 border border-white/10 backdrop-blur-xl transition-all duration-500 group-hover:border-cyan-400/50 group-hover:shadow-2xl group-hover:shadow-cyan-500/30 group-hover:-translate-y-2" />
 
-              {/* Glow Effect */}
+              {/*ito yung Glow Effect */}
               <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-20 rounded-2xl blur-xl"
                 style={{
                   background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.25) 0%, transparent 70%)',
@@ -83,7 +87,7 @@ export function FeaturedNFTs({ items = [], onItemClick }: FeaturedNFTsProps) {
                 }}
               />
 
-              {/* Hot Badge */}
+              {/*ito yung  Hot Badge */}
               {item.isHot && (
                 <div className="absolute top-4 right-4 z-20 animate-slide-in-down">
                   <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg backdrop-blur-xl bg-gradient-to-r from-red-500/90 to-orange-500/80 border border-red-300/60 shadow-lg shadow-red-500/40">
@@ -93,7 +97,7 @@ export function FeaturedNFTs({ items = [], onItemClick }: FeaturedNFTsProps) {
                 </div>
               )}
 
-              {/* Trending Badge */}
+              {/* ito yung Trending Badge */}
               <div className="absolute top-4 left-4 z-20 animate-slide-in-left">
                 <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg backdrop-blur-xl bg-gradient-to-r from-cyan-500/90 to-teal-500/80 border border-cyan-300/60 shadow-lg shadow-cyan-500/40">
                   <TrendingUp className="h-3.5 w-3.5 text-white" />
@@ -101,7 +105,7 @@ export function FeaturedNFTs({ items = [], onItemClick }: FeaturedNFTsProps) {
                 </div>
               </div>
               
-              {/* Image Container */}
+              {/* ito yung Image Container */}
               <div className="relative aspect-square w-full overflow-hidden bg-gradient-to-br from-white/8 to-white/[0.01] rounded-t-2xl">
                 <Image
                   src={item.imageUrl}
@@ -155,7 +159,7 @@ export function FeaturedNFTs({ items = [], onItemClick }: FeaturedNFTsProps) {
                   </div>
                 </div>
 
-                {/* Action Button */}
+                {/* ito yung Action Button */}
                 <Button
                   onClick={() => onItemClick?.(item.id)}
                   className="w-full font-semibold bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-400 hover:to-cyan-500 text-white transition-all duration-300 rounded-lg"
@@ -169,7 +173,7 @@ export function FeaturedNFTs({ items = [], onItemClick }: FeaturedNFTsProps) {
         </div>
       </div>
 
-      {/* Background Glow */}
+      {/* ito yung Background Glow */}
       <div className="absolute inset-0 -z-50 pointer-events-none overflow-hidden">
         <div 
           className="absolute top-0 right-0 w-96 h-96 rounded-full opacity-10 blur-3xl"

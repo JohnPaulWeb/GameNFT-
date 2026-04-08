@@ -17,6 +17,7 @@ import { Label } from "@/app/components/ui/label"
 
 const Form = FormProvider
 
+// ito yung FormFieldContextValue
 type FormFieldContextValue<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
@@ -24,10 +25,12 @@ type FormFieldContextValue<
   name: TName
 }
 
+// ito yung FormFieldContext
 const FormFieldContext = React.createContext<FormFieldContextValue>(
   {} as FormFieldContextValue
 )
 
+// ito yung FormField
 const FormField = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
@@ -41,6 +44,8 @@ const FormField = <
   )
 }
 
+
+// ito yung useFormField
 const useFormField = () => {
   const fieldContext = React.useContext(FormFieldContext)
   const itemContext = React.useContext(FormItemContext)
@@ -171,6 +176,7 @@ const FormMessage = React.forwardRef<
 // ito yung FormMessage
 FormMessage.displayName = "FormMessage"
 
+// ito yung export 
 export {
   useFormField,
   Form,

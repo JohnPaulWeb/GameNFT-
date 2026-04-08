@@ -108,6 +108,8 @@ const MenubarSubContent = React.forwardRef<
     {...props}
   />
 ))
+
+// ito yung MenubarContent
 MenubarSubContent.displayName = MenubarPrimitive.SubContent.displayName
 
 // ito yung MenubarContent
@@ -136,14 +138,18 @@ const MenubarContent = React.forwardRef<
     </MenubarPrimitive.Portal>
   )
 )
+
+// ito yung MenubarContent
 MenubarContent.displayName = MenubarPrimitive.Content.displayName
 
+// ito yung MenubarItem
 const MenubarItem = React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Item> & {
     inset?: boolean
   }
 >(({ className, inset, ...props }, ref) => (
+  // ito yung MenuBarPrimitive 
   <MenubarPrimitive.Item
     ref={ref}
     className={cn(
@@ -186,6 +192,7 @@ const MenubarRadioItem = React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.RadioItem>,
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.RadioItem>
 >(({ className, children, ...props }, ref) => (
+  // ito yung MenuBarPrimitive
   <MenubarPrimitive.RadioItem
     ref={ref}
     className={cn(
@@ -228,6 +235,7 @@ const MenubarLabel = React.forwardRef<
 ))
 MenubarLabel.displayName = MenubarPrimitive.Label.displayName
 
+// ito yung MenuBar Separator
 const MenubarSeparator = React.forwardRef<
   React.ElementRef<typeof MenubarPrimitive.Separator>,
   React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Separator>

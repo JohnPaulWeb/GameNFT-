@@ -77,6 +77,7 @@ export function AIAdvisorClient() {
     }
   }
 
+  // ito yung FieldClass
   const fieldClass =
     'rounded-xl border border-white/15 bg-white/5 text-white placeholder:text-white/30 ' +
     'focus:border-cyan-400/60 focus:ring-0 focus:bg-white/8 transition-all duration-200 font-medium';
@@ -84,7 +85,7 @@ export function AIAdvisorClient() {
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
 
-      {/* ── Input Panel ── */}
+      {/* ito yung Input Panel */}
       <div className="group relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 via-white/[0.02] to-transparent backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/30 hover:shadow-xl hover:shadow-cyan-500/10">
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl"
           style={{ background: 'radial-gradient(ellipse at top left, rgba(16,240,252,0.06), transparent 60%)' }} />
@@ -106,6 +107,7 @@ export function AIAdvisorClient() {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
 
+              {/* ito yung Form Field */}
               <FormField control={form.control} name="marketData" render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-sm font-semibold text-white/80">
@@ -119,6 +121,7 @@ export function AIAdvisorClient() {
                 </FormItem>
               )} />
 
+              {/* ito yung User Form Field */}
               <FormField control={form.control} name="userInventory" render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-sm font-semibold text-white/80">
@@ -132,6 +135,7 @@ export function AIAdvisorClient() {
                 </FormItem>
               )} />
 
+              {/* ito yung FormField */}
               <FormField control={form.control} name="suiAccountBalance" render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-sm font-semibold text-white/80">
@@ -168,12 +172,13 @@ export function AIAdvisorClient() {
         </div>
       </div>
 
-      {/* ── Result Panel ── */}
+      {/* ito yung Result Panel */}
       <div className="group relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 via-white/[0.02] to-transparent backdrop-blur-xl transition-all duration-300 hover:border-indigo-400/30">
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl"
           style={{ background: 'radial-gradient(ellipse at top right, rgba(99,102,241,0.06), transparent 60%)' }} />
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-indigo-400/50 to-transparent" />
 
+        {/* ito yung UI */}
         <div className="relative p-8 h-full flex flex-col">
           <div className="flex items-center gap-4 mb-6">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-400/25 to-cyan-500/15 border border-indigo-400/40 shadow-lg shadow-indigo-400/15">
@@ -189,6 +194,7 @@ export function AIAdvisorClient() {
 
           <div className="flex-1 flex items-center justify-center min-h-[340px]">
 
+            {/* ito yung isLoading */}
             {isLoading && (
               <div className="text-center space-y-4 animate-fade-in">
                 <div className="relative mx-auto w-20 h-20">
@@ -205,6 +211,7 @@ export function AIAdvisorClient() {
               </div>
             )}
 
+            {/* ito yung IsLoading */}
             {!isLoading && !result && (
               <div className="text-center space-y-4 animate-fade-in">
                 <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500/15 to-cyan-500/10 border border-indigo-400/20">
@@ -221,7 +228,7 @@ export function AIAdvisorClient() {
 
             {result && (
               <div className="w-full space-y-4 animate-fade-up">
-                {/* Suggested item */}
+                {/* ito yung Suggested Item */}
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
                   <div className="flex items-start justify-between gap-3">
                     <div>
@@ -241,7 +248,7 @@ export function AIAdvisorClient() {
                   </div>
                 </div>
 
-                {/* Stats */}
+                {/* ito yung stats information*/}
                 <div className="grid grid-cols-2 gap-3">
                   <div className="rounded-2xl border border-cyan-400/20 bg-gradient-to-br from-cyan-500/10 to-transparent p-4">
                     <div className="flex items-center gap-2 mb-2">
@@ -262,7 +269,7 @@ export function AIAdvisorClient() {
                   </div>
                 </div>
 
-                {/* Reasoning */}
+                {/* ito yung Ai Reasoning*/}
                 <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
                   <p className="text-xs font-bold text-white/50 uppercase tracking-wider mb-3">AI Reasoning</p>
                   <p className="text-sm leading-relaxed text-white/70">{result.reasoning}</p>

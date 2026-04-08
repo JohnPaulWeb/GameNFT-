@@ -25,6 +25,7 @@ type CarouselProps = {
   setApi?: (api: CarouselApi) => void
 }
 
+// ito yung CarouselContextPromps
 type CarouselContextProps = {
   carouselRef: ReturnType<typeof useEmblaCarousel>[0]
   api: ReturnType<typeof useEmblaCarousel>[1]
@@ -34,8 +35,10 @@ type CarouselContextProps = {
   canScrollNext: boolean
 } & CarouselProps
 
+// ito yung CarouselContext
 const CarouselContext = React.createContext<CarouselContextProps | null>(null)
 
+// ito yung Carousel
 function useCarousel() {
   const context = React.useContext(CarouselContext)
 
@@ -125,6 +128,7 @@ const Carousel = React.forwardRef<
         return
       }
 
+      // ito yung OnSelect
       onSelect(api)
       api.on("reInit", onSelect)
       api.on("select", onSelect)
@@ -150,6 +154,7 @@ const Carousel = React.forwardRef<
         }}
       >
         <div
+        // ito yung CarouselContext
           ref={ref}
           onKeyDownCapture={handleKeyDown}
           className={cn("relative", className)}
@@ -189,6 +194,7 @@ const CarouselContent = React.forwardRef<
 })
 CarouselContent.displayName = "CarouselContent"
 
+// ito yung CarouselItem
 const CarouselItem = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -211,6 +217,7 @@ const CarouselItem = React.forwardRef<
 })
 CarouselItem.displayName = "CarouselItem"
 
+// ito yung CarouselPrevious
 const CarouselPrevious = React.forwardRef<
   HTMLButtonElement,
   React.ComponentProps<typeof Button>
