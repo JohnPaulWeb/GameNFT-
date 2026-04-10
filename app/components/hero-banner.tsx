@@ -3,6 +3,8 @@
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 
+
+// interface for HeroBanner Props
 interface HeroBannerProps {
   onExplore?: () => void;
   stats?: {

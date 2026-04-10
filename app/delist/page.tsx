@@ -1,11 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useCurrentAccount, useSignAndExecuteTransaction, useSuiClient } from '@mysten/dapp-kit';
-import { PackageX, Wallet } from 'lucide-react';
+import { ArrowLeft, PackageX, ShieldAlert, Wallet, X } from 'lucide-react';
 import { Transaction } from '@mysten/sui/transactions';
 
+import { CONTRACTS } from '@/app/components/contracts';
 import { useMarketplace } from '@/app/components/providers';
 import { Button } from '@/app/components/ui/button';
 import {
@@ -19,7 +21,6 @@ import {
 import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
 import { useToast } from '@/app/hooks/use-toast';
-import { CONTRACTS } from '@/app/components/contracts';
 
 export default function DelistPage() {
   const [nftId, setNftId] = useState('');
@@ -31,6 +32,15 @@ export default function DelistPage() {
   const client = useSuiClient();
   const { mutate: signAndExecuteTransaction } = useSignAndExecuteTransaction();
   const { delistNft } = useMarketplace();
+
+  const handleExit = () => {
+    if (typeof window !== 'undefined' && window.history.length > 1) {
+      router.back();
+      return;
+    }
+
+    router.push('/my-nfts');
+  };
 
   const handleDelist = async () => {
     if (!nftId.trim()) {
@@ -54,36 +64,29 @@ export default function DelistPage() {
     setIsDelisting(true);
 
     try {
-      console.log('Delisting NFT ID:', nftId);
-
-      // First check if the listing exists in the marketplace
       const marketplaceData = await client.getObject({
         id: CONTRACTS.MARKETPLACE_ID,
         options: { showContent: true },
       });
 
-      console.log('Marketplace data:', marketplaceData);
+      if (!marketplaceData.data) {
+        throw new Error('Marketplace object not found.');
+      }
 
       const tx = new Transaction();
-      
-      // Call delist_and_take function
-      // Note: nft_id parameter is the ID (UID) of the NFT, not the listing object
+
       tx.moveCall({
         target: `${CONTRACTS.PACKAGE_ID}::nft_marketplace::delist_and_take`,
         arguments: [
-          tx.object(CONTRACTS.MARKETPLACE_ID), // marketplace object
-          tx.pure.id(nftId), // NFT ID (not listing ID)
+          tx.object(CONTRACTS.MARKETPLACE_ID),
+          tx.pure.id(nftId),
         ],
       });
-
-      // ito yung SignAndExecuteTransaction
 
       signAndExecuteTransaction(
         { transaction: tx },
         {
           onSuccess: (result: any) => {
-            console.log('✅ Delist successful!', result);
-
             delistNft(nftId);
 
             toast({
@@ -99,10 +102,7 @@ export default function DelistPage() {
             }, 2000);
           },
 
-          // ito yung Error Message
           onError: (error: any) => {
-            console.error('❌ Delist failed:', error);
-
             let errorMessage = 'Transaction failed';
 
             if (error?.message) {
@@ -129,7 +129,6 @@ export default function DelistPage() {
         }
       );
     } catch (error) {
-      console.error('Error in delist:', error);
       toast({
         variant: 'destructive',
         title: 'Transaction Error',
@@ -140,122 +139,237 @@ export default function DelistPage() {
   };
 
   return (
-    <div className="flex justify-center py-8">
-      <Card className="w-full max-w-2xl border-2 border-orange-200 shadow-xl">
-        <CardHeader className="space-y-2">
-          <CardTitle className="text-2xl font-bold text-orange-600 dark:text-orange-400">
-            📦 Delist NFT
-          </CardTitle>
-          <CardDescription>
-            Remove your NFT from the marketplace. The NFT will be returned to your wallet.
-          </CardDescription>
-          {account && (
-            <div className="mt-4 flex items-center gap-3 rounded-lg border bg-muted/50 p-3">
-              <Wallet className="h-5 w-5 text-primary" />
-              <div className="flex flex-col">
-                <span className="text-xs font-medium text-muted-foreground">Connected Wallet</span>
-                <span suppressHydrationWarning className="font-mono text-sm font-semibold">
-                  {account.address.slice(0, 6)}...{account.address.slice(-4)}
-                </span>
-              </div>
-            </div>
-          )}
-        </CardHeader>
+    <div className="min-h-screen w-full bg-[hsl(var(--bg-void))] px-4 py-8 md:px-8 md:py-12">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -right-28 -top-16 h-44 w-44 rounded-full bg-orange-400/10 blur-3xl md:h-52 md:w-52" />
+        <div className="absolute left-0 top-1/3 h-36 w-36 rounded-full bg-cyan-400/10 blur-3xl md:h-44 md:w-44" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:42px_42px] opacity-12" />
+      </div>
 
-        {/* ito yung Card Content */}
-        <CardContent className="space-y-6">
-          {!account && (
-            <div className="rounded-lg border-2 border-yellow-500/50 bg-yellow-50 p-4 dark:bg-yellow-950/20">
-              <div className="flex items-start gap-3">
-                <Wallet className="h-5 w-5 text-yellow-600 dark:text-yellow-500" />
-                <div>
-                  <h3 className="font-semibold text-yellow-900 dark:text-yellow-100">
-                    Wallet Not Connected
-                  </h3>
-                  <p className="mt-1 text-sm text-yellow-800 dark:text-yellow-200">
-                    Please connect your wallet to delist NFTs.
-                  </p>
+      <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-6">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={handleExit}
+            className="rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-white/85 hover:bg-white/10 hover:text-white"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Exit
+          </Button>
+
+          <div className="inline-flex items-center gap-2 rounded-full border border-orange-400/25 bg-orange-500/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-orange-200">
+            <X className="h-3.5 w-3.5" />
+            Delist NFT
+          </div>
+        </div>
+
+        <section className="relative overflow-hidden rounded-[32px] border border-white/10 bg-gradient-to-br from-white/[0.06] via-white/[0.03] to-white/[0.015] p-6 shadow-2xl shadow-black/20 backdrop-blur-xl md:p-8">
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-300/70 to-transparent" />
+          <div className="absolute -right-12 top-8 h-28 w-28 rounded-full bg-orange-400/10 blur-2xl" />
+          <div className="absolute -left-12 bottom-0 h-36 w-36 rounded-full bg-cyan-400/10 blur-3xl" />
+
+          <div className="relative grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
+            <div className="space-y-6">
+              <div className="inline-flex items-center gap-2 rounded-full border border-orange-400/20 bg-orange-500/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-orange-200">
+                <ShieldAlert className="h-3.5 w-3.5" />
+                On-chain action
+              </div>
+
+              <div className="space-y-4">
+                <h1 className="max-w-2xl font-display text-4xl font-black tracking-tight text-white md:text-5xl lg:text-6xl">
+                  Delist with confidence.
+                </h1>
+                <p className="max-w-2xl text-sm leading-relaxed text-white/65 md:text-base">
+                  Remove a listed NFT, return it to your wallet, and keep the workflow simple. The page is built to feel fast, clear, and safe before you confirm anything on-chain.
+                </p>
+              </div>
+
+              <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(145deg,rgba(249,115,22,0.12),rgba(34,211,238,0.08),rgba(16,185,129,0.08))] p-5 shadow-[0_24px_60px_rgba(0,0,0,0.25)]">
+                <div className="absolute -left-8 -top-8 h-24 w-24 rounded-full bg-orange-300/20 blur-2xl" />
+                <div className="absolute -bottom-10 right-16 h-28 w-28 rounded-full bg-cyan-300/15 blur-3xl" />
+                <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black/20">
+                  <Image
+                    src="/nft-aurora-showcase.svg"
+                    alt="NFT return hero artwork"
+                    width={1200}
+                    height={800}
+                    className="h-24 w-full object-cover opacity-90 sm:h-28 md:h-32 lg:h-36"
+                    priority
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
+                </div>
+
+                <div className="relative mt-4 grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end">
+                  <div className="space-y-3">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-orange-100/70">
+                      Return Preview
+                    </p>
+                    <div className="space-y-2">
+                      <div className="h-4 w-44 rounded-full bg-white/15" />
+                      <div className="h-3 w-56 rounded-full bg-white/10" />
+                      <div className="h-3 w-32 rounded-full bg-white/10" />
+                    </div>
+                  </div>
+
+                  <div className="relative mx-auto flex h-24 w-24 items-center justify-center rounded-[22px] border border-white/12 bg-black/20 backdrop-blur-xl">
+                    <div className="absolute inset-2 rounded-[20px] border border-orange-300/20 bg-gradient-to-br from-orange-400/25 via-cyan-400/10 to-emerald-400/15" />
+                    <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl border border-white/20 bg-white/10 shadow-[0_0_30px_rgba(249,115,22,0.18)]">
+                      <Wallet className="h-8 w-8 text-orange-100" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="relative mt-4 grid gap-3 sm:grid-cols-3">
+                  <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-3">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/35">Action</p>
+                    <p className="mt-2 text-sm text-white/80">Remove listing</p>
+                  </div>
+                  <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-3">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/35">Destination</p>
+                    <p className="mt-2 text-sm text-white/80">Your wallet</p>
+                  </div>
+                  <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-3">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/35">State</p>
+                    <p className="mt-2 text-sm text-white/80">Ready to return</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
 
-          {/* ito naman yung Delist */}
-          <div className="space-y-4">
-            <div className="rounded-lg border-2 border-orange-500/50 bg-orange-50 p-4 dark:bg-orange-950/20">
-              <p className="text-sm font-semibold text-orange-900 dark:text-orange-100">
-                📋 Important Notes:
-              </p>
-              <ul className="mt-2 space-y-1 text-sm text-orange-800 dark:text-orange-200">
-                <li><strong>1.</strong> You can only delist NFTs that you listed</li>
-                <li><strong>2.</strong> Enter the original NFT ID (not the listing object ID)</li>
-                <li><strong>3.</strong> The NFT will be returned to your wallet after delisting</li>
-                <li><strong>4.</strong> This action is free except for gas fees</li>
-              </ul>
+              <div className="grid gap-3 sm:grid-cols-3">
+                <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/40">Step 1</p>
+                  <p className="mt-2 text-sm font-medium text-white/85">Paste the NFT UID</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/40">Step 2</p>
+                  <p className="mt-2 text-sm font-medium text-white/85">Confirm in wallet</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/40">Step 3</p>
+                  <p className="mt-2 text-sm font-medium text-white/85">NFT returns to you</p>
+                </div>
+              </div>
+
+              {account ? (
+                <div className="rounded-[24px] border border-emerald-400/20 bg-emerald-500/10 p-4 md:p-5">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-full bg-emerald-400/15">
+                      <Wallet className="h-5 w-5 text-emerald-300" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-medium uppercase tracking-[0.16em] text-emerald-300/70">
+                        Connected Wallet
+                      </p>
+                      <p suppressHydrationWarning className="mt-1 font-mono text-sm font-semibold text-emerald-100 md:text-base">
+                        {account.address.slice(0, 8)}...{account.address.slice(-6)}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="rounded-[24px] border border-amber-400/20 bg-amber-500/10 p-4 md:p-5">
+                  <div className="flex items-start gap-3">
+                    <ShieldAlert className="mt-0.5 h-5 w-5 text-amber-300" />
+                    <div>
+                      <h2 className="font-semibold text-amber-50">Wallet not connected</h2>
+                      <p className="mt-1 text-sm text-amber-100/75">
+                        Connect your wallet first, before you try to delist an NFT.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
-            {/* ito naman yung text */}
-            <div className="rounded-lg border-2 border-blue-500/50 bg-blue-50 p-4 dark:bg-blue-950/20">
-              <p className="text-sm font-semibold text-blue-900 dark:text-blue-100">
-                💡 How to find your NFT ID:
-              </p>
-              <ul className="mt-2 space-y-1 text-sm text-blue-800 dark:text-blue-200">
-                <li>• Go to the Marketplace and find your listed NFT</li>
-                <li>• Copy the NFT ID shown in the listing details</li>
-                <li>• Or check your transaction history when you listed it</li>
-              </ul>
-            </div>
+            <Card className="overflow-hidden border-white/10 bg-white/[0.04] shadow-[0_24px_80px_rgba(0,0,0,0.3)] backdrop-blur-xl">
+              <div className="h-1 w-full bg-gradient-to-r from-orange-400 via-cyan-300 to-emerald-400" />
+              <CardHeader className="space-y-3 border-b border-white/10 pb-6">
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <CardTitle className="text-2xl font-semibold text-white">Delist NFT</CardTitle>
+                    <CardDescription className="mt-1 text-white/60">
+                      Paste the original NFT UID, not the listing object ID.
+                    </CardDescription>
+                  </div>
+                  <div className="rounded-full border border-orange-400/20 bg-orange-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-orange-200">
+                    Gas only
+                  </div>
+                </div>
 
+                <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/45">Quick Tips</p>
+                  <ul className="mt-3 space-y-2 text-sm leading-relaxed text-white/70">
+                    <li>• Use the original NFT ID shown when listing</li>
+                    <li>• Delisting only costs gas</li>
+                    <li>• The NFT will be sent back to your wallet</li>
+                  </ul>
+                </div>
+              </CardHeader>
 
-            {/* ito naman yung NFT ID  */}
-            <div className="space-y-2">
-              {/* ito yung Label */}
-              <Label htmlFor="nftId" className="text-sm font-semibold">
-                NFT ID
-              </Label>
-              <Input
-                id="nftId"
-                placeholder="0x1234...abcd"
-                value={nftId}
-                onChange={(e) => setNftId(e.target.value)}
-                disabled={isDelisting}
-                className="h-11 font-mono text-sm"
-              />
-              <p className="text-xs text-muted-foreground">
-                The original NFT ID UID - the same ID used when listing
-              </p>
-            </div>
+              <CardContent className="space-y-5 pt-6">
+                <div className="space-y-2">
+                  <Label htmlFor="nftId" className="text-sm font-semibold text-white/85">
+                    NFT ID
+                  </Label>
+                  <Input
+                    id="nftId"
+                    placeholder="0x1234...abcd"
+                    value={nftId}
+                    onChange={(e) => setNftId(e.target.value)}
+                    disabled={isDelisting}
+                    className="h-12 border-white/10 bg-white/[0.05] font-mono text-sm text-white placeholder:text-white/30 focus-visible:ring-cyan-400/40"
+                  />
+                  <p className="text-xs text-white/45">
+                    Enter the UID that was used when you created the listing.
+                  </p>
+                </div>
+
+                {/* ito yung div classname */}
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/40">Check</p>
+                    <p className="mt-2 text-sm leading-relaxed text-white/75">
+                      Make sure the NFT ID matches the one from your listing record.
+                    </p>
+                  </div>
+                  <div className="rounded-2xl border border-orange-400/15 bg-orange-500/10 p-4">
+                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-orange-200/70">Return</p>
+                    <p className="mt-2 text-sm leading-relaxed text-orange-50/80">
+                      After confirmation, the NFT is removed from the marketplace and sent back to your wallet.
+                    </p>
+                  </div>  
+                </div>
+              </CardContent>
+
+              <CardFooter className="border-t border-white/10 bg-white/[0.02] pt-6">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full border-orange-400/50 bg-gradient-to-r from-orange-500/10 to-transparent text-orange-100 hover:bg-orange-500/15 hover:text-white"
+                  size="lg"
+                  onClick={handleDelist}
+                  disabled={isDelisting || !nftId.trim() || !account}
+                >
+                  {isDelisting ? (
+                    'Delisting NFT...'
+                  ) : !account ? (
+                    <>
+                      <Wallet className="h-4 w-4" />
+                      Connect Wallet to Delist
+                    </>
+                  ) : (
+                    <>
+                      <PackageX className="h-4 w-4" />
+                      Delist NFT
+                    </>
+                  )}
+                </Button>
+              </CardFooter>
+            </Card>
           </div>
-        </CardContent>
-
-        {/* ito yung CardFooter */}
-        <CardFooter className="border-t bg-muted/50 pt-6">
-          <Button
-            variant="outline"
-            className="w-full font-semibold shadow-sm border-orange-500 text-orange-600 hover:bg-orange-50"
-            size="lg"
-            onClick={handleDelist}
-            disabled={isDelisting || !nftId.trim() || !account}
-          >
-            {isDelisting ? (
-              'Delisting NFT...'
-            ) : !account ? (
-              <>
-              {/* ito naman yung icon ng wallet */}
-                <Wallet className="mr-2 h-4 w-4" />
-                Connect Wallet to Delist
-              </>
-            ) : (
-              <>
-
-              {/* ito naman yung icon ng packageX */}
-                <PackageX className="mr-2 h-4 w-4" />
-                Delist NFT
-              </>
-            )}
-          </Button>
-        </CardFooter>
-      </Card>
+        </section>
+      </div>
     </div>
   );
 }

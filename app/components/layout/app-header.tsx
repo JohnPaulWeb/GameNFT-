@@ -51,7 +51,7 @@ export function AppHeader() {
           <span className="text-sm font-semibold font-display text-white/95 tracking-tight">{title}</span>
         </div>
       </div>
-
+      
       {/* ito yung Right section ito yung Connect button */}
       <div className="ml-auto">
         <div className="[&_button]:rounded-xl [&_button]:bg-gradient-to-r [&_button]:from-cyan-500 [&_button]:to-cyan-400 [&_button]:text-[hsl(var(--bg-void))] [&_button]:font-bold [&_button]:text-sm [&_button]:px-5 [&_button]:py-2.5 [&_button]:border-0 [&_button]:hover:from-cyan-400 [&_button]:hover:to-cyan-300 [&_button]:transition-all [&_button]:duration-200 [&_button]:shadow-[0_0_20px_rgba(34,211,238,0.25)] [&_button]:hover:shadow-[0_0_30px_rgba(34,211,238,0.4)]">

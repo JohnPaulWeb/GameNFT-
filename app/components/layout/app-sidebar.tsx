@@ -2,15 +2,14 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Download, Gift, Home, LifeBuoy, LogOut, Settings, Trophy } from 'lucide-react';
+import { Download, Gift, Home, LifeBuoy, LogOut, Settings, Trophy, Search, Moon } from 'lucide-react';
 import { useCurrentAccount, useDisconnectWallet } from '@mysten/dapp-kit';
+import { useState } from 'react';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/app/components/ui/avatar';
 import { cn } from '@/app/lib/utils';
 import {
   Sidebar,
   SidebarContent,
-  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -20,96 +19,207 @@ export function AppSidebar() {
   const pathname = usePathname();
   const account = useCurrentAccount();
   const { mutate: disconnect } = useDisconnectWallet();
+  const [darkMode, setDarkMode] = useState(true);
 
-  const userName =
-    account?.label ||
-    (account ? `${account.address.slice(0, 6)}...${account.address.slice(-4)}` : 'Catriona Henderson');
+  const shortAddress = account
+    ? `${account.address.slice(0, 6)}...${account.address.slice(-4)}`
+    : 'Web3 User';
+
+  const userName = account?.label || shortAddress;
+
+  const avatarSrc = account
+    ? `https://api.dicebear.com/8.x/notionists/svg?seed=${account.address}`
+    : 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80';
 
   const menuItems = [
-    { label: 'Home', icon: Home, href: '/marketplace' },
-    { label: 'Download', icon: Download, href: '/my-nfts', badge: '5' },
-    { label: 'Gift Code', icon: Gift, href: '/mint' },
-    { label: 'Top Review', icon: Trophy, href: '/advisor' },
-    { label: 'Settings', icon: Settings, href: '/list' },
-    { label: 'Support', icon: LifeBuoy, href: '/delist' },
+    { label: 'Home',    icon: Home,     href: '/marketplace' },
+    { label: 'My NFTs', icon: Download, href: '/my-nfts', badge: '5' },
+    { label: 'Mint',    icon: Gift,     href: '/mint' },
+    { label: 'Advisor', icon: Trophy,   href: '/advisor' },
+    { label: 'List',    icon: Settings, href: '/list' },
+    { label: 'Delist',  icon: LifeBuoy, href: '/delist' },
   ];
 
   return (
-    <Sidebar collapsible="none" className="border-r-0 bg-transparent [--sidebar-width:17rem]">
-      <div className="relative flex h-full flex-col overflow-hidden border-r-0 bg-[#2d3640] shadow-[4px_0_36px_rgba(0,0,0,0.24)]">
-        <SidebarHeader className="relative p-0 flex flex-col items-center justify-center pt-8 pb-6">
-          <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=60')" }} />
-          <div className="absolute inset-0 bg-black/30" />
-            
-          <Avatar className="h-20 w-20 relative z-10 border-2 border-white/20 shadow-lg">
-            {account ? (
-              <AvatarImage
-                src={`https://api.dicebear.com/8.x/notionists/svg?seed=${account.address}`}
-                alt="Profile Avatar"
-              />
-            ) : (
-                <AvatarImage src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80" alt="Avatar" />
-            )}
-            <AvatarFallback className="bg-[#3f4b56] text-sm font-semibold text-white">
-              CH
-            </AvatarFallback>
-          </Avatar>
-          <div className="relative z-10 mt-3 text-center">
-            <h2 className="text-lg font-medium text-white">{userName}</h2>
-          </div>
-        </SidebarHeader>
+    <Sidebar collapsible="none" className="border-r-0 bg-transparent [--sidebar-width:15.5rem]">
+      <div
+        className="flex h-full flex-col overflow-hidden"
+        style={{
+          background: '#18181b',
+          borderRadius: '20px',
+          boxShadow: '0 8px 40px rgba(0,0,0,0.45)',
+        }}
+      >
 
-        <SidebarContent className="flex-1 overflow-y-auto px-4 py-6">
-          <SidebarMenu className="">
+        {/* ── Header: avatar square + name ── */}
+        <div className="flex items-center gap-3 px-4 pt-5 pb-4">
+          {/* Purple logo square */}
+          <div style={{
+            width: '42px', height: '42px', minWidth: '42px', minHeight: '42px',
+            maxWidth: '42px', maxHeight: '42px',
+            borderRadius: '12px',
+            overflow: 'hidden',
+            background: 'linear-gradient(135deg, #7c6ff7, #4f46e5)',
+            boxShadow: '0 4px 14px rgba(99,91,255,0.45)',
+            flexShrink: 0,
+          }}>
+            <img
+              src={avatarSrc}
+              alt="avatar"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+          </div>
+
+          <div className="flex flex-col min-w-0 flex-1">
+            <span className="text-[14px] font-bold text-white leading-snug truncate">SuiPlay</span>
+            <span className="text-[11px] text-white/40 leading-snug truncate">{userName}</span>
+          </div>
+
+          {/* Arrow button */}
+          <div style={{
+            width: '28px', height: '28px', borderRadius: '50%',
+            background: 'linear-gradient(135deg, #7c6ff7, #4f46e5)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            flexShrink: 0, boxShadow: '0 2px 8px rgba(99,91,255,0.4)',
+          }}>
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M4.5 3L7.5 6L4.5 9" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        {/* ── Search ── */}
+        <div className="px-3 pb-3">
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: '10px',
+            background: 'rgba(255,255,255,0.05)',
+            border: '1px solid rgba(255,255,255,0.07)',
+            borderRadius: '12px',
+            height: '40px',
+            padding: '0 14px',
+          }}>
+            <Search style={{ width: '14px', height: '14px', color: 'rgba(255,255,255,0.25)', flexShrink: 0 }} strokeWidth={1.8} />
+            <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.22)', userSelect: 'none' }}>Search...</span>
+          </div>
+        </div>
+
+        {/* ── Nav ── */}
+        <SidebarContent className="flex flex-col flex-1 overflow-hidden px-3 pt-1 pb-0">
+          <SidebarMenu className="flex flex-col flex-1 justify-evenly gap-0">
             {menuItems.map((item) => {
               const isActive = pathname === item.href;
               const Icon = item.icon;
-
               return (
                 <SidebarMenuItem key={item.label}>
                   <SidebarMenuButton
                     asChild
                     isActive={isActive}
                     className={cn(
-                      'group relative flex h-14 w-full items-center gap-4 rounded-xl px-4 transition-all duration-300',
-                      isActive
-                        ? 'bg-white/10 text-white'
-                        : 'text-white/70 hover:bg-white/5 hover:text-white hover:tracking-wide'
+                      'group relative flex h-11 w-full items-center gap-3 transition-all duration-150',
+                      isActive ? 'text-white' : 'text-white/45 hover:text-white/80'
                     )}
+                    style={{
+                      borderRadius: '12px',
+                      padding: '0 14px',
+                      background: isActive
+                        ? 'linear-gradient(135deg, #7c6ff7, #4f46e5)'
+                        : 'transparent',
+                      boxShadow: isActive ? '0 4px 16px rgba(99,91,255,0.35)' : 'none',
+                    }}
                   >
-                    <Link href={item.href}>
+                    <Link href={item.href} style={{ display: 'flex', alignItems: 'center', gap: '12px', width: '100%' }}>
                       <Icon
-                        className={cn(
-                          'h-5 w-5 flex-shrink-0 transition-transform duration-300 group-hover:scale-110',
-                          isActive ? 'text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]' : 'text-white/50'
-                        )}
-                        strokeWidth={isActive ? 2.5 : 2}
+                        style={{
+                          width: '17px', height: '17px', flexShrink: 0,
+                          color: isActive ? 'white' : 'rgba(255,255,255,0.38)',
+                        }}
+                        strokeWidth={isActive ? 2.2 : 1.8}
                       />
-                      
-                      <span className="flex-1 font-medium tracking-wide">{item.label}</span>
-                      <br />
-                      <br />
+                      <span style={{
+                        flex: 1,
+                        fontSize: '13.5px',
+                        fontWeight: isActive ? 600 : 400,
+                        color: isActive ? 'white' : 'rgba(255,255,255,0.5)',
+                      }}>
+                        {item.label}
+                      </span>
                       {item.badge && (
-                        <span className="absolute left-[34px] top-3 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white shadow-sm ring-2 ring-[#2d3640]">
+                        <span style={{
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          height: '18px', minWidth: '18px',
+                          borderRadius: '999px',
+                          background: '#ef4444',
+                          padding: '0 5px',
+                          fontSize: '9px', fontWeight: 700, color: 'white',
+                        }}>
                           {item.badge}
                         </span>
                       )}
-                            
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               );
             })}
           </SidebarMenu>
-          
-          <div className="mt-4 border-t border-white/10 pt-4 px-4">
+
+          {/* ── Bottom: Logout + Dark Mode ── */}
+          <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', marginTop: '8px', paddingBottom: '16px', paddingTop: '8px' }}>
+
+            {/* Logout */}
+            <button
+              onClick={() => disconnect()}
+              style={{
+                display: 'flex', alignItems: 'center', gap: '12px',
+                width: '100%', height: '42px',
+                borderRadius: '12px', padding: '0 14px',
+                color: 'rgba(255,255,255,0.38)',
+                background: 'transparent',
+                border: 'none', cursor: 'pointer',
+                transition: 'background 0.15s',
+              }}
+              onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.04)')}
+              onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+            >
+              <LogOut style={{ width: '17px', height: '17px', flexShrink: 0 }} strokeWidth={1.8} />
+              <span style={{ fontSize: '13.5px', fontWeight: 400 }}>Logout</span>
+            </button>
+
+            {/* Dark Mode toggle */}
+            <div style={{
+              display: 'flex', alignItems: 'center', gap: '12px',
+              width: '100%', height: '42px',
+              borderRadius: '12px', padding: '0 14px',
+              color: 'rgba(255,255,255,0.38)',
+            }}>
+              <Moon style={{ width: '17px', height: '17px', flexShrink: 0 }} strokeWidth={1.8} />
+              <span style={{ flex: 1, fontSize: '13.5px', fontWeight: 400 }}>
+                {darkMode ? 'Dark Mode' : 'Light Mode'}
+              </span>
+              {/* Toggle switch */}
               <button
-                onClick={() => disconnect()}
-                className="group relative flex h-14 w-full items-center gap-4 rounded-xl px-4 transition-all duration-300 text-white/70 hover:bg-white/5 hover:text-white hover:tracking-wide"
+                onClick={() => setDarkMode(!darkMode)}
+                style={{
+                  width: '36px', height: '20px',
+                  borderRadius: '999px',
+                  background: darkMode ? 'linear-gradient(135deg, #7c6ff7, #4f46e5)' : 'rgba(255,255,255,0.15)',
+                  border: 'none', cursor: 'pointer',
+                  position: 'relative', transition: 'background 0.2s', flexShrink: 0,
+                }}
               >
-                  <LogOut className="h-5 w-5 flex-shrink-0 transition-transform duration-300 group-hover:scale-110 text-white/50" strokeWidth={2} />
-                  <span className="flex-1 text-left font-medium tracking-wide">Sign Out</span>
+                <span style={{
+                  position: 'absolute',
+                  top: '2px',
+                  left: darkMode ? '18px' : '2px',
+                  width: '16px', height: '16px',
+                  borderRadius: '50%',
+                  background: 'white',
+                  boxShadow: '0 1px 4px rgba(0,0,0,0.3)',
+                  transition: 'left 0.2s',
+                  display: 'block',
+                }} />
               </button>
+            </div>
+
           </div>
         </SidebarContent>
       </div>
