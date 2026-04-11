@@ -15,12 +15,15 @@ import {
   SidebarMenuItem,
 } from '@/app/components/ui/sidebar';
 
+
+// ito yung AppSidebar component
 export function AppSidebar() {
   const pathname = usePathname();
   const account = useCurrentAccount();
   const { mutate: disconnect } = useDisconnectWallet();
   const [darkMode, setDarkMode] = useState(true);
 
+  
   const shortAddress = account
     ? `${account.address.slice(0, 6)}...${account.address.slice(-4)}`
     : 'Web3 User';
@@ -75,7 +78,7 @@ export function AppSidebar() {
             <span className="text-[11px] text-white/40 leading-snug truncate">{userName}</span>
           </div>
 
-          {/* Arrow button */}
+          {/* ito yung Arrow button */}
           <div style={{
             width: '28px', height: '28px', borderRadius: '50%',
             background: 'linear-gradient(135deg, #7c6ff7, #4f46e5)',
@@ -88,7 +91,7 @@ export function AppSidebar() {
           </div>
         </div>
 
-        {/* ── Search ── */}
+        {/* ── ito yung search sa sidebar  ── */}
         <div className="px-3 pb-3">
           <div style={{
             display: 'flex', alignItems: 'center', gap: '10px',
@@ -103,12 +106,14 @@ export function AppSidebar() {
           </div>
         </div>
 
-        {/* ── Nav ── */}
+        {/* ── ito yung Nav ── */}
         <SidebarContent className="flex flex-col flex-1 overflow-hidden px-3 pt-1 pb-0">
           <SidebarMenu className="flex flex-col flex-1 justify-evenly gap-0">
             {menuItems.map((item) => {
               const isActive = pathname === item.href;
               const Icon = item.icon;
+
+              // ito yung sidebar menu item return statement
               return (
                 <SidebarMenuItem key={item.label}>
                   <SidebarMenuButton
@@ -127,6 +132,7 @@ export function AppSidebar() {
                       boxShadow: isActive ? '0 4px 16px rgba(99,91,255,0.35)' : 'none',
                     }}
                   >
+                    {/* ito yung Link  */}
                     <Link href={item.href} style={{ display: 'flex', alignItems: 'center', gap: '12px', width: '100%' }}>
                       <Icon
                         style={{
@@ -184,7 +190,7 @@ export function AppSidebar() {
               <span style={{ fontSize: '13.5px', fontWeight: 400 }}>Logout</span>
             </button>
 
-            {/* Dark Mode toggle */}
+            {/* ito yung Dark Mode toggle */}
             <div style={{
               display: 'flex', alignItems: 'center', gap: '12px',
               width: '100%', height: '42px',
@@ -195,7 +201,7 @@ export function AppSidebar() {
               <span style={{ flex: 1, fontSize: '13.5px', fontWeight: 400 }}>
                 {darkMode ? 'Dark Mode' : 'Light Mode'}
               </span>
-              {/* Toggle switch */}
+              {/* ito yung  Toggle switch */}
               <button
                 onClick={() => setDarkMode(!darkMode)}
                 style={{

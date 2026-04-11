@@ -233,7 +233,7 @@ export default function MintPage() {
                 </div>
               )}
 
-              {/* ito yung Main Form */}
+              {/* ito yun NFT Details */}
               <div className="rounded-2xl border border-white/[0.09] bg-white/[0.03]">
                 <div className="p-6 space-y-6">
                   <div>
@@ -250,8 +250,8 @@ export default function MintPage() {
                     </div>
                   )}
             
-                  <div className="space-y-5">
                     {/* ito yung name Input */}
+                  <div className="space-y-5">
                     <div className="space-y-2">
                       <Label htmlFor="name" className="text-sm font-medium text-white/80">NFT Name <span className="text-cyan-400/70 text-xs">required</span></Label>
                       <Input
@@ -270,6 +270,7 @@ export default function MintPage() {
                     */}
 
                     
+                    {/* ito yung div  */}
                     <div className="space-y-2">
                       <Label htmlFor="description" className="text-sm font-medium text-white/80">Description <span className="text-cyan-400/70 text-xs">required</span></Label>
                       <Textarea 
@@ -348,7 +349,7 @@ export default function MintPage() {
                       }}
                     />
                   ) : (
-                    // ito yung icon sparkles
+                    // ito yung image url to preview 
                     <div className="flex h-full w-full items-center justify-center">
                       <div className="text-center space-y-1.5">
                         <Sparkles className="h-8 w-8 text-white/20 mx-auto" />

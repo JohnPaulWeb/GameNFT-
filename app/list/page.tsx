@@ -204,6 +204,7 @@ export default function ListPage() {
     }
   };
 
+  // ito yun yung return statement ng ListPage component
   return (
     <div className="min-h-screen w-full bg-[hsl(var(--bg-void))] px-4 py-8 md:px-8 md:py-12">
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -229,6 +230,7 @@ export default function ListPage() {
           </div>
         </div>
 
+        {/* ito yung section */}
         <section className="relative overflow-hidden rounded-[32px] border border-white/10 bg-gradient-to-br from-white/[0.06] via-white/[0.03] to-white/[0.015] p-6 shadow-2xl shadow-black/20 backdrop-blur-xl md:p-8">
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300/70 to-transparent" />
           <div className="absolute -right-12 top-10 h-28 w-28 rounded-full bg-cyan-400/10 blur-2xl" />
@@ -365,6 +367,7 @@ export default function ListPage() {
               )}
             </div>
 
+            {/* ito yung listing form */}
             <Card className="overflow-hidden border-white/10 bg-white/[0.04] shadow-[0_24px_80px_rgba(0,0,0,0.3)] backdrop-blur-xl">
               <div className="h-1 w-full bg-gradient-to-r from-cyan-400 via-indigo-300 to-emerald-400" />
               <CardHeader className="space-y-3 border-b border-white/10 pb-6">
@@ -396,6 +399,7 @@ export default function ListPage() {
                 </div>
               </CardHeader>
 
+              {/* ito yung Card Content */}
               <CardContent className="space-y-5 pt-6">
                 {!account ? (
                   <div className="rounded-2xl border border-yellow-500/40 bg-yellow-50/90 p-4 dark:bg-yellow-950/20">

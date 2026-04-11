@@ -409,7 +409,7 @@ export default function MyNftsPage() {
               <p className="text-xs uppercase tracking-wider text-cyan-400/70 font-semibold mb-2">Empty Collection</p>
               <h2 className="font-display text-4xl md:text-5xl font-black text-white mb-4">No NFTs Yet</h2>
               <p className="max-w-md text-base text-white/60 leading-relaxed mb-8">
-                Start building your NFT portfolio by minting your first exclusive digital asset.
+                Start building your NFT Marketplace or portfolio by minting your first exclusive digital asset.
               </p>
               <Button 
                 size="lg" 
@@ -417,7 +417,7 @@ export default function MyNftsPage() {
                 onClick={() => window.location.href = '/mint'}
               >
                 <Sparkles className="mr-2 h-5 w-5" />
-                Mint Your First NFT
+                Mint Your First NFT 
               </Button>
             </div>
           )}
@@ -480,7 +480,7 @@ export default function MyNftsPage() {
             </p>
           </div>
 
-          {/* ito yung Dialog Footer */}
+          {/* ito yung DialogFooter */}
           <DialogFooter className="gap-2 sm:gap-0">
             {/* ito yung Button  */}
             <Button variant="ghost" size="lg" onClick={() => setBurnNftId(null)} disabled={isBurning}>
